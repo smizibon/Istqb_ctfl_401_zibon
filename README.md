@@ -3,28 +3,27 @@
 An **unofficial, community-built study guide** for the ISTQB Certified Tester Foundation Level (CTFL) v4.0 exam. Fully offline, zero-install, bilingual (English / বাংলা), and free to share under open licenses.
 
 > Not affiliated with, endorsed by, or connected to ISTQB or any exam board. See [Disclaimer](#disclaimer--trademarks).
-
----
-
-
-## A note from the author
-
-*I vibecoded this whole thing. Use it any way you wish.*
+## Authors message 
+I vibecoded this whole thing. Use it any way you wish.
 
 One thing I'd like to say to you after sitting the CTFL exam myself:
 
-1. **Follow any tutorial series first.** Don't try to memorize anything — just do it, start to finish.
-2. **Then read the syllabus.**
-3. **Make your own notes from the syllabus.**
-4. **Then use this project to take mock exams.**
-5. **Review your mistakes. Take more mocks.**
+1. Follow any tutorial series first. Don't try to memorize anything — just do it, start to finish.
+2. Then read the syllabus.
+3. Make your own notes from the syllabus.
+4. DO all the maths (EP, BVA, State ,branch,statement , transition, threepoint ) these are 7 question that will come in the exam. 
+5. Then use this project to take mock exams.
+6. Review your mistakes. Take more mocks.
+All of this took me about 15 hours 
+— plan it however works for you.
 
-All of this took me about **15 hours** — plan it however works for you.
+Real-world testing practice and the exam differ a bit; CTFL teaches the best-case view, so the real-world timeboxing you face at work isn't quite the vibe you'll get while studying. What you gain instead is the optimum mindset.
 
-Real-world testing practice and the exam differ a bit; CTFL teaches the best-case view, so the real-world timeboxing you face at work isn't quite the vibe you'll get while studying. What you gain instead is the **optimum mindset**.
 
 ---
+
 ## What this is
+
 
 CTFL-Guide is a static website you can use entirely offline: six teaching chapters, worked K3 technique walkthroughs, randomised calculation drills, three original mock exams, a glossary recall drill, and a printable cheat sheet — all in one folder of HTML, CSS, and vanilla JavaScript. There is no server, no build step, no dependency, and no tracking; your progress stays in your own browser.
 
