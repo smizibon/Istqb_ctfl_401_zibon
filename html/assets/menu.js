@@ -1,4 +1,5 @@
-// CTFL Prep menu bar v3 — journey-grouped: brand · current · Chapters ▾ · Practice ▾ · Glossary · Cheat sheet · toggles.
+// CTFL Prep menu bar v4 — journey-grouped: brand · current · Chapters ▾ · Practice ▾ · Glossary · Cheat sheet · toggles.
+// Practice = original content only (3 original mocks); official ISTQB samples link out (copyright — not embedded).
 // Dropdowns open on hover/focus (CSS) and on click (touch) — this script builds the structure and wires the theme toggle.
 (function () {
   var here = (location.pathname.split('/').pop() || 'index.html');
@@ -13,20 +14,19 @@
         page('chapter-04.html', 'Ch 4 — Techniques (K3)', '~10–11 Q'),
         page('chapter-05.html', 'Ch 5 — Management', '~9 Q'),
         page('chapter-06.html', 'Ch 6 — Tools', '~3 Q'),
-        page('explainers.html', 'Explainers — the WHY', 'Thu 19:30'),
-        page('advice.html', 'Exam advice — from passers', 'read Thu night')
+        page('explainers.html', 'Explainers — the WHY', 'the why behind the terms'),
+        page('advice.html', 'Exam advice', 'tactics from real examinees')
       ]
     },
     {
       key: 'pr', type: 'drop', label: 'Practice',
       items: [
-        page('math-walkthroughs.html', 'K3 Math — step by step', 'official K3 worked'),
-        page('drills.html', 'K3 Drills', 'fresh numbers each round'),
-        page('official-exam-A.html', 'Exam A', '66 Q · official'),
-        page('official-exam-B.html', 'Exam B', '40 Q · timed rehearsal'),
-        page('official-exam-C.html', 'Exam C', '40 Q · timed rehearsal'),
-        page('official-exam-D.html', 'Exam D', '40 Q · timed rehearsal'),
-        page('official-bank.html', 'Question Bank', 'same 186 · by chapter')
+        page('math-walkthroughs.html', 'K3 Math — step by step', 'worked technique walkthroughs'),
+        page('drills.html', 'K3 Drills', 'fresh numbers every round'),
+        page('mock-01.html', 'Mock exam 1', '40 Q · original questions'),
+        page('mock-02.html', 'Mock exam 2', '40 Q · original questions'),
+        page('mock-03.html', 'Mock exam 3', '40 Q · original questions'),
+        page('official-samples.html', 'Official samples', "ISTQB's free official exams — external")
       ]
     },
     { key: 'glo', type: 'link', href: 'glossary.html', label: 'Glossary' },

@@ -1,0 +1,125 @@
+CTFL-Guide — License
+====================
+
+This project is dual-licensed. Everyone is granted a choice of the applicable
+license below depending on the part of the project they use:
+
+  * the SOFTWARE (all code) is licensed under the MIT License; and
+  * the CONTENT (everything else) is licensed under Creative Commons
+    Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+
+If you use or redistribute any part of this project, you may comply with the
+license that applies to that part, or, at your option, comply with both.
+
+
+What is SOFTWARE (MIT License)
+------------------------------
+
+All JavaScript in `html/assets/*.js`, the local-server helper scripts
+`serve.command` and `stop.command`, and any future scripts or code added to
+this project by its contributors ("the software").
+
+What is CONTENT (CC BY-SA 4.0)
+------------------------------
+
+Everything that is not software: the teaching text and page content in
+`html/*.html`, the Bangla translations, the original practice questions
+(chapter quizzes, exercises, and mock exams) and their answer explanations,
+the glossary, the cheat sheet, the advice digest, and the markdown documents
+in `mock-exams/`, `practice/`, and `syllabus/` ("the content").
+
+
+NOTICE — NO ISTQB MATERIAL IS INCLUDED OR LICENSED HERE
+-------------------------------------------------------
+
+This project contains and licenses NO material owned by ISTQB or its member
+boards. Official ISTQB sample-exam questions, answer keys, syllabus excerpts
+beyond short attributed factual quotes, and any other ISTQB copyrighted
+material are deliberately NOT embedded in this project; the
+`html/official-samples.html` page only links to official sources. Nothing in
+this license grants any right to use ISTQB-owned material. "ISTQB", "CTFL",
+and related names and logos are trademarks of their respective owners and are
+used here only to refer descriptively to the certification being studied for.
+
+
+================================================================================
+1. SOFTWARE — MIT License
+================================================================================
+
+MIT License
+
+Copyright (c) 2026 CTFL-Guide contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+================================================================================
+2. CONTENT — Creative Commons Attribution-ShareAlike 4.0 International
+================================================================================
+
+The content of this project is licensed under a Creative Commons
+Attribution-ShareAlike 4.0 International License:
+
+    https://creativecommons.org/licenses/by-sa/4.0/
+
+Plain-text summary (provided for convenience; it is not the license):
+
+  You are free to:
+
+    Share — copy and redistribute the content in any medium or format for
+    any purpose, even commercially.
+
+    Adapt — remix, transform, and build upon the content for any purpose,
+    even commercially.
+
+  The licensor cannot revoke these freedoms as long as you follow the license
+  terms.
+
+  Under the following terms:
+
+    Attribution — You must give appropriate credit, provide a link to the
+    license, and indicate if changes were made. You may do so in any
+    reasonable manner, but not in any way that suggests the licensor endorses
+    you or your use.
+
+    ShareAlike — If you remix, transform, or build upon the content, you must
+    distribute your contributions under the same license as the original.
+
+    No additional restrictions — You may not apply legal terms or
+    technological measures that legally restrict others from doing anything
+    the license permits.
+
+  Notices:
+
+    You do not have to comply with the license for elements of the content in
+    the public domain or where your use is permitted by an applicable
+    exception or limitation.
+
+    No warranties are given. The license may not give you all of the
+    permissions necessary for your intended use. For example, other rights
+    such as publicity, privacy, or moral rights may limit how you use the
+    content.
+
+The full legal code (the actual license) is available at:
+
+    https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+CC BY-SA 4.0 is a free-culture license as defined by the Definition of Free
+Cultural Works. Creative Commons is not a party to this project and does not
+endorse it.

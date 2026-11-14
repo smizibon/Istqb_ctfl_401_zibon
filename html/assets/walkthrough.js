@@ -1,5 +1,5 @@
 // CTFL Prep — K3 math walkthrough engine.
-// Renders official sample-exam cards from window.WALKTHROUGHS (walkthrough-data.js).
+// Renders original practice cards from window.WALKTHROUGHS (walkthrough-data.js).
 // Click-to-advance steps: ONE step per click, no auto-play; viz re-renders per step.
 // No-JS: all steps render visible; hiding applies only under body.wt-js.
 (function () {
@@ -69,9 +69,9 @@
     var art = el('article', 'wt-card');
     art.id = 'card-' + card.id;
 
-    // header: OFFICIAL badge + appendix tag + source + LO + K-level
+    // header: ORIGINAL badge + appendix tag + source + LO + K-level
     var head = el('div', 'wt-head');
-    head.appendChild(el('p', 'pbad official', '★ OFFICIAL — ISTQB sample exam question'));
+    head.appendChild(el('p', 'pbad original', '◆ ORIGINAL — written for this guide'));
     if (card.appendix) head.appendChild(el('span', 'wt-appendix', 'Appendix'));
     head.appendChild(el('span', 'wt-src', card.source));
     head.appendChild(el('span', 'wt-lo', card.lo));
@@ -79,13 +79,13 @@
     head.appendChild(kb);
     art.appendChild(head);
 
-    // verbatim stem + options
+    // stem + options
     var stem = el('div', 'wt-stem');
     stem.innerHTML = card.stem;
     art.appendChild(stem);
 
-    // teaching derivation label — clearly not the official rationale
-    art.appendChild(el('p', 'wt-ours', '◆ Our step-by-step — teaching derivation, not the official rationale'));
+    // worked-solution label
+    art.appendChild(el('p', 'wt-ours', 'Step by step — worked solution'));
 
     // steps (rendered visible; hidden by CSS only under body.wt-js)
     var ol = el('ol', 'wt-steps');
@@ -100,8 +100,8 @@
     });
     art.appendChild(ol);
 
-    // official answer banner (revealed with the final Answer step)
-    var ans = el('p', 'wt-ans', 'Official answer: (' + card.answer + ') — ' + card.answerText + '  ✓');
+    // answer banner (revealed with the final step)
+    var ans = el('p', 'wt-ans', 'Answer: (' + card.answer + ') — ' + card.answerText + '  ✓');
     art.appendChild(ans);
 
     // controls: click-to-advance, no auto-play
@@ -142,13 +142,13 @@
     host.insertBefore(rec, host.firstChild);
     (tech.cards || []).forEach(function (card) { host.appendChild(renderCard(card)); });
 
-    // footer: drill link + compact official variants line
+    // footer: drill link + compact variants line
     var foot = el('div', 'wt-foot');
     var d = el('a', null, 'drill this type ▸');
     d.href = tech.drillHref;
     foot.appendChild(d);
     if (tech.variants && tech.variants.length) {
-      var vars = el('span', 'wt-vars', 'More official variants: ');
+      var vars = el('span', 'wt-vars', 'More variants: ');
       tech.variants.forEach(function (v, i) {
         if (i) vars.appendChild(document.createTextNode(' · '));
         var va = el('a', null, v.source);

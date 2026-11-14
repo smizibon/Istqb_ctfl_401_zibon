@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mock exam 1 — 40 questions · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script>
+<style>
+/* ---------- mock exam page styles: protocol box + timer ---------- */
+.protocol-list{margin:8px 0 0;padding-left:20px}
+.protocol-list li{margin:7px 0}
+.mtimer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;padding-top:13px;border-top:1px dashed var(--line)}
+.mt-disp{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:2.1rem;font-weight:800;letter-spacing:.04em;color:var(--ink);min-width:7ch}
+.mt-disp.warn{color:var(--gold,#b45309)}
+.mt-disp.low,.mt-disp.up{color:var(--trap)}
+.mt-disp.up{animation:mt-blink 1s steps(2,start) infinite}
+@keyframes mt-blink{to{opacity:.35}}
+.mtimer button{font:inherit;font-size:.8rem;font-weight:700;color:var(--ink);background:var(--read-bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer}
+.mtimer button:hover{border-color:var(--accent)}
+.mt-lab{font-size:.78rem;color:var(--ink-soft)}
+.q pre{margin:8px 0}
+table.subs td:last-child{white-space:nowrap}
+@media print{nav.crumbs,.menubar{display:none!important}.mtimer button{display:none}}
+</style></head><body data-page="mock1" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">&#8962; Study hub</a> &rarr; Mock exam 1</nav>
+
+<header class="hero">
+<h1>Mock exam 1 — 40 questions · 60 minutes · pass 26/40 · original questions</h1>
+<div class="sub">Sit it like the real thing: one continuous 60-minute sitting, closed book, every question answered. These are original questions written for this programme, aligned to the CTFL v4.0 learning objectives — not official ISTQB questions. Score only after the full 40: the pass line is 26/40 and your working target is 30+ (75%).</div>
+<div class="meta"><span class="chip">timed 60 min · closed book</span><span class="chip">no negative marking</span><span class="chip">pass 26 · target 30+</span><span class="chip hot">simulation 1 of 3</span></div>
+</header>
+
+<section id="protocol" data-open>
+<h2>1 · Exam protocol — same rules as the real sitting</h2>
+<p class="sec-sum">Exam conditions &mdash; follow them exactly or the score means nothing.</p>
+<div class="box work">
+<span class="box-tag">&#9201; Exam conditions</span>
+<ul class="protocol-list">
+<li><b>Timed 60 minutes</b> &mdash; start the timer with your first question; it is the only clock you get.</li>
+<li><b>Closed book</b> &mdash; no notes, no syllabus, no glossary, no other site sections open.</li>
+<li><b>Answer every question</b> &mdash; no negative marking: a guess costs nothing, a blank scores zero.</li>
+<li><b>One pass, no take-backs</b> &mdash; the engine reveals each answer as you click; commit to your first instinct, record it, keep moving. The official count is the score bar under Q40 at the end.</li>
+<li><b>Pace:</b> ~90 seconds per question — at 60 minutes the timer below is your proctor.</li>
+</ul>
+<div class="mtimer" id="mtimer">
+<div class="mt-disp" id="mt-disp" aria-live="off">60:00</div>
+<button type="button" id="mt-start">&#9654; Start 60:00</button>
+<button type="button" id="mt-add" title="Accommodation minute: add 60 seconds">+1 min</button>
+<span class="mt-lab">the countdown is page-local &mdash; refreshing restarts the exam honestly (score resets)</span>
+</div>
+</div>
+</section>
+
+<section id="exam" data-open>
+<h2>2 · The exam — 40 questions · pass 26/40</h2>
+<p class="sec-sum">Click one answer per question. The reveal is final — record it and keep moving; the running score waits at the bottom of the 40.</p>
+<p class="plain"><b>In plain words:</b> 40 questions, 60 minutes, no notes — answer everything, guess rather than skip, score at the end.</p>
+<div class="quiz" data-target="26">
+<div class="q" data-a="b"><p class="qt">1. Which activity belongs to debugging rather than testing?</p><div class="opts">
+<button data-k="a">a) Designing tests from a specification</button><button data-k="b">b) Locating and correcting the cause of a failure in the code</button><button data-k="c">c) Reporting a failure with reproduction steps</button><button data-k="d">d) Prioritising which test to run next</button></div>
+<div class="expl"><b>b</b> &mdash; Debugging = locate and fix causes; the others are test activities.</div></div>
+
+<div class="q" data-a="b"><p class="qt">2. A system contains a defect in a rarely used feature that no customer has ever accessed. The defect exists but no failure has been observed. This shows that:</p><div class="opts">
+<button data-k="a">a) The defect does not exist because no failure occurred</button><button data-k="b">b) A defect can be present without causing a failure</button><button data-k="c">c) The feature was tested exhaustively</button><button data-k="d">d) Failures always follow defects</button></div>
+<div class="expl"><b>b</b> &mdash; Defect without failure: never executed/triggered.</div></div>
+
+<div class="q" data-a="b"><p class="qt">3. A test team finds that their long-standing test suite no longer detects new defects. Following the pesticide paradox, they should:</p><div class="opts">
+<button data-k="a">a) Execute the suite twice as often</button><button data-k="b">b) Review and improve the tests, adding new and modified cases</button><button data-k="c">c) Remove all quality checks</button><button data-k="d">d) Declare the product defect-free</button></div>
+<div class="expl"><b>b</b> &mdash; Pesticide paradox remedy: refresh/improve tests.</div></div>
+
+<div class="q" data-a="c"><p class="qt">4. Which of the following is NOT part of the fundamental test process activities?</p><div class="opts">
+<button data-k="a">a) Test planning</button><button data-k="b">b) Test analysis and design</button><button data-k="c">c) Debugging and fixing the code</button><button data-k="d">d) Test monitoring and control</button></div>
+<div class="expl"><b>c</b> &mdash; Fixing code is development work, not a test-process activity.</div></div>
+
+<div class="q" data-a="b"><p class="qt">5. "Interest calculation on overdue invoices" as an item to be tested is an example of a:</p><div class="opts">
+<button data-k="a">a) Test case</button><button data-k="b">b) Test condition</button><button data-k="c">c) Test procedure</button><button data-k="d">d) Test plan</button></div>
+<div class="expl"><b>b</b> &mdash; An item/event to be tested = test condition.</div></div>
+
+<div class="q" data-a="d"><p class="qt">6. Which option gives the HIGHEST degree of test independence?</p><div class="opts">
+<button data-k="a">a) The developer tests their own code</button><button data-k="b">b) A tester within the development team</button><button data-k="c">c) An independent test team within the organisation</button><button data-k="d">d) Testers employed by an external test services company</button></div>
+<div class="expl"><b>d</b> &mdash; External organisation = highest independence listed.</div></div>
+
+<div class="q" data-a="b"><p class="qt">7. Two teams interpreted one ambiguous requirement differently, and each built code to a different understanding. The root cause category of the resulting errors is:</p><div class="opts">
+<button data-k="a">a) Tool complexity</button><button data-k="b">b) Miscommunication about requirements</button><button data-k="c">c) Excessive testing</button><button data-k="d">d) Hardware failure</button></div>
+<div class="expl"><b>b</b> &mdash; Ambiguous requirements → miscommunication root cause.</div></div>
+
+<div class="q" data-a="b"><p class="qt">8. Before a new system goes live, the operations team verifies backup/restore procedures and system monitoring. This is:</p><div class="opts">
+<button data-k="a">a) User acceptance testing</button><button data-k="b">b) Operational acceptance testing</button><button data-k="c">c) Component integration testing</button><button data-k="d">d) Alpha testing</button></div>
+<div class="expl"><b>b</b> &mdash; Ops staff verifying operational readiness = operational acceptance testing.</div></div>
+
+<div class="q" data-a="b"><p class="qt">9. Testing focuses on interfaces and data flows between the modules produced by different developers. The test level is:</p><div class="opts">
+<button data-k="a">a) Component testing</button><button data-k="b">b) Component integration testing</button><button data-k="c">c) System testing</button><button data-k="d">d) Acceptance testing</button></div>
+<div class="expl"><b>b</b> &mdash; Interfaces between components = component integration testing.</div></div>
+
+<div class="q" data-a="b"><p class="qt">10. A new "export to PDF" feature is added. Besides testing the new feature, the team retests existing printing functionality. The retesting of printing is:</p><div class="opts">
+<button data-k="a">a) Confirmation testing</button><button data-k="b">b) Regression testing</button><button data-k="c">c) Smoke testing</button><button data-k="d">d) Static testing</button></div>
+<div class="expl"><b>b</b> &mdash; Existing functionality re-checked after a change = regression testing.</div></div>
+
+<div class="q" data-a="b"><p class="qt">11. Beta testing is performed:</p><div class="opts">
+<button data-k="a">a) At the developer's site by the development team</button><button data-k="b">b) At the users' own location by real users</button><button data-k="c">c) Only by independent test consultancies</button><button data-k="d">d) Before component testing</button></div>
+<div class="expl"><b>b</b> &mdash; Beta = users' own site; alpha = developer's site.</div></div>
+
+<div class="q" data-a="b"><p class="qt">12. Which statement BEST describes shift-left?</p><div class="opts">
+<button data-k="a">a) Move test execution from system test to acceptance test</button><button data-k="b">b) Test work products early and involve testers from the beginning of the lifecycle</button><button data-k="c">c) Schedule testing only after coding completes, but earlier in the day</button><button data-k="d">d) Replace dynamic testing with static analysis entirely</button></div>
+<div class="expl"><b>b</b> &mdash; Shift-left = early work-product testing + early tester involvement.</div></div>
+
+<div class="q" data-a="b"><p class="qt">13. Which is TRUE about test types?</p><div class="opts">
+<button data-k="a">a) Non-functional testing is only meaningful at system test level</button><button data-k="b">b) Functional and non-functional tests can both be applied at any test level</button><button data-k="c">c) Black-box testing requires access to source code</button><button data-k="d">d) White-box testing is based only on user requirements</button></div>
+<div class="expl"><b>b</b> &mdash; All types at all levels; black-box needs no code access.</div></div>
+
+<div class="q" data-a="b"><p class="qt">14. An organisation moves its application to a new cloud platform and must verify both the migrated data and system behaviour. The maintenance trigger is:</p><div class="opts">
+<button data-k="a">a) Modification</button><button data-k="b">b) Migration</button><button data-k="c">c) Retirement</button><button data-k="d">d) Enhancement</button></div>
+<div class="expl"><b>b</b> &mdash; New platform = migration (with data conversion + regression).</div></div>
+
+<div class="q" data-a="c"><p class="qt">15. A tool flags excessive cyclomatic complexity in a class, without executing the program. This is:</p><div class="opts">
+<button data-k="a">a) Dynamic testing</button><button data-k="b">b) A review</button><button data-k="c">c) Static analysis</button><button data-k="d">d) Regression testing</button></div>
+<div class="expl"><b>c</b> &mdash; Tool, no execution, structural metric = static analysis.</div></div>
+
+<div class="q" data-a="b"><p class="qt">16. In a walkthrough, the review is led by:</p><div class="opts">
+<button data-k="a">a) A trained moderator who is not the author</button><button data-k="b">b) The author of the work product</button><button data-k="c">c) The project manager</button><button data-k="d">d) The scribe</button></div>
+<div class="expl"><b>b</b> &mdash; Walkthrough is author-led (its defining feature).</div></div>
+
+<div class="q" data-a="b"><p class="qt">17. Which feature set characterises an inspection?</p><div class="opts">
+<button data-k="a">a) Author-led, educational purpose, no roles</button><button data-k="b">b) Rules/checklists, metrics, entry/exit criteria, trained non-author moderator</button><button data-k="c">c) Pair review at the desk, immediate feedback</button><button data-k="d">d) Tool-based code execution</button></div>
+<div class="expl"><b>b</b> &mdash; The formality markers of inspection.</div></div>
+
+<div class="q" data-a="a"><p class="qt">18. During a review meeting, who records the defects and comments as they are raised?</p><div class="opts">
+<button data-k="a">a) The scribe</button><button data-k="b">b) The manager</button><button data-k="c">c) The author</button><button data-k="d">d) The facilitator</button></div>
+<div class="expl"><b>a</b> &mdash; Scribe records; facilitator runs the meeting.</div></div>
+
+<div class="q" data-a="b"><p class="qt">19. A field accepts ages 0–120. The keypad permits only numbers, and values below 0 or above 120 must be rejected. Using equivalence partitioning, the minimum number of test cases (one per valid partition, one per invalid partition) is:</p><div class="opts">
+<button data-k="a">a) 2</button><button data-k="b">b) 3</button><button data-k="c">c) 5</button><button data-k="d">d) 121</button></div>
+<div class="expl"><b>b</b> &mdash; Valid [0–120]; invalid: &lt;0 and &gt;120 (letters impossible per keypad). 1 + 2 = 3 minimum tests.</div></div>
+
+<div class="q" data-a="b"><p class="qt">20. For the field in question 19, the complete 2-value BVA set is:</p><div class="opts">
+<button data-k="a">a) 0 and 120</button><button data-k="b">b) 0, 1, 120, 121</button><button data-k="c">c) −1, 0, 121, 122</button><button data-k="d">d) 0, 60, 120</button></div>
+<div class="expl"><b>b</b> &mdash; 2-value BVA: both boundaries with neighbours: 0, 1, 120, 121.</div></div>
+
+<div class="q" data-a="c"><p class="qt">21. A pricing rule combines three independent yes/no conditions. The FULL decision table has how many rules?</p><div class="opts">
+<button data-k="a">a) 3</button><button data-k="b">b) 6</button><button data-k="c">c) 8</button><button data-k="d">d) 9</button></div>
+<div class="expl"><b>c</b> &mdash; 2×2×2 = 8 rules.</div></div>
+
+<div class="q" data-a="b"><p class="qt">22. If one condition proves irrelevant to the action in every rule, the table can be collapsed, reducing the rules by:</p><div class="opts">
+<button data-k="a">a) No change</button><button data-k="b">b) Half</button><button data-k="c">c) The full combination count of that condition</button><button data-k="d">d) All rules become one</button></div>
+<div class="expl"><b>b</b> &mdash; A binary condition collapsing halves the rules.</div></div>
+
+<div class="q" data-a="c"><p class="qt">23. A lift controller has states Idle, Moving, DoorsOpen. Valid transitions: call→Moving, arrive→DoorsOpen, close→Idle, plus emergency→Idle from both Moving and DoorsOpen. How many valid transitions in total?</p><div class="opts">
+<button data-k="a">a) 3</button><button data-k="b">b) 4</button><button data-k="c">c) 5</button><button data-k="d">d) 6</button></div>
+<div class="expl"><b>c</b> &mdash; call→Moving, arrive→DoorsOpen, close→Idle, emergency→Idle (Moving), emergency→Idle (DoorsOpen) = 5.</div></div>
+
+<div class="q" data-a="b"><p class="qt">24. Which statement about coverage is TRUE?</p><div class="opts">
+<button data-k="a">a) 100% statement coverage implies 100% branch coverage</button><button data-k="b">b) 100% branch coverage implies 100% statement coverage</button><button data-k="c">c) Neither implies the other</button><button data-k="d">d) 100% statement coverage proves correctness</button></div>
+<div class="expl"><b>b</b> &mdash; Branch implies statement, never the reverse.</div></div>
+
+<div class="q" data-a="b"><p class="qt">25. A module has 50 statements; tests execute 40 of them. Statement coverage is:</p><div class="opts">
+<button data-k="a">a) 40%</button><button data-k="b">b) 80%</button><button data-k="c">c) 90%</button><button data-k="d">d) 125%</button></div>
+<div class="expl"><b>b</b> &mdash; 40/50 = 80%.</div></div>
+
+<div class="q" data-a="a"><p class="qt">26. Branch coverage is 75% with one <code>if</code> statement's false-outcome never taken. The most efficient fix is:</p><div class="opts">
+<button data-k="a">a) Add a test that exercises the untaken false outcome</button><button data-k="b">b) Remove the if statement</button><button data-k="c">c) Re-run existing tests twice</button><button data-k="d">d) Increase statement coverage to 120%</button></div>
+<div class="expl"><b>a</b> &mdash; Cover the untaken outcome; nothing else raises branch coverage.</div></div>
+
+<div class="q" data-a="a"><p class="qt">27. Tests written collaboratively as "Given/When/Then" examples that double as living documentation indicate:</p><div class="opts">
+<button data-k="a">a) BDD</button><button data-k="b">b) Inspections</button><button data-k="c">c) Decision tables</button><button data-k="d">d) Component testing</button></div>
+<div class="expl"><b>a</b> &mdash; Given/When/Then examples = BDD.</div></div>
+
+<div class="q" data-a="b"><p class="qt">28. An exploratory tester works in fixed-length sessions, each guided by a charter, and reports results per session. This is:</p><div class="opts">
+<button data-k="a">a) Ad-hoc testing</button><button data-k="b">b) Session-based exploratory testing</button><button data-k="c">c) Checklist-based testing</button><button data-k="d">d) Static analysis</button></div>
+<div class="expl"><b>b</b> &mdash; Charters + timeboxed sessions = session-based exploratory.</div></div>
+
+<div class="q" data-a="b"><p class="qt">29. Risk level equals:</p><div class="opts">
+<button data-k="a">a) Impact + likelihood</button><button data-k="b">b) Likelihood × impact</button><button data-k="c">c) Impact ÷ likelihood</button><button data-k="d">d) Likelihood − impact</button></div>
+<div class="expl"><b>b</b> &mdash; likelihood × impact.</div></div>
+
+<div class="q" data-a="b"><p class="qt">30. "The test team may lose its only performance specialist before the load tests." This is a:</p><div class="opts">
+<button data-k="a">a) Product risk</button><button data-k="b">b) Project risk</button><button data-k="c">c) Defect</button><button data-k="d">d) Failure</button></div>
+<div class="expl"><b>b</b> &mdash; Staffing threat to the project = project risk.</div></div>
+
+<div class="q" data-a="b"><p class="qt">31. Which is the best example of a measurable EXIT criterion?</p><div class="opts">
+<button data-k="a">a) "The product is good enough"</button><button data-k="b">b) "All severity-1 defects resolved; ≥95% of planned tests executed"</button><button data-k="c">c) "The team believes quality is fine"</button><button data-k="d">d) "Testing has been thorough"</button></div>
+<div class="expl"><b>b</b> &mdash; Measurable, quality-anchored exit criteria.</div></div>
+
+<div class="q" data-a="b"><p class="qt">32. Estimating test effort from the previous release's tests-per-day figures is:</p><div class="opts">
+<button data-k="a">a) Expert-based</button><button data-k="b">b) Metrics-based</button><button data-k="c">c) Risk-based</button><button data-k="d">d) Static</button></div>
+<div class="expl"><b>b</b> &mdash; Historical measures = metrics-based.</div></div>
+
+<div class="q" data-a="c"><p class="qt">33. Usability evaluation with real users critiquing the product is which test quadrant?</p><div class="opts">
+<button data-k="a">a) Q1 technology-facing, supporting the team</button><button data-k="b">b) Q2 business-facing, supporting the team</button><button data-k="c">c) Q3 business-facing, critiquing the product</button><button data-k="d">d) Q4 technology-facing, critiquing the product</button></div>
+<div class="expl"><b>c</b> &mdash; Business-facing users critiquing = Q3.</div></div>
+
+<div class="q" data-a="b"><p class="qt">34. The test pyramid exists mainly because:</p><div class="opts">
+<button data-k="a">a) GUI tests are the cheapest to maintain</button><button data-k="b">b) Lower-level tests are faster, cheaper and more stable, so they should dominate</button><button data-k="c">c) End-to-end tests find no defects</button><button data-k="d">d) Unit tests require no design</button></div>
+<div class="expl"><b>b</b> &mdash; The pyramid's economic rationale.</div></div>
+
+<div class="q" data-a="b"><p class="qt">35. A dashboard shows execution progress; the manager re-prioritises tests. These are respectively:</p><div class="opts">
+<button data-k="a">a) Control; monitoring</button><button data-k="b">b) Test monitoring; test control</button><button data-k="c">c) Estimation; completion</button><button data-k="d">d) Analysis; design</button></div>
+<div class="expl"><b>b</b> &mdash; Observing = monitoring; acting = control.</div></div>
+
+<div class="q" data-a="a"><p class="qt">36. A defect report lacks the environment/build identifier, expected result and reproduction steps. The biggest consequence is:</p><div class="opts">
+<button data-k="a">a) The defect cannot be reliably reproduced and evaluated by others</button><button data-k="b">b) The defect will be fixed too quickly</button><button data-k="c">c) Severity cannot be political</button><button data-k="d">d) Traceability improves</button></div>
+<div class="expl"><b>a</b> &mdash; Without steps/expected/build, others can't reproduce or evaluate.</div></div>
+
+<div class="q" data-a="a"><p class="qt">37. A crash in the payment module (data loss for users) versus a misspelled company name on the legal page. Correct severity/priority intuition:</p><div class="opts">
+<button data-k="a">a) Payment crash: high severity; typo: low severity but potentially high priority before launch</button><button data-k="b">b) Payment crash: low severity</button><button data-k="c">c) Typo: high severity</button><button data-k="d">d) Severity and priority are always identical</button></div>
+<div class="expl"><b>a</b> &mdash; Severity = impact; priority = urgency. Classic divergence.</div></div>
+
+<div class="q" data-a="b"><p class="qt">38. A capture/replay framework that executes functional tests against the GUI is:</p><div class="opts">
+<button data-k="a">a) Test management tooling</button><button data-k="b">b) Test execution and automation tooling</button><button data-k="c">c) Static analysis tooling</button><button data-k="d">d) Support tooling</button></div>
+<div class="expl"><b>b</b> &mdash; Automated execution of functional GUI tests = execution/automation tooling.</div></div>
+
+<div class="q" data-a="a"><p class="qt">39. Introducing a new tool first on one small project to verify fit and cost is a:</p><div class="opts">
+<button data-k="a">a) Pilot project</button><button data-k="b">b) Retrospective</button><button data-k="c">c) Walkthrough</button><button data-k="d">d) Smoke test</button></div>
+<div class="expl"><b>a</b> &mdash; Contained trial = pilot project.</div></div>
+
+<div class="q" data-a="b"><p class="qt">40. Which is a RISK (not a benefit) of test tool support?</p><div class="opts">
+<button data-k="a">a) Faster feedback</button><button data-k="b">b) Underestimating introduction and maintenance effort</button><button data-k="c">c) More consistent regression runs</button><button data-k="d">d) Better coverage measurement</button></div>
+<div class="expl"><b>b</b> &mdash; Hidden cost underestimation = documented risk; a), c), d) are benefits.</div></div>
+
+
+</div>
+</section>
+
+<section id="scoring" data-open>
+<h2>3 · Scoring &amp; sub-scores — where to re-study</h2>
+<p class="sec-sum">Pass 26/40 · working target 30+ · chapter sub-scores tell you what to re-read tonight.</p>
+<p>The engine’s score bar under Q40 is your official count. The pass line is 26/40 (65%); your working target is 30+ (75%). Score each chapter sub-total from the table — anything under 70% in a chapter sends that chapter’s sections to your re-study list. Log every miss with a root cause (didn’t know the fact / misread the stem / applied the technique wrong) — that log, not the raw score, drives the rest of your evening.</p>
+<table class="good subs">
+<thead><tr><th>Chapter</th><th>Topic</th><th>Questions</th><th>Your sub-score</th></tr></thead>
+<tbody>
+<tr><td>Ch.1</td><td>Fundamentals</td><td>Q1&ndash;7</td><td>___/7</td></tr><tr><td>Ch.2</td><td>Testing throughout the SDLC</td><td>Q8&ndash;14</td><td>___/7</td></tr><tr><td>Ch.3</td><td>Static testing</td><td>Q15&ndash;18</td><td>___/4</td></tr><tr><td>Ch.4</td><td>Test techniques (K3)</td><td>Q19&ndash;28</td><td>___/10</td></tr><tr><td>Ch.5</td><td>Test management</td><td>Q29&ndash;37</td><td>___/9</td></tr><tr><td>Ch.6</td><td>Tool support for testing</td><td>Q38&ndash;40</td><td>___/3</td></tr>
+<tr><td>Total</td><td>&mdash;</td><td>Q1&ndash;40</td><td>___/40 · pass 26</td></tr>
+</tbody>
+</table>
+<p class="axis">Sub-score rule from the mock plan: under 70% in any chapter → that chapter goes on the re-study list before the next mock. Total pass 26 · your target 30+.</p>
+</section>
+
+<div class="next"><a href="drills.html">← K3 drills</a><span></span><a href="mock-02.html">Mock exam 2 →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script>
+<script>
+// Mock exam timer — page-local 60:00 countdown; refresh = fresh timer (restart is honest).
+(function () {
+  var disp = document.getElementById('mt-disp');
+  var start = document.getElementById('mt-start');
+  var plus = document.getElementById('mt-add');
+  if (!disp || !start || !plus) return;
+  var TOTAL = 3600, left = TOTAL, iv = null;
+  function fmt(s) {
+    var m = Math.floor(s / 60), r = s % 60;
+    return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
+  }
+  function paint() {
+    disp.textContent = left === 0 ? 'TIME UP' : fmt(left);
+    disp.classList.remove('warn', 'low', 'up');
+    if (left === 0) disp.classList.add('up');
+    else if (left <= 120) disp.classList.add('low');
+    else if (left <= 600) disp.classList.add('warn');
+  }
+  function stop(label) { if (iv) { clearInterval(iv); iv = null; } start.textContent = label; }
+  start.addEventListener('click', function () {
+    if (iv) { stop('\u25B6 Resume'); return; }
+    if (left === 0) left = TOTAL;
+    start.textContent = '\u23F8 Pause';
+    iv = setInterval(function () {
+      left--;
+      if (left <= 0) { left = 0; stop('\u25B6 Restart 60:00'); paint(); return; }
+      paint();
+    }, 1000);
+  });
+  plus.addEventListener('click', function () {
+    if (left > 0 && left < 5400) { left += 60; paint(); }
+  });
+  paint();
+})();
+</script>
+</body></html>

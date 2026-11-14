@@ -1,154 +1,211 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CTFL v4.0 — Study Hub</title>
 <link rel="stylesheet" href="assets/style.css">
-<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body><main>
+<style>
+/* index-only additions: what-is box, plan onboarding panel, track renderer */
+.whatbox{margin-top:14px;background:var(--hero-chip);border:1px solid var(--hero-border);border-radius:var(--r-md);padding:12px 16px;font-size:.84rem;line-height:1.6}
+.whatbox div{margin:3px 0}
+.whatbox a{color:var(--scorebar-hot);font-weight:700}
+#plan-panel{margin-top:16px;background:var(--hero-chip);border:1px solid var(--hero-border);border-radius:var(--r-md);padding:14px 17px;color:#fff}
+#plan-panel .pp-title{font-weight:800;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;opacity:.85;margin-bottom:9px}
+#plan-panel .pp-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+#plan-panel label{display:flex;flex-direction:column;gap:4px;font-size:.76rem;font-weight:700;letter-spacing:.04em;color:#fff}
+#plan-panel input,#plan-panel select{font:inherit;font-size:.9rem;color:var(--ink);background:#fff;border:1px solid var(--hero-border);border-radius:9px;padding:7px 10px}
+#plan-panel .pp-start{font:inherit;font-weight:800;font-size:.85rem;color:#3b2600;background:#fbbf24;border:none;border-radius:99px;padding:9px 20px;cursor:pointer}
+#plan-panel .pp-start:hover{background:#f59e0b}
+#plan-panel .pp-hint{color:#fbbf24;font-size:.8rem;font-weight:700;margin-top:8px}
+#plan-panel .pp-line{font-size:.95rem;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+#plan-panel .pp-edit{font:inherit;font-weight:700;font-size:.78rem;color:#fff;background:transparent;border:1px solid var(--hero-border);border-radius:99px;padding:6px 15px;cursor:pointer}
+#plan-panel .pp-edit:hover{border-color:#fbbf24}
+.tvis{display:none!important}
+.tvis.on{display:block!important}
+.bvis{display:none}
+.bvis.on{display:block}
+</style>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body data-page="hub"><main>
 
 <header class="hero">
 <h1>CTFL v4.0 — Study Hub</h1>
-<div class="sub">Everything in reward-first order: most marks-per-hour first, hardest (Ch 4) freshest for the exam.</div>
-<div class="bn">সবকিছু reward-first ক্রমে: ঘণ্টাপ্রতি সবচেয়ে বেশি মার্কস আগে, সবচেয়ে কঠিন (Ch 4) পরীক্ষার আগে সবচেয়ে টাটকা থাকবে।</div>
-<div class="meta"><span class="chip">Exam: Friday 13 Nov, evening</span><span class="chip">Pass = 26/40</span><span class="chip">K1 ~7–8</span><span class="chip">K2 ~21–23</span><span class="chip">K3 ~10–11</span><span class="chip hot">2 days to go</span><a class="chip" href="final-day-cheatsheet.html" style="text-decoration:none;color:#fff">📄 Final-day cheat sheet</a><a class="chip" href="glossary.html" style="text-decoration:none;color:#fff">🔤 Glossary recall drill</a><a class="chip" href="drills.html" style="text-decoration:none;color:#fff">🧮 K3 math drills</a></div>
+<div class="sub">A self-study hub for the ISTQB CTFL 4.0 Foundation Level exam — set your exam date and track, then study in the order that earns the most marks per hour.</div>
+<div class="bn">ISTQB CTFL 4.0 Foundation Level পরীক্ষার জন্য সম্পূর্ণ self-study hub — পরীক্ষার তারিখ আর track সেট করো, তারপর ঘণ্টাপ্রতি সবচেয়ে বেশি মার্কস আনা ক্রমে পড়ো।</div>
+<div class="whatbox">
+<div><b>What is this?</b> ISTQB weights every question by cognitive level: <b>K1 recall</b> — recognise terms, lists, definitions (~20% · ~7–8 of 40); <b>K2 understand</b> — scenarios, comparisons, classification (~55% · ~21–23); <b>K3 apply</b> — derive the answer by hand (~25% · ~10–11). The pass is built on K1+K2; K3 is the practisable margin.</div>
+<div>English site · Bangla translation available via the বাংলা menu toggle.</div>
+<div>Original teaching content + 3 original mocks; official ISTQB sample questions via the <a href="official-samples.html">Official samples</a> page.</div>
+</div>
+<div class="whatbox bn">
+<div><b>এটা কী?</b> ISTQB প্রতিটি প্রশ্নে K-level থাকে: <b>K1 recall</b> — term, list, definition চেনা (~20% · ৪০টার মধ্যে ~7–8); <b>K2 understand</b> — scenario, তুলনা, শ্রেণিবিভাগ (~55% · ~21–23); <b>K3 apply</b> — হাতে বের করা (~25% · ~10–11)। Pass দাঁড়ায় K1+K2-এর উপর; K3 হলো practice করে জেতা যায় এমন margin।</div>
+<div>ইংরেজি সাইট · বাংলা অনুবাদ পাওয়া যায় উপরের বাংলা মেনু টগল দিয়ে।</div>
+<div>নিজস্ব teaching content + ৩টা নিজস্ব mock; official ISTQB sample প্রশ্ন <a href="official-samples.html">Official samples</a> পাতায়।</div>
+</div>
+<div class="meta"><span class="chip">Pass = 26/40 · 40 Q / 60 min</span><a class="chip" href="final-day-cheatsheet.html" style="text-decoration:none;color:#fff">📄 Final-day cheat sheet</a><a class="chip" href="glossary.html" style="text-decoration:none;color:#fff">🔤 Glossary recall drill</a><a class="chip" href="drills.html" style="text-decoration:none;color:#fff">🧮 K3 math drills</a></div>
+<div id="plan-panel">
+<div id="plan-setup">
+<div class="pp-title">Set up your study plan</div>
+<div class="pp-row">
+<label>Exam date<input type="date" id="plan-date"></label>
+<label>Track<select id="plan-track">
+<option value="standard">Standard — 4–6 weeks · syllabus order (Ch 1→Ch 6)</option>
+<option value="fast">Fast — 7–10 days · reward-first</option>
+<option value="cram">Cram — final 2–3 days · D−2 / D−1 / exam day</option>
+</select></label>
+<button class="pp-start" id="plan-start" type="button">Start</button>
+</div>
+<div class="pp-hint" id="plan-hint" hidden>Pick your exam date first.</div>
+</div>
+<div id="plan-summary" hidden>
+<div class="pp-line"><b>Your plan</b> — <span class="chip pp-days" id="plan-days"></span> · <span id="plan-track-label"></span><button class="pp-edit" id="plan-edit" type="button">Edit</button></div>
+</div>
+</div>
 <div id="total-progress"></div>
 </header>
 
-<section>
-<h2>Friday 13 Nov — hardest topic last, freshest for the exam</h2>
-<p class="sec-sum"><i>Exam-day timetable: Ch 4 K3 in the morning, the 21 official K3 bank questions after lunch, an <b>official exam as the dress rehearsal</b>, flash sweep, stop by 16:00.</i></p>
+<section data-open>
+<h2>Your study plan</h2>
+<p class="sec-sum"><i>Every label is relative to your exam date: D = exam day, D−7 = one week before, D−1 = the day before. Whatever the track, the closing rule is the same — stop studying 4 hours before your sitting.</i></p>
+<p class="sec-sum" id="plan-when"></p>
+<div class="rule tvis" id="plan-empty" data-when="none">No plan yet — set your exam date and track in the panel above, and the matching plan appears here. Until then, browse the chapters and practice pages below.</div>
+
+<div class="tvis" data-when="standard">
+<h3>Standard — 4–6 weeks, syllabus order (Ch 1 → Ch 6)</h3>
+<p>One chapter at a time in syllabus order, each closed out at its quiz target. The last three days are the same final sprint every track ends with (the Fast track's D−3 → D−1 tail; hour-by-hour detail in the Cram block).</p>
 <table class="good"><tbody>
-<tr><td>09:00–10:00</td><td>Ch 4 §4.1–4.2 read (analysis/design + black-box) — <a href="chapter-04.html">chapter-04.html</a> · <a href="math-walkthroughs.html">K3 math walkthroughs</a> before the drills</td></tr>
-<tr><td>10:00–10:45</td><td><b><a href="chapter-04.html#part-a">Part A tasks 1–6 ON PAPER</a></b> (EP, BVA, decision tables), then click to compare</td></tr>
-<tr><td>10:45–11:30</td><td><a href="chapter-04.html#part-a">§4.3 white-box + Part A tasks 7–12</a></td></tr>
-<tr><td>11:30–12:15</td><td><a href="chapter-04.html#part-b">§4.4–4.5 + Part B MCQ + Part C</a> (K3 as the exam asks it)</td></tr>
-<tr><td>12:15–13:00</td><td>Lunch — away from the screen</td></tr>
-<tr><td>13:00–13:45</td><td><a href="official-bank.html#ch4-k3"><b>Official bank → Ch 4 section</b></a>: the 21 official K3 questions, untimed, each worked on paper before clicking</td></tr>
-<tr><td>13:45–14:45</td><td><b>DRESS REHEARSAL — an official exam</b> (<a href="official-exam-B.html">B</a>, <a href="official-exam-C.html">C</a> or <a href="official-exam-D.html">D</a>), 40 Q / 60 min / closed book · target ≥ 26/40 (28+ = comfortable)</td></tr>
-<tr><td>14:45–15:15</td><td>Review every miss; re-study only chapters with ≥ 2 misses</td></tr>
-<tr><td>15:15–15:45</td><td>Flash sweep: memorise boxes + <a href="glossary.html">glossary recall drill</a> + <a href="final-day-cheatsheet.html">final-day cheat sheet</a> + the Ch 1 insurance page, closed book</td></tr>
-<tr><td>16:00</td><td><b>STOP</b> — rest, eat, arrive early</td></tr>
+<tr><td>Weeks −6 → −5 <br>(≈ D−42 → D−29)</td><td>(Only if you have the full 6 weeks) <a href="chapter-01.html">Ch 1 — Foundations</a> + start the <a href="glossary.html">glossary recall</a> habit — ten minutes a day keeps the recall questions alive</td><td>glossary habit started</td></tr>
+<tr><td>Week −4 <br>(≈ D−28 → D−22)</td><td><a href="chapter-02.html">Ch 2 — Test Levels, Types &amp; Regression</a></td><td>Ch 2 quiz at target</td></tr>
+<tr><td>Week −3 <br>(≈ D−21 → D−15)</td><td><a href="chapter-03.html">Ch 3 — Reviews &amp; Static Analysis</a> + the <a href="explainers.html">Explainers</a> (the WHY behind the definitions)</td><td>Ch 3 quiz at target</td></tr>
+<tr><td>Week −2 <br>(≈ D−14 → D−8)</td><td><a href="chapter-04.html">Ch 4 — Test Techniques (K3)</a> — full first pass, warmed up by the <a href="math-walkthroughs.html">K3 math walkthroughs</a>, with <a href="chapter-04.html#part-a">Part A tasks on paper</a></td><td>Part A ≥ 10/12 on paper</td></tr>
+<tr><td>Week −1 <br>(≈ D−7 → D−4)</td><td><a href="chapter-05.html">Ch 5 — Test Planning, Risk &amp; Defects</a> early in the week, <a href="chapter-06.html">Ch 6 — Test Tools</a> (~45 min) after it; <a href="drills.html">K3 drills</a> at least twice</td><td>both quizzes at target</td></tr>
+<tr><td>D−3 → D−1</td><td>The final sprint — identical on every track: <b>D−3</b> <a href="mock-01.html">Mock 1</a> + review every miss · <b>D−2</b> <a href="mock-02.html">Mock 2</a> + review, drills on your weak K3 forms · <b>D−1</b> dress rehearsal (≥ 26/40), final afternoon sweep, stop 4 hours before your sitting</td><td>all three gates green (below)</td></tr>
+<tr><td>Exam morning</td><td>If your sitting is late in the day: flash sweep only — memorise boxes, <a href="glossary.html">glossary</a>, <a href="final-day-cheatsheet.html">cheat sheet</a>. No new material.</td><td>—</td></tr>
+</tbody></table>
+</div>
+
+<div class="tvis" data-when="fast">
+<h3>Fast — 7–10 days, reward-first</h3>
+<p>The order this hub is built around: most marks-per-hour first, hardest (Ch 4) last and freshest. If you have fewer than 8 days, drop the D−9/D−8 refresher row and tighten each block.</p>
+<table class="good"><tbody>
+<tr><td>D−9 → D−8</td><td>(Only if you have the full 10 days) optional <a href="chapter-01.html">Ch 1 refresher</a> — the insurance page, not the full chapter</td></tr>
+<tr><td>D−7</td><td><a href="chapter-02.html">Ch 2 — Test Levels, Types &amp; Regression</a> (reward #1, ~7 Q) + start the <a href="glossary.html">glossary recall</a> habit</td></tr>
+<tr><td>D−6</td><td><a href="chapter-03.html">Ch 3 — Reviews &amp; Static Analysis</a> (~4 Q) + <a href="explainers.html">Explainers</a> for anything that felt memorised rather than understood</td></tr>
+<tr><td>D−5</td><td><a href="chapter-05.html">Ch 5 — Test Planning, Risk &amp; Defects</a> (reward #2, ~9 Q)</td></tr>
+<tr><td>D−4</td><td><a href="chapter-06.html">Ch 6 — Test Tools</a> (~45 min) + a first pass over the <a href="math-walkthroughs.html">K3 math walkthroughs</a></td></tr>
+<tr><td>D−3</td><td><b><a href="mock-01.html">Mock 1</a></b> (40 Q / 60 min, closed book) + review every miss — judge the non-Ch 4 sub-score while Ch 4 is still ahead of you</td></tr>
+<tr><td>D−2</td><td><b><a href="mock-02.html">Mock 2</a></b> + review; <a href="drills.html">K3 drills</a> on your weak forms; <a href="advice.html">advice from passers</a> in the evening</td></tr>
+<tr><td>D−1</td><td><a href="chapter-04.html">Ch 4 — Test Techniques</a> as a full day (hardest last, freshest — the section-by-section method is the Cram block's exam-day table), then the <b>dress rehearsal</b> — <a href="mock-03.html">Mock 3</a>, or the <a href="official-samples.html">Official samples</a> paper if Mock 3 is already used — 40 Q / 60 min, target ≥ 26/40; final afternoon sweep; stop 4 hours before your sitting</td></tr>
+<tr><td>Exam morning</td><td>Flash sweep only — memorise boxes, <a href="glossary.html">glossary</a>, <a href="final-day-cheatsheet.html">cheat sheet</a>. No new material.</td></tr>
+</tbody></table>
+</div>
+
+<div class="tvis" data-when="cram">
+<h3>Cram — the final 2–3 days, block by block</h3>
+<p>Two study days plus the exam day itself: reward-first through D−1, then Ch 4 — hardest, freshest — on exam morning. The left column is a block order, not a clock: shift the blocks to fit your sitting, keep their order.</p>
+<table class="good"><tbody>
+<tr><td>D−2 morning</td><td><a href="chapter-02.html">Ch 2 — Test Levels, Types &amp; Regression</a> (~7 Q, reward #1)</td></tr>
+<tr><td>D−2 afternoon</td><td><a href="chapter-03.html">Ch 3 — Reviews &amp; Static Analysis</a> (~4 Q) — roles and types are cheap recall/understand marks</td></tr>
+<tr><td>D−2 evening</td><td><a href="glossary.html">Glossary recall drill</a> — start the memorise-box habit tonight</td></tr>
+<tr><td>D−1 morning</td><td><a href="chapter-05.html">Ch 5 — Test Planning, Risk &amp; Defects</a> (~9 Q, reward #2)</td></tr>
+<tr><td>D−1 midday</td><td><a href="chapter-06.html">Ch 6 — Test Tools</a> (~45 min)</td></tr>
+<tr><td>D−1 afternoon</td><td><b><a href="mock-01.html">Mock 1</a></b> (40 Q / 60 min, closed book) + review every miss</td></tr>
+<tr><td>D−1 evening</td><td><b><a href="mock-02.html">Mock 2</a></b> + review (judge the non-Ch 4 sub-score — Ch 4 is tomorrow), then the <a href="explainers.html">Explainers</a> on whatever still feels memorised</td></tr>
+<tr><td>Exam morning — first hour</td><td><a href="chapter-04.html">Ch 4 §4.1–4.2</a> read (analysis/design + black-box) · <a href="math-walkthroughs.html">K3 math walkthroughs</a> before the drills</td></tr>
+<tr><td>Exam morning — second hour</td><td><b><a href="chapter-04.html#part-a">Part A tasks 1–6 ON PAPER</a></b> (EP, BVA, decision tables), then click to compare</td></tr>
+<tr><td>Mid-morning</td><td><a href="chapter-04.html#part-a">§4.3 white-box + Part A tasks 7–12</a></td></tr>
+<tr><td>Late morning</td><td><a href="chapter-04.html#part-b">§4.4–4.5 + Part B MCQ + Part C</a> (K3 as the exam asks it)</td></tr>
+<tr><td>Midday</td><td>Lunch — away from the screen</td></tr>
+<tr><td>Early afternoon</td><td><a href="drills.html"><b>K3 drills — the Ch 4 section</b></a>: worked on paper, untimed, before you check each answer</td></tr>
+<tr><td>Afternoon</td><td><b>DRESS REHEARSAL</b> — <a href="mock-03.html">Mock 3</a> (or the <a href="official-samples.html">Official samples</a> paper if Mock 3 is already used), 40 Q / 60 min / closed book · target ≥ 26/40 (28+ = comfortable)</td></tr>
+<tr><td>After the rehearsal</td><td>Review every miss; re-study only chapters with ≥ 2 misses</td></tr>
+<tr><td>Final afternoon sweep</td><td>Memorise boxes + <a href="glossary.html">glossary recall drill</a> + <a href="final-day-cheatsheet.html">final-day cheat sheet</a> + the <a href="chapter-01.html">Ch 1 insurance page</a>, closed book</td></tr>
+<tr><td><b>Stop 4 hours before your sitting</b></td><td><b>STOP</b> — rest, eat, arrive early</td></tr>
 </tbody></table>
 <div class="box trap"><span class="box-tag">⚠️ If Ch 4 runs long — triage rule</span>
-The pass is built on K1+K2 (~30 questions); Ch 4's K3 is the <b>margin, not the foundation</b>. If Part A is going slowly at 11:00: cap the morning — nail EP, BVA, decision tables and statement-vs-branch coverage (the 4 highest-frequency K3 forms, all in Part A tasks 1–10), skim state transitions and §4.4–4.5, and go straight to the <a href="official-bank.html#ch4-k3">21 official bank K3 questions</a> — they are the best predictor of what the exam actually asks. The rehearsal and the 16:00 stop are immovable.</div>
-<div class="rule">Original <a href="../mock-exams/mock-03.md">Mock 3</a> stays in reserve — only use it if you've already burned exams B, C and D.</div>
+The pass is built on K1+K2 (~30 questions); Ch 4's K3 is the <b>margin, not the foundation</b>. If Part A is going slowly by mid-morning: cap the morning — nail EP, BVA, decision tables and statement-vs-branch coverage (the 4 highest-frequency K3 forms, all in Part A tasks 1–10), skim state transitions and §4.4–4.5, and go straight to the <a href="drills.html">K3 drills</a> — they are the best predictor of what the exam actually asks. The rehearsal and the stop are immovable.</div>
+<div class="rule">Keep <a href="mock-03.html">Mock 3</a> in reserve as the dress rehearsal — if you have already used it, rehearse with the <a href="official-samples.html">Official samples</a> page instead.</div>
+</div>
+
 <div class="bn">
-<p class="sec-sum"><i>পরীক্ষার দিনের সময়সূচি: সকালে Ch 4-এর K3, দুপুরের খাবারের পর ২১টা official K3 bank প্রশ্ন, <b>একটা official exam-ই dress rehearsal</b>, flash sweep, 16:00-তে থেমে যাও।</i></p>
-<table class="good"><tbody>
-<tr><td>সকাল 09:00–10:00</td><td>Ch 4 §4.1–4.2 পড়া (analysis/design + black-box) — <a href="chapter-04.html">chapter-04.html</a> · drill-এর আগে <a href="math-walkthroughs.html">K3 math walkthroughs</a></td></tr>
-<tr><td>সকাল 10:00–10:45</td><td><b><a href="chapter-04.html#part-a">Part A tasks 1–6 ON PAPER</a></b> (EP, BVA, decision tables), তারপর click করে মিলিয়ে দেখা</td></tr>
-<tr><td>সকাল 10:45–11:30</td><td><a href="chapter-04.html#part-a">§4.3 white-box + Part A tasks 7–12</a></td></tr>
-<tr><td>সকাল 11:30–12:15</td><td><a href="chapter-04.html#part-b">§4.4–4.5 + Part B MCQ + Part C</a> (K3 যেভাবে পরীক্ষায় চায়)</td></tr>
-<tr><td>দুপুর 12:15–13:00</td><td>লাঞ্চ — পর্দা থেকে দূরে</td></tr>
-<tr><td>দুপুর 13:00–13:45</td><td><a href="official-bank.html#ch4-k3"><b>Official bank → Ch 4 section</b></a>: ২১টা official K3 প্রশ্ন, সময় ধরে নয়, প্রতিটা আগে কাগজে করে তারপর click</td></tr>
-<tr><td>দুপুর 13:45–14:45</td><td><b>DRESS REHEARSAL — একটা official exam</b> (<a href="official-exam-B.html">B</a>, <a href="official-exam-C.html">C</a> বা <a href="official-exam-D.html">D</a>), ৪০ প্রশ্ন / ৬০ মিনিট / closed book · লক্ষ্য ≥ 26/40 (28+ = আরাম)</td></tr>
-<tr><td>বিকাল 14:45–15:15</td><td>প্রতিটা ভুল পর্যালোচনা; যে chapter-এ ≥ ২টা ভুল, শুধু সেগুলো আবার পড়া</td></tr>
-<tr><td>বিকাল 15:15–15:45</td><td>Flash sweep: memorise box + <a href="glossary.html">glossary recall drill</a> + <a href="final-day-cheatsheet.html">final-day cheat sheet</a> + Ch 1 insurance page, closed book</td></tr>
-<tr><td>বিকাল 16:00</td><td><b>STOP</b> — বিশ্রাম, খাওয়া, আগে পৌঁছানো</td></tr>
-</tbody></table>
-<div class="box trap"><span class="box-tag">⚠️ যদি Ch 4 সময় ছাড়িয়ে যায় — triage নিয়ম</span>
-"The pass is built on K1+K2" (~৩০টা প্রশ্ন); Ch 4-এর K3 হলো <b>margin, foundation নয়</b>। 11:00-তে Part A ধীরে চললে: সকালটা সীমিত করো — EP, BVA, decision table আর statement-vs-branch coverage ঠিকঠাক শেষ করো (সবচেয়ে বেশি আসা ৪টা K3 ফর্ম, সবই Part A tasks 1–10-এ), state transition আর §4.4–4.5 দ্রুত ঝাড়ো, আর সোজা <a href="official-bank.html#ch4-k3">21 official bank K3 questions</a>-এ যাও — পরীক্ষা আসলে কী চায় তার সবচেয়ে ভালো পূর্বাভাস ওগুলোই। Rehearsal আর 16:00-এর থামা অপরিবর্তনীয়।</div>
-<div class="rule">Original <a href="../mock-exams/mock-03.md">Mock 3</a> রিজার্ভে রাখা আছে — শুধু তখনই ব্যবহার কোরো যখন exam B, C আর D তিনটেই আগে শেষ করে ফেলেছ।</div>
+<p class="sec-sum"><i>সব লেবেল তোমার পরীক্ষার তারিখ অনুযায়ী: D = পরীক্ষার দিন, D−7 = তার এক সপ্তাহ আগে, D−1 = তার আগের দিন। যে track-ই হোক, শেষ নিয়ম একই — তোমার sitting-এর ৪ ঘণ্টা আগে পড়া থামাও।</i></p>
+<p class="bvis" data-when="none">এখনো plan সেট করা হয়নি — উপরের প্যানেলে পরীক্ষার তারিখ আর track বাছলে এখানে তোমার plan দেখা যাবে।</p>
+<p class="bvis" data-when="standard"><b>Standard — ৪–৬ সপ্তাহ, syllabus ক্রমে (Ch 1 → Ch 6):</b> সপ্তাহ −6/−5 (পূর্ণ ৬ সপ্তাহ থাকলে): Ch 1 + glossary অভ্যাস · সপ্তাহ −4: Ch 2 · সপ্তাহ −3: Ch 3 + Explainers · সপ্তাহ −2: Ch 4 প্রথম পূর্ণ পাস (Part A কাগজে) · সপ্তাহ −1: Ch 5, Ch 6 + drill · D−3 → D−1: শেষ sprint — Mock 1, Mock 2 + drill, D−1 dress rehearsal (≥ 26/40) + final sweep + থামা · পরীক্ষার সকালে শুধু flash sweep।</p>
+<p class="bvis" data-when="fast"><b>Fast — ৭–১০ দিন, reward-first:</b> D−9/−8 (১০ দিন থাকলে ঐচ্ছিক Ch 1 refresher) · D−7: Ch 2 + glossary অভ্যাস · D−6: Ch 3 + Explainers · D−5: Ch 5 · D−4: Ch 6 + math walkthrough · D−3: Mock 1 + review · D−2: Mock 2 + drill আর passers-এর advice · D−1: Ch 4 পূর্ণ দিন + dress rehearsal (≥ 26/40) + final sweep + থামা · পরীক্ষার সকালে শুধু flash sweep।</p>
+<p class="bvis" data-when="cram"><b>Cram — শেষ ২–৩ দিন:</b> D−2 সকালে Ch 2, বিকেলে Ch 3, সন্ধ্যায় glossary drill · D−1 সকালে Ch 5, দুপুরে Ch 6, বিকেলে Mock 1 + review, সন্ধ্যায় Mock 2 + Explainers · পরীক্ষার দিনে: সকালে Ch 4 (§4.1–4.2 পড়া → Part A কাগজে → §4.3 white-box → §4.4–4.5 + Part B/C), দুপুরে খাওয়া-দূরে, তারপর K3 drill → dress rehearsal (≥ 26/40) → ভুল review → final afternoon sweep → <b>sitting-এর ৪ ঘণ্টা আগে STOP</b>। Ch 4 সময় ছাড়িয়ে গেলে: EP, BVA, decision table আর statement-vs-branch coverage ঠিকঠাক শেষ করো, state transition আর §4.4–4.5 দ্রুত ঝাড়ো — rehearsal আর থামা অপরিবর্তনীয়।</p>
 </div>
 </section>
 
 <section>
 <h2>Chapters — reward-first order</h2>
-<p class="sec-sum"><i>All six chapters ranked by marks-per-hour with exam-question counts, reward rating and study slots — Ch 2 and Ch 5 first, Ch 4 Friday.</i></p>
+<p class="sec-sum"><i>All six chapters ranked by marks-per-hour with exam-question counts and reward rating. Standard studies them Ch 1 → Ch 6; Fast and Cram use this order — Ch 2 and Ch 5 first, Ch 4 last and freshest for the exam.</i></p>
 <table>
-<thead><tr><th>Order</th><th>Chapter</th><th>Exam Qs</th><th>Reward</th><th>Study slot</th></tr></thead>
+<thead><tr><th>Order</th><th>Chapter</th><th>Exam Qs</th><th>Reward</th><th>Fast-track slot</th></tr></thead>
 <tbody>
-<tr><td>1</td><td><a href="chapter-02.html">Ch 2 — Test Levels, Types &amp; Regression</a></td><td>~7</td><td>🔥🔥🔥 #1</td><td>Wed 11 Nov</td></tr>
-<tr><td>2</td><td><a href="chapter-05.html">Ch 5 — Test Planning, Risk &amp; Defects</a></td><td>~9</td><td>🔥🔥🔥 #2</td><td>Thu 12 Nov</td></tr>
-<tr><td>3</td><td><a href="chapter-03.html">Ch 3 — Reviews &amp; Static Analysis</a></td><td>~4</td><td>🔥🔥 #3</td><td>Wed 11 Nov</td></tr>
-<tr><td>4</td><td><a href="chapter-06.html">Ch 6 — Test Tools</a></td><td>~3</td><td>🔥🔥 #4</td><td>Thu 12 Nov · ~45 min</td></tr>
-<tr><td>5</td><td><a href="chapter-04.html">Ch 4 — Test Techniques (K3)</a> — <b>hardest, saved for Friday</b></td><td>~10–11</td><td>🔥🔥 #5 (but = your margin)</td><td><b>Fri 13 Nov morning</b></td></tr>
-<tr><td>Insurance</td><td><a href="chapter-01.html">Ch 1 — Foundations (insurance refresher)</a></td><td>~7–8 traced here</td><td>skipped by decision — cheap insurance page last</td><td>Fri flash sweep (~10 min)</td></tr>
+<tr><td>1</td><td><a href="chapter-02.html">Ch 2 — Test Levels, Types &amp; Regression</a></td><td>~7</td><td>🔥🔥🔥 #1</td><td>D−7 (Cram: D−2)</td></tr>
+<tr><td>2</td><td><a href="chapter-05.html">Ch 5 — Test Planning, Risk &amp; Defects</a></td><td>~9</td><td>🔥🔥🔥 #2</td><td>D−5 (Cram: D−1)</td></tr>
+<tr><td>3</td><td><a href="chapter-03.html">Ch 3 — Reviews &amp; Static Analysis</a></td><td>~4</td><td>🔥🔥 #3</td><td>D−6 (Cram: D−2)</td></tr>
+<tr><td>4</td><td><a href="chapter-06.html">Ch 6 — Test Tools</a></td><td>~3</td><td>🔥🔥 #4</td><td>D−4 · ~45 min (Cram: D−1)</td></tr>
+<tr><td>5</td><td><a href="chapter-04.html">Ch 4 — Test Techniques (K3)</a> — <b>hardest, studied last</b></td><td>~10–11</td><td>🔥🔥 #5 (but = the margin)</td><td><b>D−1, full day</b> (Cram: exam morning)</td></tr>
+<tr><td>Optional</td><td><a href="chapter-01.html">Ch 1 — Foundations</a></td><td>~7–8 traced here</td><td>optional refresher — cheap insurance page in the final sweep</td><td>final sweep (~10 min)</td></tr>
 </tbody></table>
 <div class="bn">
-<p class="sec-sum"><i>ছয়টা chapter-ই ঘণ্টাপ্রতি-মার্কস হিসেবে সাজানো — exam-এর প্রশ্নসংখ্যা, reward rating আর পড়ার slot সহ — আগে Ch 2 আর Ch 5, শুক্রবার Ch 4।</i></p>
+<p class="sec-sum"><i>ছয়টা chapter-ই ঘণ্টাপ্রতি-মার্কস হিসেবে সাজানো — exam-এর প্রশ্নসংখ্যা আর reward rating সহ। Standard track-এ Ch 1 → Ch 6 syllabus ক্রমে; Fast আর Cram এই ক্রমে — আগে Ch 2 আর Ch 5, সবার শেষে Ch 4, পরীক্ষার জন্য সবচেয়ে টাটকা।</i></p>
 <table>
-<thead><tr><th>ক্রম</th><th>Chapter</th><th>Exam Qs</th><th>Reward</th><th>পড়ার slot</th></tr></thead>
+<thead><tr><th>ক্রম</th><th>Chapter</th><th>Exam Qs</th><th>Reward</th><th>Fast-track slot</th></tr></thead>
 <tbody>
-<tr><td>1</td><td><a href="chapter-02.html">Ch 2 — Test Levels, Types &amp; Regression</a></td><td>~7</td><td>🔥🔥🔥 #1</td><td>বুধ 11 Nov</td></tr>
-<tr><td>2</td><td><a href="chapter-05.html">Ch 5 — Test Planning, Risk &amp; Defects</a></td><td>~9</td><td>🔥🔥🔥 #2</td><td>বৃহস্পতি 12 Nov</td></tr>
-<tr><td>3</td><td><a href="chapter-03.html">Ch 3 — Reviews &amp; Static Analysis</a></td><td>~4</td><td>🔥🔥 #3</td><td>বুধ 11 Nov</td></tr>
-<tr><td>4</td><td><a href="chapter-06.html">Ch 6 — Test Tools</a></td><td>~3</td><td>🔥🔥 #4</td><td>বৃহস্পতি 12 Nov · ~45 মিনিট</td></tr>
-<tr><td>5</td><td><a href="chapter-04.html">Ch 4 — Test Techniques (K3)</a> — <b>সবচেয়ে কঠিন, শুক্রবারের জন্য রাখা</b></td><td>~10–11</td><td>🔥🔥 #5 (কিন্তু = তোমার margin)</td><td><b>শুক্র 13 Nov সকাল</b></td></tr>
-<tr><td>Insurance</td><td><a href="chapter-01.html">Ch 1 — Foundations (insurance refresher)</a></td><td>~7–8 এখানে trace করা</td><td>সিদ্ধান্ত অনুযায়ী বাদ — সস্তার insurance পাতা সবার শেষে</td><td>শুক্র flash sweep (~10 মিনিট)</td></tr>
+<tr><td>1</td><td><a href="chapter-02.html">Ch 2 — Test Levels, Types &amp; Regression</a></td><td>~7</td><td>🔥🔥🔥 #1</td><td>D−7 (Cram: D−2)</td></tr>
+<tr><td>2</td><td><a href="chapter-05.html">Ch 5 — Test Planning, Risk &amp; Defects</a></td><td>~9</td><td>🔥🔥🔥 #2</td><td>D−5 (Cram: D−1)</td></tr>
+<tr><td>3</td><td><a href="chapter-03.html">Ch 3 — Reviews &amp; Static Analysis</a></td><td>~4</td><td>🔥🔥 #3</td><td>D−6 (Cram: D−2)</td></tr>
+<tr><td>4</td><td><a href="chapter-06.html">Ch 6 — Test Tools</a></td><td>~3</td><td>🔥🔥 #4</td><td>D−4 · ~45 মিনিট (Cram: D−1)</td></tr>
+<tr><td>5</td><td><a href="chapter-04.html">Ch 4 — Test Techniques (K3)</a> — <b>সবচেয়ে কঠিন, সবার শেষে</b></td><td>~10–11</td><td>🔥🔥 #5 (কিন্তু = margin)</td><td><b>D−1, পূর্ণ দিন</b> (Cram: পরীক্ষার সকাল)</td></tr>
+<tr><td>ঐচ্ছিক</td><td><a href="chapter-01.html">Ch 1 — Foundations</a></td><td>~7–8 এখানে trace করা</td><td>optional refresher — সস্তার insurance পাতা final sweep-এ</td><td>final sweep (~10 মিনিট)</td></tr>
 </tbody></table>
-</div>
-</section>
-
-<section data-open>
-<h2>⭐ OFFICIAL ISTQB mocks &amp; question bank — with official answers</h2>
-<p class="sec-sum"><i>186 official questions from ISTQB sample sets A–D, verified against the official answer keys — kept strictly separate from this site's original questions.</i></p>
-<div class="box mem"><span class="box-tag">📖 100% official — separate from my original questions</span>
-The four pages below contain the actual ISTQB CTFL v4.0 sample-exam questions (A v1.7 · B v1.7 · C v1.6 · D v1.5), every answer cross-checked against the official answer grids. Multi-select questions (Select TWO) are supported — pick two options. Note a handful of questions reference diagrams that only exist in the PDFs; those are flagged on the page.</div>
-<ul>
-<li><a href="official-exam-A.html">Official Exam A</a> — 66 questions (40 exam + 26 appendix) · K1 14 / K2 42 / K3 10</li>
-<li><a href="official-exam-B.html">Official Exam B</a> — 40 questions · K1 8 / K2 24 / K3 8</li>
-<li><a href="official-exam-C.html">Official Exam C</a> — 40 questions · K1 8 / K2 24 / K3 8</li>
-<li><a href="official-exam-D.html">Official Exam D</a> — 40 questions · K1 8 / K2 24 / K3 8</li>
-<li><a href="official-bank.html"><b>Official Question Bank — sorted by chapter → K-level</b></a> — all 186, grouped Ch1 38 · Ch2 28 · Ch3 20 · Ch4 48 · Ch5 44 · Ch6 8</li>
-</ul>
-<div class="rule">Best use with one day left: after Ch 4 study, do one official exam (target ≥ 26/40 = the real pass line) and drill the bank's Ch 4 K3 section (21 official K3 questions — more than any other source you have).</div>
-<div class="bn">
-<p class="sec-sum"><i>ISTQB sample set A–D থেকে ১৮৬টা official প্রশ্ন, official answer key-র সাথে যাচাই করা — এই সাইটের নিজস্ব (original) প্রশ্ন থেকে সম্পূর্ণ আলাদা রাখা।</i></p>
-<div class="box mem"><span class="box-tag">📖 100% official — আমার original প্রশ্ন থেকে আলাদা</span>
-নিচের চারটা পাতায় ISTQB CTFL v4.0 sample exam-এর আসল প্রশ্নগুলো আছে (A v1.7 · B v1.7 · C v1.6 · D v1.5), প্রতিটা উত্তর official answer grid-এর সাথে মিলিয়ে দেখা। Multi-select প্রশ্ন (Select TWO) সাপোর্টেড — দুটো option বাছতে হবে। খেয়াল করো, কিছু প্রশ্ন এমন diagram বোঝায় যা শুধু PDF-এ আছে; পাতায় ওগুলো চিহ্নিত করা।</div>
-<ul>
-<li><a href="official-exam-A.html">Official Exam A</a> — 66টা প্রশ্ন (40 exam + 26 appendix) · K1 14 / K2 42 / K3 10</li>
-<li><a href="official-exam-B.html">Official Exam B</a> — 40টা প্রশ্ন · K1 8 / K2 24 / K3 8</li>
-<li><a href="official-exam-C.html">Official Exam C</a> — 40টা প্রশ্ন · K1 8 / K2 24 / K3 8</li>
-<li><a href="official-exam-D.html">Official Exam D</a> — 40টা প্রশ্ন · K1 8 / K2 24 / K3 8</li>
-<li><a href="official-bank.html"><b>Official Question Bank — sorted by chapter → K-level</b></a> — সব 186টা, ভাগ করা Ch1 38 · Ch2 28 · Ch3 20 · Ch4 48 · Ch5 44 · Ch6 8</li>
-</ul>
-<div class="rule">একদিন বাকি থাকলে সবচেয়ে ভালো ব্যবহার: Ch 4 পড়ার পর একটা official exam দাও (লক্ষ্য ≥ 26/40 = আসল pass line) আর bank-এর Ch 4 K3 section ঝালাও (21টা official K3 প্রশ্ন — তোমার হাতের যেকোনো source-এর চেয়ে বেশি)।</div>
 </div>
 </section>
 
 <section>
-<h2>Mock exams — original (non-official)</h2>
-<p class="sec-sum"><i>Three 40-question, 60-minute, closed-book mocks — judge Mock 1/2 on the non-Ch 4 sub-score until Ch 4 is studied.</i></p>
-<div class="box mem"><span class="box-tag">📖 Do these on paper, exam conditions</span>
+<h2>Mocks &amp; official samples</h2>
+<p class="sec-sum"><i>Three original 40-question, 60-minute, closed-book mocks — plus the official ISTQB sample questions on their own page. This is the rehearsal pool for every track.</i></p>
+<ul>
+<li><a href="mock-01.html">Mock 1</a> — original · take it once the non-Ch 4 chapters are behind you (Fast/Cram: after Ch 5+6)</li>
+<li><a href="mock-02.html">Mock 2</a> — original · after the Mock 1 review</li>
+<li><a href="mock-03.html">Mock 3</a> — original · the dress rehearsal, kept in reserve for your final sitting rehearsal</li>
+<li><a href="official-samples.html"><b>Official samples — ISTQB sample-exam questions with the official answers</b></a> · kept strictly separate from this site's original questions</li>
+<li><a href="advice.html">Advice from passers</a> — original · read it once your first mock is done</li>
+</ul>
+<div class="box mem"><span class="box-tag">📖 Take every mock on paper, exam conditions</span>
 40 questions · 60 minutes · closed book. Review every wrong answer before moving on.</div>
-<ul>
-<li><a href="../mock-exams/mock-01.md">Mock 1</a> — Thursday, after Ch 5+6</li>
-<li><a href="../mock-exams/mock-02.md">Mock 2</a> — Thursday, after Mock 1 review</li>
-<li>Thursday <b>19:30–21:00</b> — <a href="explainers.html">Explainers</a>: the WHY behind the definitions, after Mock 2 review</li>
-<li><a href="../mock-exams/mock-03.md">Mock 3</a> — Friday afternoon, the final dress rehearsal</li>
-</ul>
-<p class="cp-detail">These are markdown files — print or read as-is; they're on paper by design.</p>
 <div class="box trap"><span class="box-tag">⚠️ Expected &amp; OK</span>
-Mock 1/2 scores will look DEFICIT on the ~10 technique questions because Ch 4 isn't studied yet. Judge yourself on the <b>non-Ch 4 sub-score</b> — that's the gate below.</div>
+If you haven't reached Ch 4 yet, Mock 1/2 scores will look weak on the ~10 technique questions. Judge yourself on the <b>non-Ch 4 sub-score</b> — that's the gate below.</div>
+<div class="rule">Best use in the final days: after your Ch 4 study, sit one full 40-Q rehearsal (target ≥ 26/40 — the real pass line) and drill your weak K3 forms on the <a href="drills.html">drills page</a>.</div>
 <div class="bn">
-<p class="sec-sum"><i>তিনটা 40-প্রশ্ন, 60-মিনিট, closed-book mock — Ch 4 পড়া হওয়া পর্যন্ত Mock 1/2-কে non-Ch 4 sub-score-এ বিচার করো।</i></p>
-<div class="box mem"><span class="box-tag">📖 এগুলো কাগজে, exam-এর পরিবেশে দাও</span>
-40 প্রশ্ন · 60 মিনিট · closed book। এগিয়ে যাওয়ার আগে প্রতিটা ভুল উত্তর পর্যালোচনা করো।</div>
+<p class="sec-sum"><i>তিনটা নিজস্ব 40-প্রশ্ন, 60-মিনিট, closed-book mock — সাথে আলাদা পাতায় official ISTQB sample প্রশ্ন। সব track-এর rehearsal pool এটাই।</i></p>
 <ul>
-<li><a href="../mock-exams/mock-01.md">Mock 1</a> — বৃহস্পতিবার, Ch 5+6-এর পর</li>
-<li><a href="../mock-exams/mock-02.md">Mock 2</a> — বৃহস্পতিবার, Mock 1 review-এর পর</li>
-<li>বৃহস্পতিবার <b>19:30–21:00</b> — <a href="explainers.html">Explainers</a>: সংজ্ঞার পেছনের WHY, Mock 2 review-এর পরে</li>
-<li><a href="../mock-exams/mock-03.md">Mock 3</a> — শুক্রবার দুপুরে, শেষ dress rehearsal</li>
+<li><a href="mock-01.html">Mock 1</a> — non-Ch 4 chapter-গুলো শেষ হলে (Fast/Cram: Ch 5+6-এর পরে)</li>
+<li><a href="mock-02.html">Mock 2</a> — Mock 1 review-এর পরে</li>
+<li><a href="mock-03.html">Mock 3</a> — dress rehearsal, শেষ sitting rehearsal-এর জন্য রিজার্ভে</li>
+<li><a href="official-samples.html"><b>Official samples — ISTQB sample প্রশ্ন, official উত্তরসহ</b></a> · এই সাইটের নিজস্ব প্রশ্ন থেকে সম্পূর্ণ আলাদা</li>
+<li><a href="advice.html">Passers-এর advice</a> — প্রথম mock শেষ হলে পড়ো</li>
 </ul>
-<p class="cp-detail">এগুলো markdown ফাইল — প্রিন্ট করো বা যেমন আছে তেমন পড়ো; কাগজে হওয়াটাই ইচ্ছাকৃত।</p>
+<div class="box mem"><span class="box-tag">📖 প্রতিটা mock কাগজে, exam-এর পরিবেশে দাও</span>
+40 প্রশ্ন · 60 মিনিট · closed book। এগিয়ে যাওয়ার আগে প্রতিটা ভুল উত্তর পর্যালোচনা করো।</div>
 <div class="box trap"><span class="box-tag">⚠️ প্রত্যাশিত আর ঠিক আছে</span>
-Ch 4 এখনো পড়া হয়নি বলে ~10টা technique প্রশ্নে Mock 1/2-এর স্কোর ঘাটতি-সদৃশ দেখাবে। নিজেকে বিচার করো <b>non-Ch 4 sub-score</b>-এ — নিচের gate সেটাই।</div>
+Ch 4 এখনো পড়া না হয়ে থাকলে ~10টা technique প্রশ্নে Mock 1/2-এর স্কোর ঘাটতি-সদৃশ দেখাবে। নিজেকে বিচার করো <b>non-Ch 4 sub-score</b>-এ — নিচের gate সেটাই।</div>
+<div class="rule">শেষ দিনগুলোতে সবচেয়ে ভালো ব্যবহার: Ch 4 পড়ার পর একটা পূর্ণ 40-প্রশ্ন rehearsal দাও (লক্ষ্য ≥ 26/40 = আসল pass line) আর দুর্বল K3 ফর্ম <a href="drills.html">drills</a> পাতায় ঝালাও।</div>
 </div>
 </section>
 
 <section>
 <h2>Gates — exam-ready when all three are green</h2>
-<p class="sec-sum"><i>Three pass/fail gates: Mock 1/2 non-Ch 4 ≥ 80%, dress rehearsal (official B/C/D) ≥ 26/40, Ch 4 Part A ≥ 10/12 on paper.</i></p>
+<p class="sec-sum"><i>Track-relative gates, the same on every track: Standard clears them across the weeks, Fast across the final days, Cram inside the last 48 hours.</i></p>
 <table class="good"><tbody>
-<tr><td>Mock 1/2</td><td>non-Ch 4 sub-score ≥ 80% (≈ 25/30)</td></tr>
-<tr><td>Dress rehearsal (official B/C/D)</td><td>≥ 26/40 = pass line met; 28+ = comfortable. (Mock 3's 32/40 gate applies only if you use Mock 3.)</td></tr>
-<tr><td>Ch 4 Part A</td><td>≥ 10/12 on paper tasks before entering the exam</td></tr>
+<tr><td>Mock 1/2</td><td>non-Ch 4 sub-score ≥ 80% (≈ 25/30) — judge it this way for as long as Ch 4 is still ahead of you</td></tr>
+<tr><td>Dress rehearsal</td><td>≥ 26/40 = pass line met; 28+ = comfortable — rehearse with <a href="mock-03.html">Mock 3</a>, or the <a href="official-samples.html">Official samples</a> paper if Mock 3 is already used</td></tr>
+<tr><td>Ch 4 Part A</td><td>≥ 10/12 on the paper tasks before your sitting (Standard/Fast: by D−1; Cram: before you stop on exam day)</td></tr>
 </tbody></table>
 <div class="bn">
-<p class="sec-sum"><i>তিনটা pass/fail gate: Mock 1/2 non-Ch 4 ≥ 80%, dress rehearsal (official B/C/D) ≥ 26/40, Ch 4 Part A কাগজে ≥ 10/12।</i></p>
+<p class="sec-sum"><i>Track-relative gate, যেকোনো track-এ একই: Standard সপ্তাহ ধরে, Fast শেষ দিনগুলোতে, Cram শেষ ৪৮ ঘণ্টায় পূরণ হয়।</i></p>
 <table class="good"><tbody>
-<tr><td>Mock 1/2</td><td>non-Ch 4 sub-score ≥ 80% (≈ 25/30)</td></tr>
-<tr><td>Dress rehearsal (official B/C/D)</td><td>≥ 26/40 = pass line পূরণ; 28+ = আরামদায়ক। (Mock 3-এর 32/40 gate শুধু তখনই প্রযোজ্য যদি Mock 3 ব্যবহার করো।)</td></tr>
-<tr><td>Ch 4 Part A</td><td>exam-এ ঢোকার আগে কাগজের task-এ ≥ 10/12</td></tr>
+<tr><td>Mock 1/2</td><td>non-Ch 4 sub-score ≥ 80% (≈ 25/30) — Ch 4 এখনো বাকি থাকলে এভাবেই বিচার করো</td></tr>
+<tr><td>Dress rehearsal</td><td>≥ 26/40 = pass line পূরণ; 28+ = আরামদায়ক — <a href="mock-03.html">Mock 3</a> দিয়ে rehearsal; আগে ব্যবহৃত হলে <a href="official-samples.html">Official samples</a></td></tr>
+<tr><td>Ch 4 Part A</td><td>sitting-এর আগে কাগজের task-এ ≥ 10/12 (Standard/Fast: D−1-এর মধ্যে; Cram: পরীক্ষার দিন থামার আগে)</td></tr>
 </tbody></table>
 </div>
 </section>
@@ -157,27 +214,133 @@ Ch 4 এখনো পড়া হয়নি বলে ~10টা technique প
 <h2>Where the 40 questions come from — K levels</h2>
 <p class="sec-sum"><i>K1 ~7–8, K2 ~21–23, K3 ~10–11 — the pass is built on K1+K2; K3 is the practisable margin.</i></p>
 <table>
-<thead><tr><th>Level</th><th>~Share</th><th>~Questions</th><th>Demands</th><th>Where in my materials</th></tr></thead>
+<thead><tr><th>Level</th><th>~Share</th><th>~Questions</th><th>Demands</th><th>Where on this site</th></tr></thead>
 <tbody>
 <tr><td><b>K1 recall</b></td><td>~20%</td><td>~7–8</td><td>Recognise terms, lists, definitions</td><td>📖 memorise boxes; Ch 3 roles, Ch 6 categories</td></tr>
 <tr><td><b>K2 understand</b></td><td>~55%</td><td>~21–23</td><td>Scenario → concept; compare, classify</td><td>Confusion tables + ⚠️ trap lists; most MCQs</td></tr>
-<tr><td><b>K3 apply</b></td><td>~25%</td><td>~10–11</td><td>Derive by hand: partitions, boundaries, rules, transitions, coverage %</td><td>Ch 4 Part A tasks (Friday morning, deliberately last)</td></tr>
+<tr><td><b>K3 apply</b></td><td>~25%</td><td>~10–11</td><td>Derive by hand: partitions, boundaries, rules, transitions, coverage %</td><td>Ch 4 Part A tasks (scheduled last, deliberately — freshest for the exam)</td></tr>
 </tbody></table>
 <div class="box und"><span class="box-tag">🧠 Understand the pass math</span>
-K1 + K2 ≈ 30 questions = <b>the pass is built here</b> (need 26). K3 ≈ 10 = the margin — unguessable, only practicable, which is why it gets a fresh, unhurried Friday morning.</div>
+K1 + K2 ≈ 30 questions = <b>the pass is built here</b> (need 26). K3 ≈ 10 = the margin — unguessable, only practisable, which is why every track gives it a fresh, unhurried final slot.</div>
 <div class="bn">
 <p class="sec-sum"><i>K1 ~7–8, K2 ~21–23, K3 ~10–11 — pass দাঁড়িয়ে আছে K1+K2-এর উপর; K3 হলো practice করে জেতা যায় এমন margin।</i></p>
 <table>
-<thead><tr><th>Level</th><th>~অংশ</th><th>~প্রশ্ন</th><th>দাবি করে</th><th>আমার material-এ কোথায়</th></tr></thead>
+<thead><tr><th>Level</th><th>~অংশ</th><th>~প্রশ্ন</th><th>দাবি করে</th><th>এই সাইটে কোথায়</th></tr></thead>
 <tbody>
 <tr><td><b>K1 recall</b></td><td>~20%</td><td>~7–8</td><td>term, list, definition চিনে ফেলা</td><td>📖 memorise box; Ch 3-এর role, Ch 6-এর category</td></tr>
 <tr><td><b>K2 understand</b></td><td>~55%</td><td>~21–23</td><td>Scenario → concept; compare ও classify করা</td><td>Confusion table + ⚠️ trap list; বেশিরভাগ MCQ</td></tr>
-<tr><td><b>K3 apply</b></td><td>~25%</td><td>~10–11</td><td>হাতে বের করা: partition, boundary, rule, transition, coverage %</td><td>Ch 4 Part A task (শুক্রবার সকালে, ইচ্ছাকৃতভাবে সবার শেষে)</td></tr>
+<tr><td><b>K3 apply</b></td><td>~25%</td><td>~10–11</td><td>হাতে বের করা: partition, boundary, rule, transition, coverage %</td><td>Ch 4 Part A task (সবার শেষ স্লটে, ইচ্ছাকৃতভাবে — পরীক্ষার জন্য টাটকা)</td></tr>
 </tbody></table>
 <div class="box und"><span class="box-tag">🧠 Pass-এর অঙ্কটা বোঝো</span>
-K1 + K2 ≈ 30টা প্রশ্ন = <b>pass এখানেই দাঁড়িয়ে</b> (দরকার 26)। K3 ≈ 10 = margin — আন্দাজে পাওয়া যায় না, শুধু practice করেই জেতা যায়, তাই-ই এটাকে একটা টাটকা, তাড়াহুড়োহীন শুক্রবার সকাল দেওয়া।</div>
+K1 + K2 ≈ 30টা প্রশ্ন = <b>pass এখানেই দাঁড়িয়ে</b> (দরকার 26)। K3 ≈ 10 = margin — আন্দাজে পাওয়া যায় না, শুধু practice করেই জেতা যায়, তাই-ই প্রতিটা track এটাকে দেয় একটা টাটকা, তাড়াহুড়োহীন শেষ স্লট।</div>
 </div>
 </section>
 
 </main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
-<script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>
+<script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script>
+<script>
+(function () {
+  'use strict';
+  var KEY = 'ctflg-plan';
+  var TRACK_LABEL = {
+    standard: 'Standard · 4–6 weeks · syllabus order',
+    fast: 'Fast · 7–10 days · reward-first',
+    cram: 'Cram · final 2–3 days'
+  };
+  function $(id) { return document.getElementById(id); }
+  function loadPlan() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (p && typeof p.date === 'string' && TRACK_LABEL[p.track]) return { date: p.date, track: p.track };
+    } catch (e) {}
+    return null;
+  }
+  function savePlan(p) { try { localStorage.setItem(KEY, JSON.stringify(p)); } catch (e) {} }
+  function daysLeft(dateStr) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr || '');
+    if (!m) return null;
+    var exam = new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
+    var n = new Date();
+    var today = new Date(n.getFullYear(), n.getMonth(), n.getDate());
+    return Math.round((exam.getTime() - today.getTime()) / 86400000);
+  }
+  function describeDays(d) {
+    if (d === null) return 'exam date not set';
+    if (d < 0) return 'exam date has passed';
+    if (d === 0) return 'exam is TODAY';
+    if (d === 1) return 'exam is tomorrow';
+    return 'exam in ' + d + ' days';
+  }
+  var setup = $('plan-setup'), summary = $('plan-summary'), hint = $('plan-hint');
+  var dateInput = $('plan-date'), trackInput = $('plan-track');
+  function apply() {
+    var plan = loadPlan();
+    var stale = false;
+    if (plan) {
+      var d = daysLeft(plan.date);
+      if (d === null || d < 0) stale = true; // unreadable or past date -> back to setup
+    }
+    if (plan && !stale && setup && summary) {
+      var daysBadge = $('plan-days');
+      if (daysBadge) {
+        daysBadge.textContent = describeDays(daysLeft(plan.date));
+        daysBadge.className = 'chip pp-days' + (daysLeft(plan.date) <= 3 ? ' hot' : '');
+      }
+      var tl = $('plan-track-label');
+      if (tl) tl.textContent = TRACK_LABEL[plan.track];
+      summary.hidden = false;
+      setup.hidden = true;
+    } else if (setup && summary) {
+      setup.hidden = false;
+      summary.hidden = true;
+      if (plan && hint) {
+        hint.textContent = 'The saved exam date has passed — set a new one.';
+        hint.hidden = false;
+      }
+    }
+    var want = (plan && !stale) ? plan.track : 'none';
+    var blocks = document.querySelectorAll('[data-when]');
+    for (var i = 0; i < blocks.length; i++) {
+      if (blocks[i].getAttribute('data-when') === want) blocks[i].classList.add('on');
+      else blocks[i].classList.remove('on');
+    }
+    var when = $('plan-when');
+    if (when) when.textContent = plan && !stale
+      ? 'Now showing: ' + TRACK_LABEL[plan.track] + ' — ' + describeDays(daysLeft(plan.date)) + '.'
+      : '';
+  }
+  if ($('plan-start')) {
+    $('plan-start').addEventListener('click', function () {
+      var d = dateInput ? dateInput.value : '';
+      var tr = trackInput ? trackInput.value : '';
+      if (!d) {
+        if (hint) { hint.textContent = 'Pick your exam date first.'; hint.hidden = false; }
+        return;
+      }
+      if (!TRACK_LABEL[tr]) tr = 'standard';
+      savePlan({ date: d, track: tr });
+      if (loadPlan()) {
+        if (hint) hint.hidden = true;
+      } else if (hint) {
+        hint.textContent = 'Could not save — storage is blocked in this browser.';
+        hint.hidden = false;
+      }
+      apply();
+    });
+  }
+  if ($('plan-edit')) {
+    $('plan-edit').addEventListener('click', function () {
+      var plan = loadPlan();
+      if (plan) {
+        if (dateInput) dateInput.value = plan.date;
+        if (trackInput) trackInput.value = plan.track;
+      }
+      if (summary) summary.hidden = true;
+      if (setup) setup.hidden = false;
+    });
+  }
+  apply();
+})();
+</script></body></html>
