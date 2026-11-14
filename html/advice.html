@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exam Advice — from people who actually took it · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script>
+<style>
+/* Advice page: credibility-tagged bullets + checklist styling */
+.adv-list{margin:10px 0 4px;padding:0;list-style:none}
+.adv-list li{position:relative;margin:0 0 10px;padding:8px 12px 8px 34px;background:var(--kc-bg);border:1px solid var(--line);border-radius:var(--r-md);font-size:.92rem}
+.adv-list li::before{content:"▸";position:absolute;left:12px;top:8px;font-weight:800;color:var(--accent)}
+.adv-list li b{color:var(--accent)}
+.cred{display:block;margin-top:4px;font-size:.72rem;font-weight:700;color:var(--ink-soft)}
+.cred::before{content:"— ";color:var(--ink-soft)}
+/* Non-interactive checklist */
+.checklist{margin:10px 0 4px;padding:0;list-style:none}
+.checklist li{position:relative;margin:0 0 8px;padding:8px 12px 8px 38px;background:var(--kc-bg);border:1px solid var(--line);border-radius:var(--r-md);font-size:.92rem}
+.checklist li::before{content:"";position:absolute;left:11px;top:10px;width:15px;height:15px;border:2px solid var(--accent);border-radius:4px;background:var(--read-bg)}
+.checklist li b{color:var(--accent)}
+.checklist .cred{display:block;margin-top:4px;font-size:.72rem;font-weight:700;color:var(--ink-soft)}
+/* Sources table */
+table.src{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:.85rem}
+table.src th,table.src td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+table.src th{background:var(--pill-bg);color:#fff;font-size:.76rem;letter-spacing:.04em;text-transform:uppercase}
+table.src td .cred{display:inline;margin-top:0}
+@media (max-width:640px){table.src{font-size:.78rem}}
+@media print{.adv-list li,.checklist li{break-inside:avoid}}
+</style></head><body data-page="advice" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Exam advice</nav>
+
+<header class="hero">
+<h1>Exam advice — from people who actually took it</h1>
+<div class="sub">Verified first-person reports from Reddit, asktester and istqb.guru — passers, failers, and retakers of CTFL v4.0 (and v3.1 where the tactics still transfer). Read this <b>Thursday night</b>, not Friday: it tells you what the exam actually feels like, which is not the same as what the syllabus says. <b>Exam: Friday 13 Nov 2026, evening.</b></div>
+<div class="meta"><span class="chip">14 first-person + guide sources</span><span class="chip">2021–2025 · v3.1 threads flagged</span><span class="chip">contested points marked</span><span class="chip hot">Read Thu night before the exam</span></div>
+</header>
+
+<section data-open>
+<h2>The consensus in one line</h2>
+<p class="sec-sum"><i>If you read nothing else on this page, read this box — it is what nearly every passer independently says.</i></p>
+
+<div class="box mem"><span class="box-tag">The consensus</span>
+The real exam is <b>broadly similar to the official sample exams — several people found it easier.</b> But the answers are <b>worded to trick you</b>: it tests <b>precise ISTQB terminology, not real-world practice</b>. Answer as ISTQB thinks, not as your team works.
+<span class="cred">Reddit + asktester passers, 2021–2025, multiple independent reports</span></div>
+
+<div class="box trap"><span class="box-tag">The one rule with no exception</span>
+<b>Never leave a blank — ever.</b> There is <b>no negative marking</b>, and on the Pearson engine you often <b>cannot advance without selecting an answer</b>. A blind guess is free; a blank is a guaranteed zero.
+<span class="cred">asktester ISTQB guide (undated) · Reddit Jun 2023</span></div>
+</section>
+
+<section>
+<h2>Exam-day tactics</h2>
+<p class="sec-sum"><i>Mechanics and habits for the 60 minutes themselves — pacing, flagging, and how to read trick questions.</i></p>
+<ul class="adv-list">
+<li><b>Pace at ~1.5 min/question</b> (40 Q / 60 min) and bank the easy points first — don't sit stuck on one hard stem while three cheap ones wait.
+<span class="cred">asktester · ISTQB guide (undated)</span></li>
+<li><b>Flag and return.</b> The Pearson engine lets you flag questions and review them before ending the exam — use it instead of forcing an answer in the first pass you're unsure of.
+<span class="cred">Reddit · Pearson CTFL 4.0 test-center UK · May 2025</span></li>
+<li><b>Never advance without an answer selected + no negative marking.</b> On Pearson you may not be able to move on without choosing — always guess before moving; a wrong guess costs nothing.
+<span class="cred">asktester · ISTQB guide (undated)</span></li>
+<li><b>Read every question twice</b>, hunting for NOT / NEVER / EXCEPT / BEST — in the stem <b>and</b> in the options. Distractors are deliberately near-identical to the right answer.
+<span class="cred">asktester (undated) + multiple Reddit threads 2021–2025</span></li>
+<li><b>Eliminate 2 of 4 on wording alone:</b> absolutist options ("always better", "never applicable") are auto-wrong — ISTQB rarely speaks in absolutes.
+<span class="cred">Reddit · retake thread · Mar 2024</span></li>
+<li><b>The trick is in the answers, not the question.</b> Classic planted confusion: verification vs validation — know the pair cold because the options will contain both.
+<span class="cred">Reddit · 92.5% passer, German board · Oct 2025</span></li>
+<li><b>Read-the-whole-exam-first only works on paper / at test centers</b> — a remote engine may force you forward-only. <i>(Contested — engine-dependent.)</i>
+<span class="cred">Reddit · Jun 2023 (v3.1 era) · flagged contested</span></li>
+<li><b>Calculator and whiteboard:</b> an on-screen calculator is provided; at test centers, ask for a whiteboard for K3 working.
+<span class="cred">Reddit · Pearson test-center UK · May 2025</span></li>
+<li><b>Non-native English? You may be entitled to +25% time</b> — check with your board when booking, not on exam day. And whoever you are: <b>don't rush out of timer anxiety.</b>
+<span class="cred">Reddit · Jun 2023 (v3.1 era)</span></li>
+</ul>
+</section>
+
+<section>
+<h2>Common mistakes</h2>
+<p class="sec-sum"><i>Every one of these was reported by someone who made it and paid for it — most often on a failed first attempt.</i></p>
+<ul class="adv-list">
+<li><b>Memorizing mock answers instead of understanding.</b> One passer scored 90%+ on mocks, still failed the first attempt — the real exam words questions differently.
+<span class="cred">Reddit · 77.5% passer, failed first attempt · Apr 2025</span></li>
+<li><b>Trusting dumps.</b> Question dumps circulate with genuinely wrong answers — treat them as poison.
+<span class="cred">asktester · ISTQB guide (undated)</span></li>
+<li><b>Skipping the syllabus wording.</b> The exam is very particular about ISTQB wording, not real-world practice — "correct in your team" ≠ "correct on this exam".
+<span class="cred">Reddit · multiple threads</span></li>
+<li><b>Strong K3 but weak K1/K2 recall.</b> "K3 really simple, K2 and K1 kinda hard" — the recall-level definitions are where the sneaky marks hide.
+<span class="cred">Reddit · 85% scorer · Jul 2024</span></li>
+<li><b>Panicking over low mock scores.</b> One passer failed 3 of the 6 official sample papers, then scored 85% on the real thing — mocks are deliberately at-or-above difficulty.
+<span class="cred">Reddit · Jul 2024 · real-is-easier reported 2022–2025</span></li>
+<li><b>Neglecting the cheap guaranteed marks.</b> Chapter 6 (~2 questions) is the easiest section on the exam — one passer deliberately secured it rather than leaving it to chance.
+<span class="cred">Reddit · 92.5% passer · Oct 2025</span></li>
+<li><b>Expecting verbatim repeats.</b> Zero verbatim repeats reported — but many near-identical shapes, and questions come in syllabus chapter order.
+<span class="cred">Reddit · Jun 2023 (v3.1 era — bank differs)</span></li>
+</ul>
+</section>
+
+<section>
+<h2>What surprised passers</h2>
+<p class="sec-sum"><i>The gaps between expectation and reality, in passers' own words.</i></p>
+<ul class="adv-list">
+<li><b>The real exam is easier than the mocks</b> — reported repeatedly and independently, 2022 through 2025.
+<span class="cred">Reddit · multiple independent reports · 2022–2025</span></li>
+<li><b>The style mirrors the official samples</b> — same question voice and structure; nothing exotic.
+<span class="cred">Reddit · 85% passer · May 2025</span></li>
+<li><b>Signal-word matching is the real skill.</b> Recognizing the ISTQB keyword in a stem and matching it to the option's keyword beats deep analysis under time pressure.
+<span class="cred">Reddit · Apr 2025</span></li>
+<li><b>v4.0 official samples feel harder than v3.1's</b> — the difficulty step is in the samples, not only the real exam.
+<span class="cred">Reddit · Aug 2024 + Apr 2024</span></li>
+<li><b>K3 calculations do appear</b> — BVA, decision tables, state transitions. Practice every variant; note the boundary-inclusion convention varies by board.
+<span class="cred">Reddit · 92.5% passer · Oct 2025</span></li>
+<li><b>No fixed recycled pool.</b> It's not 400 recycled questions — but similar question shapes recur across sittings.
+<span class="cred">Reddit · Jun 2023 (v3.1 era — bank differs)</span></li>
+</ul>
+</section>
+
+<section>
+<h2>Remote proctor checklist</h2>
+<p class="sec-sum"><i>For iSQI-style two-camera (webcam + phone) and Pearson OnVUE-style remote exams. ⚠️ Source caveat: this comes from a provider guide (istqb.guru), not first-person reports — verify against your booking confirmation.</i></p>
+<ul class="checklist">
+<li><b>System test 24–48h ahead, on the actual exam machine</b> — and log in 30 minutes early or you may forfeit the sitting.
+<span class="cred">istqb.guru · provider guide · accessed Nov 2026</span></li>
+<li><b>Government photo ID matching your registration name exactly</b> — both sides shown; face, wrists and ears visible; 360° room + desk scan; private closable-door room; no notes, posters or whiteboards in view; phone out of reach.
+<span class="cred">istqb.guru · provider guide · accessed Nov 2026</span></li>
+<li><b>No Alt-Tab; physically disconnect any second monitor;</b> close Slack/Teams/Dropbox/remote-desktop apps; no VPN; wired internet preferred; restart the machine the day before.
+<span class="cred">istqb.guru · provider guide · accessed Nov 2026</span></li>
+<li><b>No bathroom breaks in the 60 minutes; no talking;</b> clear water in a clear bottle is sometimes allowed.
+<span class="cred">istqb.guru · provider guide · accessed Nov 2026</span></li>
+<li><b>Top disqualification causes: Wi-Fi drop, someone entering the room, forgotten second monitor/phone, name mismatch</b> — document any provider-side failure for a free-retake claim.
+<span class="cred">istqb.guru · provider guide · accessed Nov 2026</span></li>
+<li><b>Keep a backup paper answer sheet</b> if your format allows, so a connection failure doesn't cost your answers.
+<span class="cred">asktester · ISTQB guide (undated)</span></li>
+<li><b>Result timing:</b> remote results are often immediate; test-center results printed on site; the certificate itself takes anywhere from 48 hours to several weeks.
+<span class="cred">istqb.guru · provider guide · accessed Nov 2026</span></li>
+</ul>
+</section>
+
+<section>
+<h2>Final 48 hours — what worked</h2>
+<p class="sec-sum"><i>The closing routine, distilled from the passers above. Exam is Friday evening — this is Wednesday night to Friday.</i></p>
+<ul class="adv-list">
+<li><b>Cram beats drip in the final week</b> for one passer (4–5 h/day). <i>Contested — know yourself: if cramming melts you, keep your steady plan.</i>
+<span class="cred">Reddit · 77.5% passer · Apr 2025 · flagged contested</span></li>
+<li><b>Make a 1-hour keyword crib note.</b> The 92.5% passer reviewed only that in the final hour before the exam — one page, the pure signal words.
+<span class="cred">Reddit · 92.5% passer, German board · Oct 2025</span></li>
+<li><b>Timed full 40-question mocks for pacing and confidence — then stop</b> the moment you start memorizing answers instead of reasoning.
+<span class="cred">Reddit passers · 2022–2025</span></li>
+<li><b>Drill every Chapter 4–5 technique variant</b> (BVA, decision tables, state transitions, risk-based) and <b>deliberately secure the cheap Chapter 6 marks.</b>
+<span class="cred">Reddit · 92.5% passer · Oct 2025</span></li>
+<li><b>Re-read the glossary distinctions</b> — "glossary more important than I gave credit" is a direct passer quote.
+<span class="cred">r/QualityAssurance · direct quote</span></li>
+<li><b>Know the 7 principles cold</b> — they surface in more questions than any other single list.
+<span class="cred">Reddit passers · multiple threads</span></li>
+<li><b>Study WHY each wrong mock answer is wrong,</b> then re-read that syllabus section — the miss points at the gap.
+<span class="cred">Reddit passers · 2024–2025</span></li>
+<li><b>Reported wasted time, avoid it:</b> re-doing the same 3 papers past memorization; third-party old question sets; reading the v3.1 textbook outside the techniques; and arguing with the exam from real-world practice — <b>"answer as ISTQB thinks, not as your team works."</b>
+<span class="cred">Reddit passers · 2023–2025 · composite list</span></li>
+</ul>
+</section>
+
+<section>
+<h2>Sources</h2>
+<p class="sec-sum"><i>Every claim above traces to one of these 14 sources. Scores and boards are as self-reported by posters.</i></p>
+<table class="src">
+<thead><tr><th>#</th><th>Source</th><th>Date · detail</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>r/softwaretesting · 1k681kj</td><td>Apr 2025 · 77.5% · failed first attempt despite 90%+ mocks</td></tr>
+<tr><td>2</td><td>r/QualityAssurance · 1ojnuq4</td><td>Oct 2025 · 92.5% · German board</td></tr>
+<tr><td>3</td><td>r/softwaretesting · 1kkrc7q</td><td>May 2025 · CTFL 4.0 · Pearson UK test center</td></tr>
+<tr><td>4</td><td>r/softwaretesting · 1e8tn35</td><td>Jul 2024 · 85% · v4.0</td></tr>
+<tr><td>5</td><td>r/softwaretesting · 1ehhzl7</td><td>Aug 2024 · failed v4.0</td></tr>
+<tr><td>6</td><td>r/softwaretesting · 143j1wz</td><td>Jun 2023 · v3.1</td></tr>
+<tr><td>7</td><td>r/QualityAssurance · xy5b0q</td><td>Oct 2022 · v3.1</td></tr>
+<tr><td>8</td><td>r/QualityAssurance · o1ehzc</td><td>Jun 2021 · v3.1</td></tr>
+<tr><td>9</td><td>r/softwaretesting · 1bmj6b6</td><td>Mar 2024 · 24/40 retake</td></tr>
+<tr><td>10</td><td>r/softwaretesting · 1f4vsu9</td><td>Aug 2024 · v4.0 samples feel hard</td></tr>
+<tr><td>11</td><td>r/QualityAssurance · 1ivgb1x</td><td>Feb 2025 · iSQI remote</td></tr>
+<tr><td>12</td><td>asktester.com · ISTQB guide</td><td>undated</td></tr>
+<tr><td>13</td><td>istqb.guru · online-vs-test-center</td><td>accessed Nov 2026 · provider guide, not first-person</td></tr>
+<tr><td>14</td><td>club.ministryoftesting.com/t/86264</td><td>Aug 2025</td></tr>
+</tbody>
+</table>
+<div class="box und"><span class="box-tag">Caveats — read before trusting any single claim</span>
+<b>v3.1-era threads:</b> sources 6, 7, 8 (2021–2023) predate CTFL 4.0 — the tactics transfer, but the question bank differs. <b>Contested points:</b> (1) read-the-whole-exam-first — engine-dependent; (2) cram-vs-steady in the final week — know yourself; (3) difficulty perception — the majority found the real exam easier, but a minority, mostly non-native English speakers, found it harder.</div>
+</section>
+
+<div class="next"><a href="index.html">← Study hub</a><span></span><a href="final-day-cheatsheet.html">Final-day cheat sheet →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

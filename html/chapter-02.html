@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 2 — Testing Throughout the SDLC · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body data-ch="ch2" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Chapter 2</nav>
+
+<header class="hero">
+<h1>Chapter 2 — Testing Throughout the Software Development Lifecycle</h1>
+<div class="sub">SDLC models · DevOps · shift-left · the four test levels · the four test types · confirmation vs regression · maintenance triggers. Heavily scenario-based in the exam.<br><span lang="bn">SDLC মডেল · DevOps · shift-left · চারটি test level · চারটি test type · confirmation বনাম regression · maintenance ট্রিগার। পরীক্ষায় প্রচুর scenario-ভিত্তিক প্রশ্ন আসে।</span></div>
+<div class="meta"><span class="chip">~7 exam questions</span><span class="chip">K2</span><span class="chip">Study: Wednesday 11 Nov</span><span class="chip hot">Reward rank #1 🔥🔥🔥</span></div>
+<div id="chapter-progress"></div>
+</header>
+
+<section>
+<h2>2.1 How the SDLC shapes testing</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>How you build software decides when you test; DevOps automates it; shift-left pulls it earlier.</i></p>
+<p class="plain"><b>In plain words:</b> the way a team builds software sets when testing happens — and good teams start it earlier.</p>
+<p><b>Core idea (2.1.1):</b> every SDLC model — sequential (waterfall, V-model), iterative/incremental (spiral, RUP), or <b>agile</b> (Scrum, Kanban, XP) — changes <i>when</i> and <i>how</i> you test:</p>
+<ul>
+<li><b>Sequential:</b> test levels follow phases; detailed test preparation can start early from documentation; test execution happens late.</li>
+<li><b>Iterative/agile:</b> regression testing grows in importance each iteration (the system keeps changing); <b>lightweight, communicate-often</b> test documentation; development and testing run concurrently in the same iteration; <b>continuous feedback</b>.</li>
+<li>In every model the <b>test process activities (Ch. 1) still happen</b> — only their timing, formality, and frequency change.</li>
+</ul>
+
+<h3>DevOps (2.1.2)</h3>
+<div class="box und"><span class="box-tag">🧠 Understand — DevOps benefit/challenge pairs</span>
+DevOps = development + operations collaborating, with <b>automation of the deployment pipeline</b>.<br>
+<b>Benefits:</b> fast feedback on quality and usability (CI → automated builds and tests on every commit), shorter time-to-market, defects found and fixed quickly, automated regression suites make frequent releases safe.<br>
+<b>Challenges:</b> the pipeline itself must be <b>maintained and automated</b> (test automation is an ongoing investment, not a one-off); team needs <b>new skills</b>; unmanaged feedback loops drown teams in automated failures.</div>
+
+<h3>Shift-left (2.1.3)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — both halves of shift-left</span>
+Move test activities <b>earlier</b> in the lifecycle — and it is more than "start testing sooner":
+(a) testing <b>work products earlier</b> (reviews, static analysis, early test design) and
+(b) <b>testers involved from the start</b> in requirements/user stories, improving testability and <b>preventing defects</b>. Both halves are the correct meaning.</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>Shift-left described only as "starting test <b>execution</b> earlier" is <b>incomplete</b> — the exam wants early <i>work-product testing</i> + early <i>tester involvement</i>.</div>
+
+<figure class="diag"><svg viewBox="0 0 520 190" role="img" aria-label="Shift-left timeline: sequential SDLC bar with review marks and tester-involvement marks pulled earlier by two arrows; note that in iterative SDLCs activities overlap and iterate.">
+<defs><marker id="darrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink-soft)"/></marker></defs>
+<!-- traditional (late) marks -->
+<text class="dsmall" x="262" y="14" text-anchor="middle">Traditional: reviews &amp; testers appear only when coding ends</text>
+<rect class="dsub" x="345" y="24" width="14" height="14" rx="3"/>
+<text class="dsmall" x="363" y="35">reviews, late</text>
+<circle cx="440" cy="31" r="7" fill="var(--read-bg)" stroke="var(--line)"/>
+<text class="dsmall" x="452" y="35">testers, late</text>
+<!-- shift-left arrows -->
+<path class="dedge" d="M335 42 C 260 62, 160 62, 85 52" marker-end="url(#darrow)"/>
+<path class="dedge" d="M425 45 C 330 70, 230 70, 155 60" marker-end="url(#darrow)"/>
+<text class="dtxt" x="200" y="86" text-anchor="middle">shift-left ⬅ pull both kinds of testing earlier</text>
+<!-- early marks -->
+<rect class="dbox" x="78" y="40" width="14" height="14" rx="3"/>
+<circle cx="148" cy="48" r="7" fill="var(--kc-bg)" stroke="var(--accent)" stroke-width="1.5"/>
+<!-- sequential SDLC bar -->
+<rect class="dbox" x="10" y="104" width="500" height="34"/>
+<line x1="110" y1="104" x2="110" y2="138" stroke="var(--line)"/>
+<line x1="210" y1="104" x2="210" y2="138" stroke="var(--line)"/>
+<line x1="310" y1="104" x2="310" y2="138" stroke="var(--line)"/>
+<line x1="410" y1="104" x2="410" y2="138" stroke="var(--line)"/>
+<text class="dtxt" x="60" y="125" text-anchor="middle">Req</text>
+<text class="dtxt" x="160" y="125" text-anchor="middle">Design</text>
+<text class="dtxt" x="260" y="125" text-anchor="middle">Code</text>
+<text class="dtxt" x="360" y="125" text-anchor="middle">Test</text>
+<text class="dtxt" x="460" y="125" text-anchor="middle">Release</text>
+<!-- iteration annotation -->
+<text class="dsmall" x="12" y="160">Iterative SDLCs (agile): activities overlap and iterate ↺</text>
+</svg>
+<figcaption class="dsmall" style="margin-top:4px;color:var(--trap);font-size:.84rem">⚠️ Half-right = wrong: shift-left = earlier <b>work-product testing</b> AND earlier <b>tester involvement</b> — both halves.</figcaption></figure>
+
+<h3>Retrospectives &amp; process improvement (2.1.4)</h3>
+<p>After each iteration/release, the team reflects: what went well, what to improve — including <b>test process improvement</b> (better automation, improved defect prevention, revised estimation). Lessons feed the next cycle. Exam scenario: "team meets after sprint to improve testing" → <b>retrospective</b>.</p>
+<div class="bn">
+<p class="sec-sum"><i>Sequential বনাম agile testing, DevOps-এর benefit/challenge জোড়া, আর shift-left মানে আগেভাগে work product টেস্ট করা + শুরু থেকেই tester-দের যুক্ত করা।</i></p>
+<p><b>মূল আইডিয়া (2.1.1):</b> প্রতিটি SDLC মডেল — sequential (waterfall, V-model), iterative/incremental (spiral, RUP), বা <b>agile</b> (Scrum, Kanban, XP) — বদলে দেয় আপনি <i>কখন</i> আর <i>কীভাবে</i> টেস্ট করবেন:</p>
+<ul>
+<li><b>Sequential:</b> test level গুলো phase-এর পরে phase ধরে চলে; ডকুমেন্টেশন থেকে বিস্তারিত test preparation শুরু হতে পারে; test execution হয় অনেক পরে।</li>
+<li><b>Iterative/agile:</b> প্রতিটি iteration-এ regression testing-এর গুরুত্ব বাড়তে থাকে (সিস্টেমটা ক্রমাগত বদলায়); <b>হালকা, ঘন ঘন যোগাযোগ-ভিত্তিক</b> test documentation; একই iteration-এর ভেতরে development আর testing একসাথে চলে; <b>continuous feedback</b>।</li>
+<li>যে মডেলেই হোক, <b>test process-এর activity গুলো (Ch. 1) তবুও ঘটে</b> — শুধু সেগুলোর সময়, formality আর frequency বদলায়।</li>
+</ul>
+
+<h3>DevOps (2.1.2)</h3>
+<div class="box und"><span class="box-tag">🧠 Understand — DevOps benefit/challenge জোড়া</span>
+DevOps মানে development + operations একসাথে কাজ করা, সঙ্গে <b>deployment pipeline-এর automation</b>।<br>
+<b>Benefits:</b> quality আর usability নিয়ে দ্রুত feedback (CI → প্রতিটি commit-এ automated build ও test), time-to-market ছোট হয়, defect দ্রুত ধরা পড়ে ও ঠিক হয়, automated regression suite-গুলো ঘন ঘন release-কে নিরাপদ করে।<br>
+<b>Challenges:</b> pipeline নিজেই <b>maintain আর automate করতে হয়</b> (test automation একটা চলমান investment, এককালীন নয়); দলকে <b>নতুন skill</b> শিখতে হয়; নিয়ন্ত্রণ ছাড়া feedback loop দলকে automated failure-এর ভেতরে ডুবিয়ে দেয়।</div>
+
+<h3>Shift-left (2.1.3)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — shift-left-এর দুই অর্ধেক</span>
+Test activity গুলো lifecycle-এ <b>আরও আগে</b> সরিয়ে আনা — আর এটা শুধু "আগে টেস্ট শুরু করা" নয়:
+(a) <b>work product আগেভাগে টেস্ট</b> করা (review, static analysis, আগেভাগে test design) এবং
+(b) requirements/user story থেকেই <b>tester-দের যুক্ত করা</b>, যাতে testability বাড়ে আর <b>defect প্রতিরোধ</b> হয়। দুই অর্ধেক মিলেই সঠিক অর্থ।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>Shift-left-কে শুধু "starting test <b>execution</b> earlier" বলা <b>অসম্পূর্ণ</b> — পরীক্ষায় চাই আগেভাগে <i>work-product testing</i> + আগেভাগে <i>tester involvement</i>।</div>
+
+<h3>Retrospectives &amp; process improvement (2.1.4)</h3>
+<p>প্রতিটি iteration/release-এর পরে দল প্রতিফলিত করে: কী ভালো হলো, কী উন্নত করা যায় — এর মধ্যে <b>test process improvement</b>-ও পড়ে (ভালো automation, ভালো defect prevention, সংশোধিত estimation)। শেখা শিক্ষা পরের cycle-এ খাওয়ানো হয়। Exam scenario: "team meets after sprint to improve testing" → <b>retrospective</b>।</p>
+</div>
+</section>
+
+<section>
+<h2>2.2 Test levels and test types — the chapter's core</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>Levels say how big a thing you test; types say what kind of test you run — and they mix freely.</i></p>
+<p class="plain"><b>In plain words:</b> level = how much of the system you test; type = what question the test asks. Mix and match.</p>
+<div class="rule"><b>Level = scope · Type = nature</b> — two independent axes; <b>ANY type runs at ANY level</b>.</div>
+
+<h3 id="c2-levels">The four test levels (2.2.1)</h3>
+<div class="flow">
+<span class="st">Component<br><small style="font-weight:400">one unit in isolation (stubs/mocks) · developers</small></span><span class="ar">→</span>
+<span class="st" style="background:#4c1d95">Component integration<br><small style="font-weight:400">interfaces &amp; interactions between components · developers</small></span><span class="ar">→</span>
+<span class="st" style="background:#b45309">System<br><small style="font-weight:400">whole-system behaviour end-to-end · independent testers</small></span><span class="ar">→</span>
+<span class="st" style="background:#15803d">Acceptance<br><small style="font-weight:400">validation: meets user/business needs · users/ops</small></span>
+</div>
+<div class="box mem"><span class="box-tag">📖 Memorise — the four levels in detail</span>
+<table>
+<tr><th>Level</th><th>Scope / test basis</th><th>Who &amp; notes</th></tr>
+<tr><td><b>Component (unit)</b></td><td>Single components in isolation; code, design, spec of the component</td><td>Developers; mock objects/stubs to isolate</td></tr>
+<tr><td><b>Component integration</b></td><td><b>Interactions &amp; interfaces between components</b>; architecture/design docs</td><td>Developers primarily</td></tr>
+<tr><td><b>System</b></td><td><b>Whole system's behaviour &amp; capabilities</b>, end-to-end; requirements/spec, use cases, risk analysis</td><td><b>Independent test team</b>; functional + non-functional; also behaviour no single requirement describes</td></tr>
+<tr><td><b>Acceptance</b></td><td><b>Validation</b> — meets user needs/business goals?; often the <b>entry criterion for release</b></td><td>Users/customers, ops, support; forms: <b>user acceptance, operational, contractual/regulatory, alpha (developer's site), beta (user's site)</b></td></tr>
+</table>
+⚠️ Classic exam item: "verifying interaction between modules" = component <i>integration</i>; "checking the delivered system meets business needs with real users" = <b>acceptance</b>.</div>
+
+<h3 id="c2-types">The four test types (2.2.2)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — the four types</span>
+<table>
+<tr><th>Type</th><th>Target</th><th>Examples</th></tr>
+<tr><td><b>Functional</b></td><td><i>What</i> the system does — functions it performs</td><td>Search, payment, interest calculation; possible at <b>all levels</b> (e.g., component tests of a function's behaviour)</td></tr>
+<tr><td><b>Non-functional</b></td><td><i>How well</i> it behaves — quality characteristics</td><td>Performance, usability, security, reliability; also all levels</td></tr>
+<tr><td><b>Black-box</b></td><td>Behaviour <b>from outside</b>, based on specifications — no knowledge of internals</td><td>Spec-based test derivation</td></tr>
+<tr><td><b>White-box</b></td><td>Internal <b>structure</b> of the system/code drives the tests</td><td>Statement/branch coverage of code</td></tr>
+</table>
+Key idea: <b>a test type can be applied at every test level</b> (this surprises people). Black-box vs white-box is about <i>the basis of test derivation</i> (spec vs structure) — not about "who runs it".</div>
+
+<h3 id="c2-confreg">Confirmation vs regression testing (2.2.3)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — near-guaranteed exam question</span>
+<table>
+<tr><th></th><th>Confirmation (re-testing)</th><th>Regression testing</th></tr>
+<tr><td><b>Purpose</b></td><td>Verify a <b>specific defect</b> is really fixed — and the fix caused no <b>adverse effects</b></td><td>Verify a <b>change</b> broke nothing else</td></tr>
+<tr><td><b>Runs on</b></td><td>The fixed defect's test (+ anything needed to re-run it)</td><td>Affected areas + previously working areas at risk</td></tr>
+<tr><td><b>When</b></td><td>After the fix is delivered</td><td>After <b>any</b> change: fixes, new features, environment/configuration changes</td></tr>
+</table>
+Rules the exam tests: regression happens at <b>all levels</b> and in <b>all SDLCs</b>; with many changes, regression can target <i>affected</i> areas rather than everything; a passing confirmation test doesn't mean the fix caused <b>no regressions elsewhere</b> — both coexist.</div>
+
+<h3 id="c2-suites">Test suites in regression automation (2.2.4)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — smoke suite</span>
+When regression suites become huge: run the <b>full/complete regression suite</b> before major releases, and <b>smaller selection-based suites</b> for everyday changes — e.g., a <b>smoke test suite</b>: "does the build work at all?" — the most important functions, run on every new build.<br>
+⚠️ A smoke suite does <b>not replace</b> regression testing; it just gates further work on a build.</div>
+<div class="bn">
+<p class="sec-sum"><i>4 level × 4 type (যেকোনো type যেকোনো level-এ চলে), confirmation বনাম regression, আর smoke suite — Ch 2-এর নম্বরের প্রাণকেন্দ্র।</i></p>
+<div class="rule"><b>Level = scope · Type = nature</b> — দুটি স্বাধীন অক্ষ; <b>যেকোনো type যেকোনো level-এ চালানো যায়</b>।</div>
+
+<h3>The four test levels (2.2.1)</h3>
+<div class="flow">
+<span class="st">Component<br><small style="font-weight:400">একটি unit আলাদা করে (stub/mock দিয়ে) · developers</small></span><span class="ar">→</span>
+<span class="st" style="background:#4c1d95">Component integration<br><small style="font-weight:400">component-গুলোর মধ্যে interface ও interaction · developers</small></span><span class="ar">→</span>
+<span class="st" style="background:#b45309">System<br><small style="font-weight:400">পুরো সিস্টেমের আচরণ end-to-end · independent testers</small></span><span class="ar">→</span>
+<span class="st" style="background:#15803d">Acceptance<br><small style="font-weight:400">validation: user/business-এর চাহিদা মেটায় কি না · users/ops</small></span>
+</div>
+<div class="box mem"><span class="box-tag">📖 Memorise — চারটি level-এর বিস্তারিত</span>
+<table>
+<tr><th>Level</th><th>Scope / test basis</th><th>Who &amp; notes</th></tr>
+<tr><td><b>Component (unit)</b></td><td>একটি component আলাদা করে টেস্ট; ওই component-এর code, design, spec</td><td>Developers; আলাদা করতে mock object/stub</td></tr>
+<tr><td><b>Component integration</b></td><td><b>component-গুলোর মধ্যে interaction ও interface</b>; architecture/design doc</td><td>মূলত developers</td></tr>
+<tr><td><b>System</b></td><td><b>পুরো সিস্টেমের আচরণ ও সামর্থ্য</b>, end-to-end; requirements/spec, use case, risk analysis</td><td><b>Independent test team</b>; functional + non-functional; এমন আচরণও যা একটি requirement-ই বর্ণনা করে না</td></tr>
+<tr><td><b>Acceptance</b></td><td><b>Validation</b> — user-এর চাহিদা/business লক্ষ্য মেটায় কি না?; প্রায়ই <b>release-এর entry criterion</b></td><td>Users/customers, ops, support; রূপ: <b>user acceptance, operational, contractual/regulatory, alpha (developer-এর site-এ), beta (user-এর site-এ)</b></td></tr>
+</table>
+⚠️ ক্লাসিক exam item: "verifying interaction between modules" = component <i>integration</i>; "checking the delivered system meets business needs with real users" = <b>acceptance</b>।</div>
+
+<h3>The four test types (2.2.2)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — চারটি type</span>
+<table>
+<tr><th>Type</th><th>Target</th><th>Examples</th></tr>
+<tr><td><b>Functional</b></td><td>সিস্টেম <i>কী</i> করে — কোন কোন function সম্পাদনা করে</td><td>Search, payment, interest হিসাব; <b>সব level-এই</b> সম্ভব (যেমন কোনো function-এর আচরণের component test)</td></tr>
+<tr><td><b>Non-functional</b></td><td><i>কতটা ভালোভাবে</i> আচরণ করে — quality characteristic</td><td>Performance, usability, security, reliability; এগুলোও সব level-এ</td></tr>
+<tr><td><b>Black-box</b></td><td>specification থেকে বাইরে থেকে <b>আচরণ</b> দেখা — ভেতরের কিছু না জেনেই</td><td>Spec-ভিত্তিক test derivation</td></tr>
+<tr><td><b>White-box</b></td><td>সিস্টেম/code-এর ভেতরের <b>গঠন</b> থেকে test তৈরি হয়</td><td>Code-এর statement/branch coverage</td></tr>
+</table>
+মূল আইডিয়া: <b>যেকোনো test level-এ যেকোনো test type প্রয়োগ করা যায়</b> (অনেকের কাছে এটা অপ্রত্যাশিত লাগে)। Black-box বনাম white-box আসলে <i>test derivation-এর ভিত্তি</i> নিয়ে (spec বনাম structure) — "কে চালায়" তা নিয়ে নয়।</div>
+
+<h3>Confirmation vs regression testing (2.2.3)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — প্রায় নিশ্চিত exam question</span>
+<table>
+<tr><th></th><th>Confirmation (re-testing)</th><th>Regression testing</th></tr>
+<tr><td><b>Purpose</b></td><td>কোনো <b>নির্দিষ্ট defect</b> সত্যিই ঠিক হয়েছে কি না যাচাই</td><td>কোনো <b>change</b> অন্য কিছু ভেঙেছে কি না যাচাই</td></tr>
+<tr><td><b>Runs on</b></td><td>ঠিক হওয়া defect-টার test (আরও যা লাগে তা সমেত)</td><td>প্রভাবিত এলাকা + আগে থেকে চলা ঝুঁকিপূর্ণ এলাকা</td></tr>
+<tr><td><b>When</b></td><td>fix deliver হওয়ার পরে</td><td><b>যেকোনো</b> change-এর পরে: fix, নতুন feature, environment/configuration change</td></tr>
+</table>
+পরীক্ষা যে নিয়মগুলো দেখে: regression চলে <b>সব level-এ</b> আর <b>সব SDLC-তে</b>; change বেশি হলে regression সব নয়, <i>প্রভাবিত</i> এলাকায় কেন্দ্রিত হতে পারে; confirmation test পাস করা মানে এই নয় যে fix-টার কারণে <b>অন্য কোথাও কোনো regression হয়নি</b> — দুটো একসাথে থাকে।</div>
+
+<h3>Test suites in regression automation (2.2.4)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — smoke suite</span>
+Regression suite যখন বিশাল হয়ে যায়: বড় release-এর আগে <b>পুরো/complete regression suite</b> চালান, আর দৈনন্দিন change-এর জন্য <b>ছোট, selection-ভিত্তিক suite</b> — যেমন <b>smoke test suite</b>: "build-টা আদৌ চলে কি না?" — সবচেয়ে গুরুত্বপূর্ণ function গুলো, প্রতিটি নতুন build-এ চালানো হয়।<br>
+⚠️ Smoke suite regression testing-এর <b>বিকল্প নয়</b>; এটা শুধু একটি build-এ পরের কাজ শুরু করা যাবে কি না সেই গেট তৈরি করে।</div>
+</div>
+</section>
+
+<section>
+<h2>2.3 Maintenance testing (2.3.1)</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>After release, three events can force more testing: you change it, you move it, or you retire it.</i></p>
+<p class="plain"><b>In plain words:</b> live systems get changed, moved, or shut down — each event triggers testing, sized by what the change could touch.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — the 3 maintenance triggers</span>
+Scope is driven by <b>impact analysis</b> of what changed and what the change could affect:
+<ol style="margin:6px 0">
+<li><b>Modification</b> — planned enhancements, corrective fixes, emergency hotfixes.</li>
+<li><b>Migration</b> — moving to another platform/OS/DB/server, incl. data migration; often needs <b>conversion testing of data</b> + regression on the new environment.</li>
+<li><b>Retirement</b> — shutting down; testing may include data <b>archiving/migration</b> and, when replacing a system, testing the new environment and old-data handling.</li>
+</ol>
+Maintenance releases may require regression tests at <b>all levels</b>; scope is influenced by the <b>risk of the change</b> — the change and its ripple effects decide how much regression runs.</div>
+<div class="bn">
+<p class="sec-sum"><i>3টি ট্রিগার — modification, migration, retirement — আর scope ঠিক হয় change ও তার ripple effect-এর impact analysis দিয়ে।</i></p>
+<div class="box mem"><span class="box-tag">📖 Memorise — 3টি maintenance ট্রিগার</span>
+কী বদলালো আর সেই change কী কী-কে ছুঁতে পারে তার <b>impact analysis</b>-ই scope নির্ধারণ করে:
+<ol style="margin:6px 0">
+<li><b>Modification</b> — পরিকল্পিত enhancement, corrective fix, emergency hotfix।</li>
+<li><b>Migration</b> — অন্য platform/OS/DB/server-এ সরানো, data migration সহ; প্রায়ই <b>data-র conversion testing</b> + নতুন environment-এ regression লাগে।</li>
+<li><b>Retirement</b> — বন্ধ করে দেওয়া; testing-এ থাকতে পারে data-র <b>archiving/migration</b>, আর কোনো সিস্টেম replace করলে নতুন environment ও পুরনো data সামলানো পরীক্ষা।</li>
+</ol>
+Maintenance release-এ <b>সব level-এ</b> regression test লাগতে পারে; <b>change-এর risk</b>-ই scope প্রভাবিত করে — কতটা regression চলবে তা change আর তার ripple effect ঠিক করে।</div>
+</div>
+</section>
+
+<section>
+<h2>Confusion table</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>Six pairs students mix up — one line each on who is who.</i></p>
+<p class="plain"><b>In plain words:</b> six look-alike pairs; each row is the one-word difference the exam checks.</p>
+<table><tbody>
+<tr><td>Component integration / system testing</td><td>interfaces between components / behaviour of the whole system</td></tr>
+<tr><td>System / acceptance testing</td><td>built right (meets spec) / built the right thing (meets needs)</td></tr>
+<tr><td>Alpha / beta</td><td>at developer's site / at users' sites</td></tr>
+<tr><td>Functional / non-functional</td><td>what it does / how well it does it</td></tr>
+<tr><td>Confirmation / regression</td><td>the fix works / nothing else broke</td></tr>
+<tr><td>Smoke suite / regression suite</td><td>build-worth-testing gate / change-impact verification</td></tr>
+</tbody></table>
+<div class="bn">
+<p class="sec-sum"><i>ছয়টি এক লাইনের তুলনা: integration/system, system/acceptance, alpha/beta, functional/non-functional, confirmation/regression, smoke/regression।</i></p>
+<table><tbody>
+<tr><td>Component integration / system testing</td><td>component-গুলোর মধ্যে interface / পুরো সিস্টেমের আচরণ</td></tr>
+<tr><td>System / acceptance testing</td><td>সঠিকভাবে বানানো হয়েছে (spec মেটায়) / সঠিক জিনিসটাই বানানো হয়েছে (চাহিদা মেটায়)</td></tr>
+<tr><td>Alpha / beta</td><td>developer-এর site-এ / user-দের site-এ</td></tr>
+<tr><td>Functional / non-functional</td><td>কী করে / কতটা ভালোভাবে করে</td></tr>
+<tr><td>Confirmation / regression</td><td>fix কাজ করছে / অন্য কিছু ভাঙেনি</td></tr>
+<tr><td>Smoke suite / regression suite</td><td>build টেস্ট করার যোগ্য কি না সেই গেট / change-এর প্রভাব যাচাই</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<section>
+<h2>Top exam traps</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>Six wrong answers the exam keeps offering — know why each is wrong.</i></p>
+<p class="plain"><b>In plain words:</b> six classic wrong claims; learn the exact correction for each.</p>
+<div class="box trap"><span class="box-tag">⚠️ Trap 1</span>"Non-functional testing happens only at system level" → false; <b>all types at all levels</b>.</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 2</span>"Regression testing only after defect fixes" → false; after <b>any</b> change (features, migrations, config).</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 3</span>Shift-left described only as "starting test execution earlier" → incomplete; it's early <b>work-product testing</b> + early <b>tester involvement</b>.</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 4</span>Migration scenario asking for "regression testing" only → also needs data <b>conversion</b> testing.</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 5</span>"White-box is done by developers, black-box by testers" → the real distinction is <b>spec-based vs structure-based derivation</b>.</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 6</span>Beta testing placed "at the developer's site" → swapped with <b>alpha</b>.</div>
+<div class="bn">
+<p class="sec-sum"><i>ছয়টি trap: সব level-এ সব type, যেকোনো change-এর পরে regression, shift-left-এর দুই অর্ধেক, migration-এ conversion testing, alpha/beta অদল-বদল।</i></p>
+<div class="box trap"><span class="box-tag">⚠️ Trap 1</span>"Non-functional testing happens only at system level" → ভুল; <b>সব level-এ সব type</b> সম্ভব।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 2</span>"Regression testing only after defect fixes" → ভুল; <b>যেকোনো</b> change-এর পরে (feature, migration, config)।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 3</span>Shift-left-কে শুধু "starting test execution earlier" বলা → অসম্পূর্ণ; আসল অর্থ আগেভাগে <b>work-product testing</b> + আগেভাগে <b>tester involvement</b>।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 4</span>Migration scenario-তে শুধু "regression testing" চাওয়া → data-র <b>conversion</b> testing-ও লাগবে।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 5</span>"White-box is done by developers, black-box by testers" → আসল পার্থক্য <b>spec-ভিত্তিক বনাম structure-ভিত্তিক derivation</b>।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap 6</span>Beta testing-কে "at the developer's site" বলা → <b>alpha</b>-র সঙ্গে অদল-বদল হয়েছে।</div>
+</div>
+</section>
+
+<section>
+<h2>Knowledge check — say it out loud, then reveal</h2>
+<p class="sec-sum"><i>Say each answer out loud before revealing — 8 quick checks.</i></p>
+<p class="plain"><b>In plain words:</b> answer each question aloud first, then click to check yourself.</p>
+<details class="kc"><summary>1. A test exercises the interface between the payment module and the shopping cart. Level, and why?</summary><div class="a">Component integration — it exercises the interface between two components.</div></details>
+<details class="kc"><summary>2. Can functional, non-functional, black-box and white-box testing all be performed at component level?</summary><div class="a">Yes — every test type can be applied at every test level; component tests are often white-box but functional, non-functional and black-box component tests are all valid.</div></details>
+<details class="kc"><summary>3. A defect is fixed; you re-run its failing test and it passes. What have you done, and what is still missing?</summary><div class="a">Confirmation testing done; regression testing of surrounding areas still missing.</div></details>
+<details class="kc"><summary>4. The company moves the application from on-premise to a cloud provider. Which maintenance trigger, and what two kinds of testing are involved?</summary><div class="a">Migration; data conversion testing + regression testing (on the new environment).</div></details>
+<details class="kc"><summary>5. What is a smoke suite and what is it not?</summary><div class="a">A small high-value suite that gates further work on a build; not a substitute for regression testing.</div></details>
+<details class="kc"><summary>6. Give two DevOps benefits and one challenge for testing.</summary><div class="a">Benefits: fast feedback, quicker fixes, shorter time-to-market. Challenge: pipeline/automation maintenance, new skills.</div></details>
+<details class="kc"><summary>7. Define shift-left with both of its components.</summary><div class="a">(a) test work products earlier; (b) involve testers early for testability and defect prevention.</div></details>
+<details class="kc"><summary>8. UAT performed at the customer's own offices by their staff: which testing form is this?</summary><div class="a">User acceptance testing at the users' site (beta-style).</div></details>
+<div class="bn">
+<p class="sec-sum"><i>৮টি recall check — প্রতিটির উত্তর হাতে-মুখে বলুন, তারপর মিলিয়ে নিন।</i></p>
+<p class="kc-bn"><b>প্রশ্ন ১.</b> একটি test, payment module আর shopping cart-এর মধ্যকার interface পরীক্ষা করছে। কোন level, আর কেন?</p>
+<p class="kc-bn"><b>উত্তর ১.</b> Component integration — এটি দুটি component-এর মধ্যকার interface পরীক্ষা করছে।</p>
+<p class="kc-bn"><b>প্রশ্ন ২.</b> Functional, non-functional, black-box আর white-box testing — কি component level-এ করা যায়?</p>
+<p class="kc-bn"><b>উত্তর ২.</b> হ্যাঁ — যেকোনো test type যেকোনো test level-এ প্রয়োগ করা যায়; component test প্রায়ই white-box হয়, তবে functional, non-functional ও black-box component test-ও সম্পূর্ণ বৈধ।</p>
+<p class="kc-bn"><b>প্রশ্ন ৩.</b> একটি defect ঠিক হলো; আপনি তার fail করা test আবার চালালেন আর এবার পাস করল। আপনি কী করলেন, আর এখনো কী বাকি?</p>
+<p class="kc-bn"><b>উত্তর ৩.</b> Confirmation testing হলো; চারপাশের এলাকার regression testing এখনো বাকি।</p>
+<p class="kc-bn"><b>প্রশ্ন ৪.</b> কোম্পানি অ্যাপ্লিকেশনটি on-premise থেকে cloud provider-এ সরাচ্ছে। কোন maintenance ট্রিগার, আর কোন দুই ধরনের testing জড়িত?</p>
+<p class="kc-bn"><b>উত্তর ৪.</b> Migration; data conversion testing + regression testing (নতুন environment-এ)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৫.</b> Smoke suite কী, আর কী নয়?</p>
+<p class="kc-bn"><b>উত্তর ৫.</b> ছোট, উচ্চমূল্যের একটি suite যা একটি build-এ পরের কাজ চালানো যাবে কি না সেই গেট দেয়; regression testing-এর বিকল্প নয়।</p>
+<p class="kc-bn"><b>প্রশ্ন ৬.</b> Testing-এর জন্য DevOps-এর দুটি benefit আর একটি challenge বলুন।</p>
+<p class="kc-bn"><b>উত্তর ৬.</b> Benefits: দ্রুত feedback, দ্রুত fix, ছোট time-to-market। Challenge: pipeline/automation রক্ষণাবেক্ষণ, নতুন skill।</p>
+<p class="kc-bn"><b>প্রশ্ন ৭.</b> Shift-left সংজ্ঞায়িত করুন তার দুই অংশসহ।</p>
+<p class="kc-bn"><b>উত্তর ৭.</b> (a) work product আগেভাগে test করা; (b) testability ও defect prevention-এর জন্য tester-দের শুরুতেই যুক্ত করা।</p>
+<p class="kc-bn"><b>প্রশ্ন ৮.</b> গ্রাহকের নিজের অফিসে তাদের কর্মীরা UAT চালাচ্ছে: এটি কোন রূপের testing?</p>
+<p class="kc-bn"><b>উত্তর ৮.</b> User-দের site-এ user acceptance testing (beta-ধাঁচের)।</p>
+</div>
+</section>
+
+<section id="recap">
+<h2>⏱ 60-second recap</h2>
+<p class="sec-sum"><i>Everything Ch 2 wants you to remember, in one glance.</i></p>
+<div class="recap">
+<span class="rk">Levels: <i>Component → Component integration → System → Acceptance</i></span>
+<span class="rk">Any type at any level <i>— 4 types × 4 levels, all combos valid</i></span>
+<span class="rk">Confirmation = <i>the fix works</i> · Regression = <i>nothing else broke</i></span>
+<span class="rk">Smoke suite = <i>gate on a build, not a regression replacement</i></span>
+<span class="rk">Shift-left = <i>earlier work-product testing + earlier tester involvement</i></span>
+<span class="rk">Regression after <i>any</i> change <i>— fixes, features, config</i></span>
+<span class="rk">Maintenance triggers: <i>modification · migration · retirement</i> (impact analysis sets scope)</span>
+</div>
+</section>
+
+<section>
+<h2>Exercises — closed book, click to answer (target 16/20)</h2>
+<p class="sec-sum"><i>20 exam-style questions, target 16 right — click an answer, get instant feedback.</i></p>
+<p class="plain"><b>In plain words:</b> 20 mock questions; aim for at least 16 correct before Friday.</p>
+<div class="quiz" data-target="16">
+<div class="q" data-a="d"><p class="qt">1. In a sequential (V-model) project, detailed test design begins from documentation well before executable code exists. This illustrates that:</p><div class="opts">
+<button data-k="a">a) Test design requires running software</button><button data-k="b">b) Sequential models have no test levels</button><button data-k="c">c) The V-model forbids early test design</button><button data-k="d">d) Test activities can be prepared early based on available work products</button></div>
+<div class="expl"><b>d</b> — test design needs a <i>basis</i>, not executable code.</div></div>
+
+<div class="q" data-a="b"><p class="qt">2. Which is a challenge testing faces in a DevOps environment?</p><div class="opts">
+<button data-k="a">a) Feedback is too slow to be useful</button><button data-k="b">b) The deployment pipeline and test automation must themselves be developed and maintained</button><button data-k="c">c) Releases become less frequent, increasing risk</button><button data-k="d">d) DevOps removes the need for regression testing</button></div>
+<div class="expl"><b>b</b> — pipeline/automation maintenance and new skills are the DevOps challenges; DevOps speeds feedback and automation <i>enables</i> regression, never replaces it.</div></div>
+
+<div class="q" data-a="c"><p class="qt">3. "Shift-left" in testing means:</p><div class="opts">
+<button data-k="a">a) Starting test execution earlier in the schedule only</button><button data-k="b">b) Moving all testing to the development phase and cancelling system test</button><button data-k="c">c) Testing work products earlier and involving testers from the start of the lifecycle</button><button data-k="d">d) Executing tests earlier by compressing the test schedule without changing test design</button></div>
+<div class="expl"><b>c</b> — both halves: early work-product testing + early tester involvement.</div></div>
+
+<div class="q" data-a="a"><p class="qt">4. After each sprint, the team discusses what went well and what to improve in testing. This is:</p><div class="opts">
+<button data-k="a">a) A retrospective</button><button data-k="b">b) An inspection</button><button data-k="c">c) A walkthrough</button><button data-k="d">d) A test completion review</button></div>
+<div class="expl"><b>a</b> — retrospective = post-iteration improvement meeting.</div></div>
+
+<div class="q" data-a="a"><p class="qt">5. Testing that a single class correctly calculates VAT, isolated from the rest of the system using stubs, is:</p><div class="opts">
+<button data-k="a">a) Component testing</button><button data-k="b">b) Component integration testing</button><button data-k="c">c) System testing</button><button data-k="d">d) Acceptance testing</button></div>
+<div class="expl"><b>a</b> — isolated single component = component testing.</div></div>
+
+<div class="q" data-a="b"><p class="qt">6. Testing the data exchanged between the invoicing module and the tax module is:</p><div class="opts">
+<button data-k="a">a) Component testing</button><button data-k="b">b) Component integration testing</button><button data-k="c">c) System testing</button><button data-k="d">d) Beta testing</button></div>
+<div class="expl"><b>b</b> — interfaces/interactions between components = component integration testing.</div></div>
+
+<div class="q" data-a="a"><p class="qt">7. End-to-end testing of the complete, integrated system against its requirements and use cases is:</p><div class="opts">
+<button data-k="a">a) System testing</button><button data-k="b">b) Component integration testing</button><button data-k="c">c) Component testing</button><button data-k="d">d) Confirmation testing</button></div>
+<div class="expl"><b>a</b> — whole-system behaviour against requirements = system testing.</div></div>
+
+<div class="q" data-a="c"><p class="qt">8. Users at their own workplace verify the system supports their business processes before rollout. This is:</p><div class="opts">
+<button data-k="a">a) Alpha testing</button><button data-k="b">b) Operational acceptance testing performed as alpha</button><button data-k="c">c) User acceptance testing (a form of beta-style site testing)</button><button data-k="d">d) Component testing</button></div>
+<div class="expl"><b>c</b> — users validating business fit at their own site (beta-style, UAT form); alpha is at the developer's site.</div></div>
+
+<div class="q" data-a="b"><p class="qt">9. Operational acceptance testing is typically performed by:</p><div class="opts">
+<button data-k="a">a) End customers</button><button data-k="b">b) Operations/administration staff (admins, helpdesk, security, database administrators)</button><button data-k="c">c) Developers</button><button data-k="d">d) External regulators only</button></div>
+<div class="expl"><b>b</b> — operational acceptance = ops/admin staff.</div></div>
+
+<div class="q" data-a="d"><p class="qt">10. Which statement about functional and non-functional testing is TRUE?</p><div class="opts">
+<button data-k="a">a) Non-functional testing can only be done at system level</button><button data-k="b">b) Component testing cannot be functional</button><button data-k="c">c) Functional testing is always black-box; non-functional is always white-box</button><button data-k="d">d) Functional and non-functional testing can be performed at every test level</button></div>
+<div class="expl"><b>d</b> — all four types at all levels — the key insight.</div></div>
+
+<div class="q" data-a="a"><p class="qt">11. A tester derives tests from the system's specification without seeing the code. The derivation basis makes this:</p><div class="opts">
+<button data-k="a">a) Black-box testing</button><button data-k="b">b) White-box testing</button><button data-k="c">c) Experience-based testing</button><button data-k="d">d) Debugging</button></div>
+<div class="expl"><b>a</b> — spec-based derivation without internal knowledge = black-box.</div></div>
+
+<div class="q" data-a="d"><p class="qt">12. A defect in the search function is fixed. The team re-runs the test that previously failed. This is:</p><div class="opts">
+<button data-k="a">a) Regression testing</button><button data-k="b">b) Maintenance testing</button><button data-k="c">c) Smoke testing</button><button data-k="d">d) Confirmation (re-)testing</button></div>
+<div class="expl"><b>d</b> — re-running the failed test for that defect = confirmation.</div></div>
+
+<div class="q" data-a="c"><p class="qt">13. After installing the search fix, the team also retests checkout and login "just in case." This is:</p><div class="opts">
+<button data-k="a">a) Confirmation testing</button><button data-k="b">b) Alpha testing</button><button data-k="c">c) Regression testing</button><button data-k="d">d) Static testing</button></div>
+<div class="expl"><b>c</b> — checking unaffected areas after a change = regression.</div></div>
+
+<div class="q" data-a="b"><p class="qt">14. Regression testing:</p><div class="opts">
+<button data-k="a">a) Runs only after defect fixes</button><button data-k="b">b) Runs after any change, including new features, enhancements and environment changes</button><button data-k="c">c) Applies only at system test level</button><button data-k="d">d) Is unnecessary in agile projects</button></div>
+<div class="expl"><b>b</b> — regression follows <i>any</i> change, at any level.</div></div>
+
+<div class="q" data-a="b"><p class="qt">15. A build is deployed to the test environment and a small suite verifies its most crucial functions work before deeper testing starts. This suite is:</p><div class="opts">
+<button data-k="a">a) A full regression suite</button><button data-k="b">b) A smoke test suite</button><button data-k="c">c) An inspection suite</button><button data-k="d">d) A confirmation suite</button></div>
+<div class="expl"><b>b</b> — smoke suite = build-worthiness gate.</div></div>
+
+<div class="q" data-a="d"><p class="qt">16. The company upgrades the database from version 11 to 12 and re-checks data integrity and application behaviour. The maintenance trigger is:</p><div class="opts">
+<button data-k="a">a) Modification</button><button data-k="b">b) Enhancement</button><button data-k="c">c) Retirement</button><button data-k="d">d) Migration</button></div>
+<div class="expl"><b>d</b> — new DB version = migration (incl. data conversion checks).</div></div>
+
+<div class="q" data-a="c"><p class="qt">17. A 15-year-old system is replaced by a new one; old data must be archived and verified. The maintenance trigger is:</p><div class="opts">
+<button data-k="a">a) Migration</button><button data-k="b">b) Modification</button><button data-k="c">c) Retirement</button><button data-k="d">d) Hotfix</button></div>
+<div class="expl"><b>c</b> — shutting down the old system = retirement (incl. archiving).</div></div>
+
+<div class="q" data-a="b"><p class="qt">18. The scope of maintenance testing is primarily determined by:</p><div class="opts">
+<button data-k="a">a) The size of the test team</button><button data-k="b">b) Impact analysis of the change and the areas it could affect</button><button data-k="c">c) The number of pages in the test plan</button><button data-k="d">d) The customer's contract penalty clauses</button></div>
+<div class="expl"><b>b</b> — impact analysis scopes maintenance testing.</div></div>
+
+<div class="q" data-a="a"><p class="qt">19. In an iterative/agile project, which testing concern grows the most over time?</p><div class="opts">
+<button data-k="a">a) Regression testing</button><button data-k="b">b) Component testing</button><button data-k="c">c) Requirements reviews</button><button data-k="d">d) Unit testing</button></div>
+<div class="expl"><b>a</b> — each iteration adds functionality → ever-growing regression need.</div></div>
+
+<div class="q" data-a="b"><p class="qt">20. Emergency fixes deployed to production typically require:</p><div class="opts">
+<button data-k="a">a) Only confirmation testing of the fix</button><button data-k="b">b) Both confirmation of the fix and regression testing around it</button><button data-k="c">c) No testing due to urgency</button><button data-k="d">d) A fresh impact analysis followed by targeted regression selection</button></div>
+<div class="expl"><b>b</b> — even emergency fixes need confirmation + regression of affected areas.</div></div>
+</div>
+</section>
+
+<div class="next"><a href="chapter-01.html">← Ch 1 insurance</a><span><a href="official-bank.html#ch2">Drill 28 official Ch 2 questions</a></span><a href="chapter-05.html">Next: Ch 5 — Test Management (reward #2) →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

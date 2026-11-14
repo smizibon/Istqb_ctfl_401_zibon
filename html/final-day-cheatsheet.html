@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Final-Day Cheat Sheet · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script>
+<style>
+/* cheat-sheet tightening — goal: one sheet, front/back */
+.cs{font-size:.86rem;line-height:1.42}
+.cs .sec-head{padding:10px 18px 8px}
+.cs .sec-head h2{font-size:1.02rem}
+.cs .sec-body{padding:0}
+.cs .cs-body{padding:2px 18px 14px}
+.cs h3{margin:10px 0 4px;font-size:.92rem}
+.cs ul{margin:3px 0;padding-left:17px}
+.cs li{margin:2px 0}
+.cs p{margin:4px 0}
+.cs table{margin:6px 0;font-size:.8rem}
+.cs th{padding:4px 8px}
+.cs td{padding:3px 8px}
+.cs .box{padding:7px 11px;margin:8px 0}
+.cs .box .box-tag{margin-bottom:3px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.cols>li,.cols>div{break-inside:avoid}
+.cs .kbadge{font-size:.64rem;padding:1px 9px;margin:0}
+.gl{font-size:.68em;font-weight:700;text-decoration:none;opacity:.5;vertical-align:super}
+.gl:hover{opacity:1}
+.rung{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:6px 0;font-size:.8rem}
+.rung b{background:#312e81;color:#fff;border-radius:8px;padding:3px 9px;white-space:nowrap}
+.rung span.ar2{color:var(--accent-2);font-weight:800}
+#selftest-btn{font-size:.78rem;font-weight:700;padding:5px 14px;margin:8px 0 0;border-radius:9px;border:1px solid var(--accent,#312e81);background:#312e81;color:#fff;cursor:pointer}
+#selftest-btn[aria-pressed="true"]{background:#fff;color:#312e81}
+/* self-test mode: blur answer-bearing cells only */
+.selftest #k3 table tbody tr td:last-child,
+.selftest #principles table tbody tr td:last-child,
+.selftest #chain table tbody tr td:nth-child(2),
+.selftest #process table tbody tr td:last-child,
+.selftest #levels table tbody tr td:last-child,
+.selftest #static table tbody tr td:nth-child(2),.selftest #static table tbody tr td:nth-child(3),.selftest #static table tbody tr td:last-child,
+.selftest #mgmt table tbody tr td:last-child{filter:blur(3.5px);cursor:pointer}
+.selftest td.shown{filter:none!important}
+.exam-foot{margin-top:6px;text-align:center;font-size:.9rem;font-weight:700;color:#1e1b4b;background:#fdf3e3;border:1px solid #f3d9a4;border-radius:10px;padding:8px 12px}
+@media print{
+ nav.crumbs,#toggle-all,.gl,#selftest-btn{display:none!important}
+ /* print safety: self-test blur fully overridden */
+ .selftest #k3 table tbody tr td:last-child,
+ .selftest #principles table tbody tr td:last-child,
+ .selftest #chain table tbody tr td:nth-child(2),
+ .selftest #process table tbody tr td:last-child,
+ .selftest #levels table tbody tr td:last-child,
+ .selftest #static table tbody tr td:nth-child(2),.selftest #static table tbody tr td:nth-child(3),.selftest #static table tbody tr td:last-child,
+ .selftest #mgmt table tbody tr td:last-child,
+ .selftest td.shown{filter:none!important}
+ header.hero{padding:10px 14px;margin-bottom:8px;border-radius:8px}
+ header.hero h1{font-size:1.05rem}
+ header.hero .sub,header.hero .meta{display:none}
+ body{font-size:9pt;line-height:1.28;background:#fff}
+ main{max-width:100%;padding:0 4mm;margin:0}
+ .cs section{box-shadow:none;border-radius:6px;margin-bottom:5px;break-inside:avoid}
+ .cs .sec-head{padding:4px 10px 3px}
+ .cs .sec-head h2{font-size:.82rem}
+ .cs .sec-body{padding:0}
+ .cs .cs-body{padding:1px 10px 7px}
+ .cs{font-size:8.5pt}
+ .cs table{font-size:8.5pt}
+ .cs td{padding:1px 5px}
+ .cs th{padding:2px 5px}
+ .cs .box{padding:4px 8px;margin:4px 0}
+ .cs .kbadge{font-size:6.5pt;padding:0 6px}
+ .cols{grid-template-columns:1fr 1fr;gap:0 10px}
+ section.closed .sec-body{display:block!important}
+ .exam-foot{font-size:8.5pt;padding:4px 8px}
+ @page{margin:7mm}
+}
+</style></head><body><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Final-day cheat sheet</nav>
+
+<header class="hero">
+<h1>Final-Day Cheat Sheet — the whole syllabus on one print-out</h1>
+<div class="sub">Closed-book recall drill: cover a line, say it, uncover. If you can't say it, that's your gap.</div>
+<div class="meta"><span class="chip">print me</span><span class="chip">closed-book recall before the exam</span><span class="chip">arrows ↗ link to the glossary</span></div>
+<button id="selftest-btn" aria-pressed="false" type="button">Self-test: blank answers</button>
+</header>
+
+<div class="cs">
+
+<section id="k3" data-open>
+<h2>1 · K3 RECIPES — calculate, don't guess (Ch 4)</h2><p class="kbadge k3">K3</p>
+<div class="cs-body">
+<table class="good"><thead><tr><th>Technique</th><th>Rule</th><th>Micro-example → test count</th></tr></thead><tbody>
+<tr><td>Equivalence partitioning <a class="gl" href="glossary.html#g-equivalence-partitioning" title="glossary">↗</a></td><td>One test per valid partition; <b>EACH invalid partition gets its own test case</b> (bundling invalids = <b>defect masking</b>)</td><td>Valid 1–100, invalids 0 / 101 / "abc" → <b>4 tests</b> (each invalid separate)</td></tr>
+<tr><td>BVA <a class="gl" href="glossary.html#g-boundary-value-analysis" title="glossary">↗</a></td><td><b>2-value</b> (ISTQB default): {boundary, nearest neighbour} · <b>3-value</b>: {b−1, b, b+1}</td><td>Range 18–60 → 2-value: 18, 17, 60, 61 (<b>4</b>) · 3-value: 17, 18, 19, 59, 60, 61 (<b>6</b>)</td></tr>
+<tr><td>Decision tables</td><td>Full rules = <b>product of condition values</b>; <b>collapse</b> rules ONLY when actions are identical; minimum tests = collapsed rules</td><td>2 binary conditions → 4 rules → <b>4 tests</b> (2×2×3 → 12); collapse identical actions → fewer</td></tr>
+<tr><td>State transition</td><td>Count <b>TRANSITIONS, not states</b>; invalid (event, state) pairs are also test cases; <b>0-switch coverage</b> = every valid transition exercised once</td><td>ATM: 4 valid transitions → <b>4 tests</b> + invalids (e.g. card removed while Awaiting PIN) each 1 more</td></tr>
+<tr><td>Statement vs branch coverage <a class="gl" href="glossary.html#g-statement-vs-branch-coverage" title="glossary">↗</a></td><td><b>100% branch ⇒ 100% statement — never the reverse</b>; coverage cannot detect <b>missing functionality</b></td><td><code>if (x&gt;10)</code>: x=15 → 100% statement / <b>50% branch</b>; add x=5 → 100% branch</td></tr>
+</tbody></table>
+<p><a class="gl" style="font-size:.82em;opacity:.75;vertical-align:baseline" href="drills.html">▸ drill these with new numbers → drills.html</a></p>
+</div>
+</section>
+
+<section id="principles">
+<h2>2 · The 7 testing principles (Ch 1)</h2><p class="kbadge">K2</p>
+<div class="cs-body"><table class="good"><tbody>
+<tr><td>1 Presence</td><td>Passing tests ≠ bug-free — testing shows the <b>presence</b> of defects, never their absence</td></tr>
+<tr><td>2 Exhaustive</td><td>Exhaustive testing is impossible → prioritise by risk &amp; criteria</td></tr>
+<tr><td>3 Early</td><td>Early testing (shift-left) saves time &amp; money — req defect 1×, production 100×</td></tr>
+<tr><td>4 Clustering</td><td>Few modules hold most defects → focus effort there</td></tr>
+<tr><td>5 Pesticide <a class="gl" href="glossary.html#g-pesticide-paradox" title="glossary">↗</a></td><td>Same tests stop finding new defects → <b>update/improve the tests</b></td></tr>
+<tr><td>6 Context</td><td>No one right way — safety-critical ≠ e-commerce</td></tr>
+<tr><td>7 Fallacy</td><td>Absence-of-errors: all bugs fixed + wrong system = still failure</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="chain">
+<h2>3 · error → defect → failure (Ch 1)</h2><p class="kbadge">K2</p>
+<div class="cs-body"><table class="good"><thead><tr><th>Link</th><th>Definition</th><th>Human?</th></tr></thead><tbody>
+<tr><td>Error <a class="gl" href="glossary.html#g-error" title="glossary">↗</a></td><td>A <b>human action</b> that produces a defect</td><td><b>YES</b> — always a human action</td></tr>
+<tr><td>Defect <a class="gl" href="glossary.html#g-defect" title="glossary">↗</a></td><td>A <b>flaw in a work product</b>, can cause failure</td><td>no — in the product</td></tr>
+<tr><td>Failure <a class="gl" href="glossary.html#g-failure" title="glossary">↗</a></td><td>Actual behaviour <b>deviates from expected</b>, at runtime</td><td>no — observed deviation</td></tr>
+<tr><td colspan="3">⚠️ Caveats: 1) a defect does <b>not always</b> cause a failure (code never run / inputs never trigger it) · 2) not every failure comes from a code defect — <b>environment</b> (hardware, radiation, config) or a wrong expected result can produce one; a wrong <b>requirement</b> also causes failures.</td></tr>
+</tbody></table>
+<p><b>QA vs QC:</b> QA = process-oriented, <b>prevents</b> defects (reviews, early design) · QC = product-oriented, <b>detects</b> defects (testing this build). Testing does both.</p>
+</div>
+</section>
+
+<section id="process">
+<h2>4 · Test process → work products + independence (Ch 1)</h2><p class="kbadge">K1–K2</p>
+<div class="cs-body">
+<div class="cols"><div>
+<table class="good"><tbody>
+<tr><td>Test planning</td><td>→ <b>test plan</b></td></tr>
+<tr><td>Test monitoring &amp; control</td><td>→ test progress reports, corrective actions</td></tr>
+<tr><td>Test analysis</td><td>→ test <b>conditions</b> (what to test)</td></tr>
+<tr><td>Test design</td><td>→ test <b>cases</b>, test data, environment design</td></tr>
+<tr><td>Test implementation</td><td>→ test <b>procedures</b>, test suites, schedules</td></tr>
+<tr><td>Test execution</td><td>→ test results, <b>defect reports</b></td></tr>
+<tr><td>Test completion</td><td>→ test <b>completion report</b>, lessons learned</td></tr>
+</tbody></table>
+</div><div>
+<table class="good"><tbody>
+<tr><td>Test basis</td><td>the information a test is based on (requirements, stories, design)</td></tr>
+<tr><td>Test condition</td><td>an <b>item/event to be tested</b></td></tr>
+<tr><td>Test case</td><td>preconditions + inputs + actions + <b>expected result</b> + postconditions</td></tr>
+<tr><td>Test procedure</td><td>ordered sequence of test cases (script)</td></tr>
+</tbody></table>
+<p><b>Independence ladder (low → high):</b></p>
+<div class="rung"><b>① author</b><span class="ar2">→</span><b>② team</b><span class="ar2">→</span><b>③ test team</b><span class="ar2">→</span><b>④ external org</b><span class="ar2">→</span><b>⑤ certified 3rd party</b></div>
+<p>① author tests own code · ② independent testers within the team · ③ independent test team/group inside the organisation · ④ testers from outside the organisation · ⑤ neither developers nor the organisation's staff.</p>
+</div></div>
+</div>
+</section>
+
+<section id="levels">
+<h2>5 · Levels, types &amp; maintenance (Ch 2)</h2><p class="kbadge">K2</p>
+<div class="cs-body">
+<p><b>Ladder:</b> component (isolated unit, dev + mocks) → component <b>integration</b> (interfaces between components) → <b>system</b> (whole behaviour, independent team) → <b>acceptance</b> (validation: user needs; often entry criterion for release; <b>alpha = developer's site · beta = user's site</b>).</p>
+<table class="good"><tbody>
+<tr><td>Functional / non-functional</td><td><i>what</i> the system does / <i>how well</i> it behaves (performance, usability, security, reliability)</td></tr>
+<tr><td>Black-box / white-box</td><td>spec-based derivation / internal-structure-based derivation — ANY type at ANY level</td></tr>
+<tr><td>Confirmation <a class="gl" href="glossary.html#g-confirmation-vs-regression" title="glossary">↗</a> / regression</td><td>verify a <b>specific defect</b> is fixed / verify a <b>change</b> broke nothing else — regression after <b>any</b> change, at <b>all levels, all SDLCs</b></td></tr>
+</tbody></table>
+<p><b>3 maintenance triggers</b> (scope = impact analysis): <b>modification</b> (enhancements, hotfixes) · <b>migration</b> (new platform/DB — needs data <b>conversion</b> testing + regression) · <b>retirement</b> (archiving, data migration). <b>Shift-left = two halves:</b> early work-product testing (reviews, static analysis) AND testers involved from the start.</p>
+</div>
+</section>
+
+<section id="static">
+<h2>6 · Static testing: reviews (Ch 3)</h2><p class="kbadge">K2 (roles K1)</p>
+<div class="cs-body">
+<table class="good"><thead><tr><th>Type</th><th>Leader</th><th>Formality</th><th>Key feature</th></tr></thead><tbody>
+<tr><td>Informal</td><td>anyone</td><td>lowest</td><td>no process/roles; pair review, desk-check; cheap, fast</td></tr>
+<tr><td>Walkthrough</td><td><b>author-led</b></td><td>mid-low</td><td>education / consensus-building, gathering comments</td></tr>
+<tr><td>Technical review</td><td>trained moderator ≠ author</td><td>mid-high</td><td>peers; consensus, detect defects, make decisions</td></tr>
+<tr><td>Inspection</td><td>trained moderator ≠ author</td><td><b>highest</b></td><td>rules/checklists, entry/exit criteria, <b>metrics</b>, formal follow-up</td></tr>
+</tbody></table>
+<p><b>6 roles:</b> <b>author</b> — fixes defects afterwards · <b>facilitator</b> — ensures the review runs effectively · <b>reviewer</b> — examines the product, ideally not the author · <b>scribe</b> — collects defects/comments during the meeting · <b>review leader</b> — takes overall responsibility for the review, decides exit · <b>manager</b> — decides <b>whether</b> the review happens. One person may hold several roles.</p>
+<p><b>Static analysis:</b> tool-based, no execution. <b>A compiler IS a static analysis tool.</b></p>
+</div>
+</section>
+
+<section id="mgmt">
+<h2>7 · Risk, criteria &amp; defects (Ch 5)</h2><p class="kbadge">K2 (+K3 report)</p>
+<div class="cs-body">
+<div class="cols"><div>
+<table class="good"><tbody>
+<tr><td>Risk</td><td>= <b>likelihood × impact</b> — rank by multiplying (2×5=10 &lt; 4×3=12); report <b>residual risk</b></td></tr>
+<tr><td>Product risk</td><td>the <b>work product</b> may fail users (security holes, poor usability)</td></tr>
+<tr><td>Project risk</td><td>the <b>project</b> fails (staffing, supplier, bad estimates, late release)</td></tr>
+<tr><td>Entry criteria</td><td>to <b>start</b> execution (env ready, testable build)</td></tr>
+<tr><td>Exit criteria</td><td>to <b>declare done</b> (tests run, coverage, defect thresholds) — both <b>measurable</b></td></tr>
+<tr><td>Severity / priority</td><td><b>technical impact</b> / <b>business urgency</b> — can diverge (typo on launch eve = low sev, high pri)</td></tr>
+</tbody></table>
+</div><div>
+<p><b>Defect lifecycle:</b><br>
+<b>New → Assigned → Fixed → confirmation test →</b> passes: <b>Closed</b> / fails: <b>Reopened</b>. Side states: Rejected · Duplicate · Deferred. "Fixed" is <b>not</b> the end.</p>
+<p><b>Good report (K3):</b> unique ID · title · date/reporter · environment/build · <b>steps to reproduce</b> · <b>expected vs actual result</b> · severity · evidence · references.</p>
+<p><b>Estimation:</b> metrics-based (past data) vs expert-based (judgement — planning poker, Delphi).<br>
+<b>Pyramid:</b> many unit → fewer integration → few end-to-end. <b>Quadrants:</b> Q4 tech/critique = performance, security, reliability.</p>
+</div></div>
+</div>
+</section>
+
+<section id="tools">
+<h2>8 · Tools (Ch 6)</h2><p class="kbadge">K2</p>
+<div class="cs-body">
+<p><b>6 categories:</b> test management (test mgmt platform, defect tracker) · static analysis (compiler, linter) · test design/implementation (model-based, test-data generators) · test execution &amp; automation (capture/replay, API runner) · non-functional (performance/load, security scanner) · support (version control, CI/CD, incident management).</p>
+<p>⚠️ Performance tools = <b>non-functional</b> · Git/version control = <b>support</b> · compiler = <b>static analysis</b>. Tools <b>help but NEVER guarantee</b>; benefits come from automating repetition; risks = unrealistic expectations, underestimated intro + maintenance cost, over-reliance, vendor dependency. <b>Pilot project</b> = try it on one small contained project before rollout.</p>
+</div>
+</section>
+
+<section id="traps">
+<h2>9 · TRAPS STRIP — the 8 highest-frequency distractors</h2><p class="kbadge k3">read Friday 15:15</p>
+<div class="cs-body"><div class="box trap">
+1. "All tests passed = defect-free" → <b>principle 1</b> (presence, not absence).<br>
+2. "Testing = only executing code" → <b>false</b> (planning + static testing exist).<br>
+3. "Most bugs in a few modules" = <b>defect clustering</b>, NOT pesticide paradox.<br>
+4. Pesticide paradox remedy = <b>new/modified tests</b>, never "run them more often".<br>
+5. QA = <b>process</b>/prevention · QC = <b>product</b>/detection — don't swap.<br>
+6. Walkthrough = <b>author-led</b>; inspection = trained moderator ≠ author + metrics.<br>
+7. A compiler <b>IS</b> static analysis; performance tools = <b>non-functional</b>; Git = <b>support</b>.<br>
+8. 100% branch ⊃ 100% statement — <b>never the reverse</b>; coverage can't find missing functionality.
+</div>
+<p><a class="gl" style="font-size:.82em;opacity:.75;vertical-align:baseline" href="official-bank.html#ch4-k3">▸ drill these with new numbers → official question bank</a></p></div>
+</section>
+
+</div>
+<p class="exam-foot">Pass = 26/40 · K1 ~7–8 · K2 ~21–23 · K3 ~10–11 · 90 sec/question — flag and move on.<br>⏱ Pacing: Q10 by 15 min · Q20 by 30 min · Q30 by 45 min · no blank answers — ever (no negative marking).</p>
+<div class="next"><a href="index.html">⌂ Study hub</a><span></span><strong>You're done — STOP at 16:00. Rest, eat, arrive early.</strong></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/layout.js"></script><script src="assets/bangla.js"></script>
+<script>
+/* self-test mode: blank answer cells, click to reveal one */
+(function(){
+  var btn = document.getElementById('selftest-btn');
+  var on = false, stOn = false;
+  function apply(clearShown){
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Self-test: ON — click a blurred cell' : 'Self-test: blank answers';
+    document.body.classList.toggle('selftest', on);
+    if (!on && clearShown) document.querySelectorAll('td.shown').forEach(function(td){ td.classList.remove('shown'); });
+  }
+  btn.addEventListener('click', function(){ on = !on; apply(true); });
+  /* click a blurred cell to reveal just that one; click again to re-blur */
+  document.addEventListener('click', function(e){
+    if (!on) return;
+    var td = e.target.closest('td');
+    if (!td) return;
+    if (getComputedStyle(td).filter !== 'none' && !td.classList.contains('shown')) { td.classList.add('shown'); }
+    else if (td.classList.contains('shown')) { td.classList.remove('shown'); }
+  });
+  /* print safety: never print blurred; revealed cells survive the print cycle */
+  window.addEventListener('beforeprint', function(){ stOn = on; on = false; apply(false); on = stOn; });
+  window.addEventListener('afterprint', function(){ apply(false); });
+})();
+</script></body></html>

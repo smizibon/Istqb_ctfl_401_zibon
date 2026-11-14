@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 1 — Fundamentals of Testing · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body data-ch="ch1" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Chapter 1</nav>
+
+<header class="hero">
+<h1>Chapter 1 — Fundamentals of Testing</h1>
+<div class="sub">The vocabulary and mental model everything else in the syllabus is built on. Tested directly (definitions) and indirectly (buried inside scenarios about other chapters' topics).<br>সিলেবাসের বাকি সবকিছুর ভিত্তি এই অধ্যায়ের শব্দভাণ্ডার আর মেন্টাল মডেল। সরাসরি (definition) এবং পরোক্ষভাবে — অন্য অধ্যায়ের টপিকের scenario-র ভেতরে লুকিয়ে — পরীক্ষায় আসে।</div>
+<div class="meta"><span class="chip">~7–8 exam questions</span><span class="chip">K1–K2</span><span class="chip">Full revision — Friday flash sweep</span><span class="chip hot">7 principles = the core</span></div>
+<div id="chapter-progress"></div>
+</header>
+
+<section>
+<h2>1.1 What is testing?</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>What testing is (and is not), how it differs from debugging, and the eight goals it can serve — one goal is always impossible.</i></p>
+<p class="plain"><b>In plain words:</b> testing checks any work product against expectations; debugging then fixes the causes found.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — the definition (essence)</span>
+<b>Software testing</b> is the process of <b>evaluating a work product</b> to determine whether it <b>satisfies requirements</b> and to <b>detect differences between given and expected results</b>. Testing also includes <b>planning, analysis, design, implementation, execution, and reporting</b> — it is far more than executing tests.</div>
+
+<div class="box und"><span class="box-tag">🧠 Understand — the three contrasts you must articulate</span>
+<b>Testing vs. debugging.</b> Testing <b>detects failures</b> caused by defects. Debugging <b>finds, analyses, and removes their causes</b>. Testing answers "is there a problem?"; debugging answers "why, and how do I fix it?" Debugging is a <b>development activity</b>, not a testing activity — though testers often help developers reproduce failures.<br><br>
+<b>Dynamic vs. static testing.</b> Dynamic = running the software (or any executable work product) and observing behaviour. Static = examining work products <b>without running them</b> (reviews, static analysis). Testing includes <b>both</b>.<br><br>
+<b>Any work product can be tested.</b> Requirements documents, user stories, design models, source code, test plans, even the tests themselves — all are testable.</div>
+
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+• "Testing always requires executing code" — <b>false</b> (static testing exists).<br>
+• "Testers only test running software" — <b>false</b> (any work product).<br>
+• An option describing "finding and removing causes" is <b>debugging</b>, not testing.</div>
+
+<h3>Test objectives (1.1.2)</h3>
+<p class="kbadge">K2</p>
+<p>Testing may aim to:</p>
+<ul>
+<li><b>Prevent defects</b> (e.g., by reviewing requirements)</li>
+<li><b>Verify</b> that requirements are fulfilled</li>
+<li>Check whether the system <b>works as expected</b></li>
+<li>Build <b>confidence</b> in the level of quality</li>
+<li><b>Find defects</b></li>
+<li><b>Reduce risk</b> (of failures in operation)</li>
+<li>Provide <b>information</b> for stakeholders' decision-making</li>
+<li><b>Comply</b> with law, regulation, or standards</li>
+</ul>
+<div class="rule"><b>Exam pattern:</b> a scenario + "which objective fits?" — e.g., "the team tested to fulfil a contractual acceptance criterion" → the <b>compliance</b> objective. Watch for the impossible objective: "proving there are no defects" is never valid.</div>
+<div class="bn">
+<p class="sec-sum"><i>সংজ্ঞা, testing-vs-debugging আর static-vs-dynamic পার্থক্য, এবং ৮টি test objective (টেস্ট উদ্দেশ্য) — যার মধ্যে একটি সবসময়ই অসম্ভব।</i></p>
+<div class="box mem"><span class="box-tag">📖 Memorise — সংজ্ঞা (মূল কথা)</span>
+<b>Software testing</b> হলো একটি <b>work product (কাজের ফলাফল) মূল্যায়ন</b> করার process, যাতে নির্ধারণ করা যায় এটি <b>requirements পূরণ করে কি না</b> এবং <b>প্রদত্ত ও প্রত্যাশিত ফলাফলের মধ্যে পার্থক্য detect</b> করা যায়। Testing-এর মধ্যে আরও রয়েছে <b>planning, analysis, design, implementation, execution এবং reporting</b> — অর্থাৎ এটি শুধু test execute করার চেয়ে অনেক বেশি কিছু।</div>
+
+<div class="box und"><span class="box-tag">🧠 Understand — যে তিনটি পার্থক্য তুমিকে বলতে পারতেই হবে</span>
+<b>Testing vs. debugging.</b> Testing <b>defect-এর কারণে সৃষ্ট failure শনাক্ত করে</b>। Debugging <b>সেই কারণগুলো খুঁজে বের করে, analysis করে এবং দূর করে</b>। Testing-এর উত্তর: "সমস্যা আছে কি না?"; debugging-এর উত্তর: "কেন, এবং কীভাবে ঠিক করব?" Debugging একটি <b>development activity</b>, testing activity নয় — যদিও tester-রা প্রায়ই developer-দের failure reproduce করতে সাহায্য করেন।<br><br>
+<b>Dynamic vs. static testing.</b> Dynamic মানে software (বা যেকোনো executable work product) চালিয়ে আচরণ পর্যবেক্ষণ করা। Static মানে work product <b>চালানো ছাড়াই</b> পরীক্ষা করা (review, static analysis)। Testing-এর মধ্যে <b>দুটোই</b> পড়ে।<br><br>
+<b>যেকোনো work product-ই test করা যায়।</b> Requirements document, user story, design model, source code, test plan, এমনকি test নিজেই — সবই testable।</div>
+
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+• "Testing always requires executing code" — <b>ভুল</b> (static testing বিদ্যমান)।<br>
+• "Testers only test running software" — <b>ভুল</b> (যেকোনো work product)।<br>
+• "finding and removing causes" বর্ণনা করা কোনো option হলো <b>debugging</b>, testing নয়।</div>
+
+<h3>Test objectives (1.1.2)</h3>
+<p>Testing-এর লক্ষ্য হতে পারে:</p>
+<ul>
+<li><b>Defect প্রতিরোধ করা</b> (যেমন requirements review-এর মাধ্যমে)</li>
+<li><b>Verify</b> করা যে requirements পূরণ হয়েছে</li>
+<li>পরীক্ষা করা সিস্টেমটি <b>প্রত্যাশা অনুযায়ী কাজ করে কি না</b></li>
+<li>মানের মাত্রা নিয়ে <b>আত্মবিশ্বাস</b> তৈরি করা</li>
+<li><b>Defect খুঁজে বের করা</b></li>
+<li><b>risk কমানো</b> (operation-এ failure-এর)</li>
+<li>Stakeholder-দের সিদ্ধান্ত নেওয়ার জন্য <b>তথ্য</b> দেওয়া</li>
+<li>আইন, রেগুলেশন বা standard <b>মেনে চলা (compliance)</b></li>
+</ul>
+<div class="rule"><b>Exam pattern:</b> একটি scenario + "কোন objective মানায়?" — যেমন "the team tested to fulfil a contractual acceptance criterion" → <b>compliance</b> objective। অসম্ভব objective-টি খেয়াল রাখো: "proving there are no defects" কখনোই বৈধ নয়।</div>
+</div>
+</section>
+
+<section>
+<h2>1.2 Why testing is necessary — errors, defects, failures</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>Why defects exist: the human mistake → product flaw → observed failure chain, its caveats, and QA vs QC.</i></p>
+<p class="plain"><b>In plain words:</b> people make mistakes, mistakes leave flaws, flaws may (or may not) surface as failures.</p>
+
+<h3>The quality chain</h3>
+<div class="chain">
+<div class="c c-err"><b>Error (mistake)</b>a <b>human action</b> that produces a defect — a developer misreads the spec and types the wrong formula</div>
+<div class="arr">→</div>
+<div class="c c-def"><b>Defect (bug/fault)</b>a <b>flaw in a work product</b>, can cause failure — the code contains the wrong interest formula</div>
+<div class="arr">→</div>
+<div class="c c-fail"><b>Failure</b>actual behaviour <b>deviates from expected</b>, observed at runtime — ATM shows a wrong balance</div>
+</div>
+
+<div class="diag"><svg viewBox="0 0 560 215" role="img" aria-label="Quality chain with two caveat branches">
+<defs><marker id="darrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs>
+<rect class="dbox" x="10" y="30" width="110" height="44"/><text class="dtxt" x="65" y="49" text-anchor="middle">Error</text><text class="dsmall" x="65" y="64" text-anchor="middle">human mistake</text>
+<line class="dedge" x1="120" y1="52" x2="168" y2="52"/>
+<rect class="dbox" x="170" y="30" width="110" height="44"/><text class="dtxt" x="225" y="49" text-anchor="middle">Defect</text><text class="dsmall" x="225" y="64" text-anchor="middle">flaw in product</text>
+<line class="dedge" x1="280" y1="52" x2="328" y2="52"/>
+<rect class="dbox" x="330" y="30" width="110" height="44"/><text class="dtxt" x="385" y="49" text-anchor="middle">Failure</text><text class="dsmall" x="385" y="64" text-anchor="middle">observed deviation</text>
+<!-- caveat 1: a defect may stop short of failure -->
+<path class="dbad" d="M225,74 C225,120 280,140 318,146"/>
+<text class="dtrap" x="330" y="150">✗ no failure (never executed)</text>
+<!-- caveat 2: environment causes failure WITHOUT any defect in the chain -->
+<rect class="dsub" x="10" y="150" width="120" height="30"/><text class="dsmall" x="70" y="169" text-anchor="middle">environment (radiation…)</text>
+<path class="dbad" d="M130,160 C220,190 320,180 372,74"/>
+<text class="dtrap" x="150" y="205">failure without a defect</text>
+<text class="dtrap" x="465" y="150" text-anchor="middle">wrong expected result</text>
+<text class="dtrap" x="465" y="164" text-anchor="middle">(bad oracle)</text>
+</svg></div>
+
+<div class="box trap"><span class="box-tag">⚠️ The caveats the exam loves</span>
+1. A defect does <b>not always</b> cause a failure — the wrong code may never be executed, or the inputs may never trigger it.<br>
+2. <b>Not every failure comes from a code defect</b> — environmental conditions (radiation, electromagnetic interference, hardware faults, wrong setup/configuration) can cause failures. And if the <b>expected result was wrong</b> (bad oracle), a "failure" may be observed even when the system behaves as designed.<br>
+3. A failure can also be caused by an error in <b>any</b> work product — a wrong requirement causes the code to faithfully implement a defect.</div>
+
+<h3>Root causes of errors (1.2.3)</h3>
+<p class="kbadge">K2</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — typical root causes</span>
+Time pressure · human fallibility · inexperienced/inadequately trained staff · miscommunication (verbal, written, ambiguous requirements) · complexity of code/design/architecture · misunderstanding interfaces · new/unfamiliar technologies · incorrect handling of system states and conditions.</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>Root-cause questions: "environmental conditions" offered as a cause of <b>failure</b> = correct; offered as a cause of <b>error</b> = wrong — an error is always a <b>human action</b>.</div>
+
+<h3>Contributions to success; QA vs. QC (1.2.1)</h3>
+<p class="kbadge">K2</p>
+<div class="box und"><span class="box-tag">🧠 Understand — how testing improves quality</span>
+<table class="good"><thead><tr><th></th><th>Quality assurance (QA)</th><th>Quality control (QC)</th></tr></thead><tbody>
+<tr><td>Focus</td><td><b>Process</b>-oriented — "are we doing the right things right?"</td><td><b>Product</b>-oriented — "is this build good?"</td></tr>
+<tr><td>Aim</td><td><b>Preventing defects</b> (through reviews and early test design)</td><td><b>Detecting and evaluating defects</b></td></tr>
+</tbody></table>
+<p class="plain"><b>In plain words:</b> QA improves how you work so bugs never appear; QC checks the thing you built.</p>
+Testing also provides <b>measures of quality</b> (defect counts, coverage) and <b>reduces risk</b> — the earlier a defect is found, the <b>cheaper</b> it is to remove.</div>
+<div class="box trap"><span class="box-tag">⚠️ Top trap</span>
+• "Testing proves the system is correct" — <b>false</b>. Testing can show the <b>presence</b> of defects, never their absence.<br>
+• Testing alone does <b>not</b> ensure quality — quality is built through the whole development effort; testing gives <i>information</i> about quality.</div>
+<div class="bn">
+<p class="sec-sum"><i>Error→defect→failure চেইনটি তার সতর্কতা সহ (defect ≠ failure), error-এর root cause, এবং QA-vs-QC — testing মানের ব্যাপারে তথ্য দেয়, কখনোই প্রমাণ করে না।</i></p>
+
+<h3>The quality chain</h3>
+<div class="chain">
+<div class="c c-err"><b>Error (mistake)</b>একটি <b>মানুষের কাজ (human action)</b> যা defect তৈরি করে — developer spec ভুল পড়ে ভুল formula টাইপ করল</div>
+<div class="arr">→</div>
+<div class="c c-def"><b>Defect (bug/fault)</b>work product-এর মধ্যে <b>একটি ত্রুটি</b>, failure ঘটাতে পারে — code-এ ভুল interest formula আছে</div>
+<div class="arr">→</div>
+<div class="c c-fail"><b>Failure</b>প্রকৃত আচরণ <b>প্রত্যাশিত আচরণ থেকে সরে যায়</b>, runtime-এ দেখা যায় — ATM ভুল balance দেখাল</div>
+</div>
+
+<div class="box trap"><span class="box-tag">⚠️ যে caveat-গুলো পরীক্ষায় বারবার আসে</span>
+1. একটি defect <b>সবসময়</b> failure ঘটায় <b>না</b> — ভুল code কখনো execute নাও হতে পারে, বা input কখনোই সেটি trigger করে না।<br>
+2. <b>প্রতিটি failure-এর উৎস কোনো code defect নয়</b> — পরিবেশগত শর্ত (radiation, electromagnetic interference, hardware fault, ভুল setup/configuration) failure ঘটাতে পারে। আর যদি <b>প্রত্যাশিত ফলাফলটাই ভুল</b> হয় (খারাপ oracle), তাহলে সিস্টেম যেমন ডিজাইন করা হয়েছে তেমনই আচরণ করলেও একটি "failure" দেখা দিতে পারে।<br>
+3. একটি failure <b>যেকোনো</b> work product-এর error-ও ঘটাতে পারে — ভুল requirement-এর কারণে code বিশ্বস্তভাবে একটি defect implement করে।</div>
+
+<h3>Root causes of errors (1.2.3)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — সাধারণ root cause-গুলো</span>
+সময়ের চাপ · মানুষের ভুল হওয়ার স্বভাব · অনভিজ্ঞ/অপর্যাপ্ত প্রশিক্ষণপ্রাপ্ত কর্মী · ভুল যোগাযোগ (মৌখিক, লিখিত, অস্পষ্ট requirements) · code/design/architecture-র জটিলতা · interface ভুল বোঝা · নতুন/অপরিচিত technology · সিস্টেমের state ও condition-এর ভুল হ্যান্ডলিং।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>Root cause-এর প্রশ্নে: "environmental conditions" যদি <b>failure</b>-এর কারণ হিসেবে দেওয়া হয় = সঠিক; কিন্তু <b>error</b>-এর কারণ হিসেবে দেওয়া হলে = ভুল — error সবসময়ই একটি <b>মানুষের কাজ</b>।</div>
+
+<h3>Contributions to success; QA vs. QC (1.2.1)</h3>
+<div class="box und"><span class="box-tag">🧠 Understand — testing কীভাবে মান বাড়ায়</span>
+Testing মান বাড়ায় <b>defect detect ও মূল্যায়ন করার</b> মাধ্যমে — এটাই <b>quality control (QC)</b>, product-মুখী: "এই build কি ভালো?" — এবং review ও দেরিতে-না-করা test design-এর মাধ্যমে <b>defect প্রতিরোধ</b> করে — এটাই <b>quality assurance (QA)</b>, process-মুখী: "আমরা কি সঠিক কাজগুলো সঠিকভাবে করছি?" Testing এছাড়াও <b>মানের মাপ</b> দেয় (defect সংখ্যা, coverage) এবং <b>risk কমায়</b> — defect যত আগে পাওয়া যায়, দূর করা তত <b>সস্তা</b>।</div>
+<div class="box trap"><span class="box-tag">⚠️ Top trap</span>
+• "Testing proves the system is correct" — <b>ভুল</b>। Testing defect-এর <b>উপস্থিতি</b> দেখাতে পারে, অনুপস্থিতি কখনোই নয়।<br>
+• শুধু testing করেই মান নিশ্চিত হয় <b>না</b> — মান গড়ে ওঠে পুরো development প্রচেষ্টা জুড়ে; testing মান সম্পর্কে <i>তথ্য</i> দেয়।</div>
+</div>
+</section>
+
+<section>
+<h2>1.3 The Seven Testing Principles</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>Seven rules of thumb every tester must know — the exam gives a mini-story, you name the rule.</i></p>
+<p class="plain"><b>In plain words:</b> seven common-sense limits of testing — learn to spot each from a one-line story.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise + apply — scenario → principle must be instant (~half of Ch 1 marks)</span>
+<table class="good"><thead><tr><th>Principle</th><th>One-line meaning</th><th>Exam-hook scenario</th></tr></thead><tbody>
+<tr><td>1. Presence, not absence</td><td>Passing tests ≠ bug-free</td><td>Team ships after all tests pass; users still find bugs</td></tr>
+<tr><td>2. Exhaustive testing is impossible</td><td>Can't test every input combination → prioritise by risk &amp; criteria</td><td>"Test all input combinations" gets rejected</td></tr>
+<tr><td>3. Early testing (shift-left)</td><td>Test as early as possible in the SDLC</td><td>Requirements defect costs 1×, production 100×</td></tr>
+<tr><td>4. Defect clustering</td><td>Few modules hold most defects</td><td>80% of bugs in 3 of 40 modules → focus effort there</td></tr>
+<tr><td>5. Pesticide paradox</td><td>Same tests stop finding new defects → <b>update/improve the tests</b></td><td>Regression suite finds nothing new for months</td></tr>
+<tr><td>6. Context-dependent</td><td>No one right way; safety-critical ≠ e-commerce</td><td>E-commerce approach applied to a medical device</td></tr>
+<tr><td>7. Absence-of-errors fallacy</td><td>All bugs fixed + wrong system = still failure</td><td>Meets (wrong) spec perfectly; users reject it</td></tr>
+</tbody></table>
+</div>
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+• "Most bugs in a few modules" = <b>defect clustering</b>, NOT pesticide paradox.<br>
+• Pesticide paradox described as "tests wear out" → the remedy is <b>new/modified tests</b>, never "run them more often".<br>
+• Principles appear as K2 <b>scenarios</b>: read the mini-story, name the principle. Practise until the mapping is instant.</div>
+<div class="bn">
+<p class="sec-sum"><i>৭টি principle, পরীক্ষায় ব্যবহৃত হওয়া exact scenario-hook সহ — presence-not-absence, clustering, pesticide… Ch 1-এর প্রায় অর্ধেক নম্বর এখানে।</i></p>
+<div class="box mem"><span class="box-tag">📖 Memorise + apply — scenario → principle ম্যাপিং তাৎক্ষণিক হতেই হবে (Ch 1-এর প্রায় অর্ধেক নম্বর)</span>
+<table class="good"><thead><tr><th>Principle</th><th>এক লাইনের অর্থ</th><th>Exam-hook scenario</th></tr></thead><tbody>
+<tr><td>1. Presence, not absence</td><td>Test pass মানে অবশ্যই bug-free নয়</td><td>সব test pass করার পর team ship করল; ব্যবহারকারীরা তবুও bug পায়</td></tr>
+<tr><td>2. Exhaustive testing is impossible</td><td>প্রতিটি input combination test করা সম্ভব নয় → risk ও criteria অনুযায়ী prioritize করো</td><td>"Test all input combinations" প্রস্তাব বাতিল হয়</td></tr>
+<tr><td>3. Early testing (shift-left)</td><td>SDLC-তে যত আগে সম্ভব test করো</td><td>Requirements defect-এর খরচ 1×, production-এ 100×</td></tr>
+<tr><td>4. Defect clustering</td><td>অল্প কিছু module-এই বেশিরভাগ defect থাকে</td><td>80% bug থাকে 40টির মধ্যে 3টি module-এ → শক্তি সেখানেই কেন্দ্রীভূত করো</td></tr>
+<tr><td>5. Pesticide paradox</td><td>একই test নতুন defect খুঁজে পাওয়া বন্ধ করে দেয় → <b>test update/improve করো</b></td><td>Regression suite মাসের পর মাস কিছু নতুন খুঁজে পায় না</td></tr>
+<tr><td>6. Context-dependent</td><td>একটিমাত্র সঠিক পদ্ধতি নেই; safety-critical ≠ e-commerce</td><td>E-commerce পদ্ধতি একটি medical device-এ প্রয়োগ করা হলো</td></tr>
+<tr><td>7. Absence-of-errors fallacy</td><td>সব bug fix + ভুল সিস্টেম = তবুও failure</td><td>(ভুল) spec নিখুঁতভাবে পূরণ করে; ব্যবহারকারীরা reject করে</td></tr>
+</tbody></table>
+</div>
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+• "Most bugs in a few modules" = <b>defect clustering</b>, pesticide paradox নয়।<br>
+• Pesticide paradox-কে "tests wear out" হিসেবে বর্ণনা করা হলে → প্রতিকার হলো <b>নতুন/পরিবর্তিত test</b>, "আরও ঘন ঘন চালানো" কখনোই নয়।<br>
+• Principle-গুলো K2 <b>scenario</b> হিসেবে আসে: mini-story পড়ো, principle-এর নাম বলো। ম্যাপিং তাৎক্ষণিক না হওয়া পর্যন্ত অনুশীলন করো।</div>
+</div>
+</section>
+
+<section>
+<h2>1.4 The test process</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>The seven test activities and what each produces, plus the basis/condition/case/procedure vocabulary and traceability.</i></p>
+<p class="plain"><b>In plain words:</b> a repeating loop of seven activities — plan, watch, analyse, design, build, run, close.</p>
+<div class="box und"><span class="box-tag">🧠 Understand — context-driven (1.4.1)</span>
+There is <b>no one universal test process</b> — it depends on <b>context</b>: product, risk, stakeholders, SDLC model, team, regulation.</div>
+
+<h3>The seven activities + work products (1.4.2 / 1.4.3)</h3>
+<p class="kbadge">K1</p>
+<table>
+<thead><tr><th>Activity</th><th>Purpose</th><th>Typical work products</th></tr></thead>
+<tbody>
+<tr><td>Test planning</td><td>Define objectives &amp; approach</td><td><b>Test plan</b></td></tr>
+<tr><td>Test monitoring &amp; control</td><td>Compare progress vs. plan, take corrective action</td><td>Test progress reports, documented corrective actions</td></tr>
+<tr><td>Test analysis</td><td>Identify <b>test conditions</b> (what to test) from the test basis</td><td>Test conditions list</td></tr>
+<tr><td>Test design</td><td>Create <b>test cases</b> &amp; data, design the environment</td><td>Test cases, test data, environment design</td></tr>
+<tr><td>Test implementation</td><td>Make things executable: procedures, suites, environment setup</td><td><b>Test procedures</b>, test suites, schedules</td></tr>
+<tr><td>Test execution</td><td>Run tests, compare actual vs. expected</td><td>Test results, defect reports</td></tr>
+<tr><td>Test completion</td><td>Collect experience at milestones (release, project end)</td><td><b>Test completion report</b>, lessons learned</td></tr>
+</tbody></table>
+
+<div class="diag"><svg viewBox="0 0 420 420" role="img" aria-label="The seven test activities as a circular, iterating pipeline">
+<circle cx="210" cy="200" r="130" fill="none" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 4"/>
+<rect class="dbox" x="160" y="53" width="100" height="34"/><text class="dtxt" x="210" y="70" text-anchor="middle">1 Planning</text><text class="dsmall" x="210" y="83" text-anchor="middle">test plan</text>
+<rect class="dbox" x="262" y="102" width="100" height="34"/><text class="dtxt" x="312" y="119" text-anchor="middle">2 Monitoring</text><text class="dsmall" x="312" y="132" text-anchor="middle">progress reports</text>
+<rect class="dbox" x="287" y="212" width="100" height="34"/><text class="dtxt" x="337" y="229" text-anchor="middle">3 Analysis</text><text class="dsmall" x="337" y="242" text-anchor="middle">conditions</text>
+<rect class="dbox" x="216" y="300" width="100" height="34"/><text class="dtxt" x="266" y="317" text-anchor="middle">4 Design</text><text class="dsmall" x="266" y="330" text-anchor="middle">test cases</text>
+<rect class="dbox" x="104" y="300" width="100" height="34"/><text class="dtxt" x="154" y="317" text-anchor="middle">5 Implementation</text><text class="dsmall" x="154" y="330" text-anchor="middle">procedures</text>
+<rect class="dbox" x="33" y="212" width="100" height="34"/><text class="dtxt" x="83" y="229" text-anchor="middle">6 Execution</text><text class="dsmall" x="83" y="242" text-anchor="middle">results, defects</text>
+<rect class="dbox" x="58" y="102" width="100" height="34"/><text class="dtxt" x="108" y="119" text-anchor="middle">7 Completion</text><text class="dsmall" x="108" y="132" text-anchor="middle">completion report</text>
+<text class="dtxt" x="210" y="196" text-anchor="middle" font-weight="700">activities overlap</text>
+<text class="dtxt" x="210" y="218" text-anchor="middle">iterate ↺</text>
+</svg></div>
+
+<h3>Key vocabulary — memorise exactly</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — the four definitions</span>
+• <b>Test basis</b> — the body of information a test is based on (requirements, user stories, design).<br>
+• <b>Test condition</b> — an <b>item/event to be tested</b> ("interest calculation on overdue accounts").<br>
+• <b>Test case</b> — input + execution preconditions + <b>expected result</b> (the expected result is what makes it a <i>case</i>, not just a trial run).<br>
+• <b>Test procedure (test script)</b> — step-by-step instructions for executing test cases, in order.</div>
+
+<h3>Traceability (1.4.4)</h3>
+<p class="kbadge">K2</p>
+<div class="box und"><span class="box-tag">🧠 Understand — why we trace</span>
+<b>Traceability</b> links test basis ↔ test conditions ↔ test cases ↔ results. It enables: <b>coverage evaluation</b>, <b>impact analysis</b> of changes, <b>audits</b>, and reporting "requirement X is tested".</div>
+
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+• <b>Analysis</b> answers <i>what</i> to test; <b>design</b> answers <i>how</i>.<br>
+• Activities <b>overlap and iterate</b> — they need not be strictly sequential (especially in Agile).<br>
+• Expected results must be defined <b>before</b> execution — otherwise "the output looked fine" bias creeps in.</div>
+<div class="bn">
+<p class="sec-sum"><i>৭টি test activity তাদের work product সহ, basis/condition/case/procedure শব্দভাণ্ডার, এবং traceability কেন গুরুত্বপূর্ণ।</i></p>
+<div class="box und"><span class="box-tag">🧠 Understand — context-driven (1.4.1)</span>
+কোনো একটি সর্বজনীন test process <b>নেই</b> — এটি <b>context</b>-এর উপর নির্ভর করে: product, risk, stakeholder, SDLC model, team, regulation।</div>
+
+<h3>The seven activities + work products (1.4.2 / 1.4.3)</h3>
+<table>
+<thead><tr><th>Activity</th><th>উদ্দেশ্য</th><th>Typical work products</th></tr></thead>
+<tbody>
+<tr><td>Test planning</td><td>Objective ও approach নির্ধারণ</td><td><b>Test plan</b></td></tr>
+<tr><td>Test monitoring &amp; control</td><td>Plan-এর সাথে অগ্রগতি তুলনা করা, সংশোধনমূলক ব্যবস্থা নেওয়া</td><td>Test progress report, লিপিবদ্ধ সংশোধনমূলক ব্যবস্থা</td></tr>
+<tr><td>Test analysis</td><td>Test basis থেকে <b>test condition</b> (কী test করা হবে) চিহ্নিত করা</td><td>Test condition-এর তালিকা</td></tr>
+<tr><td>Test design</td><td><b>Test case</b> ও data তৈরি, environment design করা</td><td>Test case, test data, environment design</td></tr>
+<tr><td>Test implementation</td><td>জিনিসগুলো executable করা: procedure, suite, environment setup</td><td><b>Test procedure</b>, test suite, schedule</td></tr>
+<tr><td>Test execution</td><td>Test চালানো, actual vs. expected তুলনা</td><td>Test result, defect report</td></tr>
+<tr><td>Test completion</td><td>Milestone-এ (release, প্রজেক্ট শেষ) অভিজ্ঞতা সংগ্রহ</td><td><b>Test completion report</b>, lessons learned</td></tr>
+</tbody></table>
+
+<h3>Key vocabulary — Memorise</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — চারটি সংজ্ঞা</span>
+• <b>Test basis</b> — যে তথ্যভাণ্ডারের উপর ভিত্তি করে test করা হয় (requirements, user story, design)।<br>
+• <b>Test condition</b> — <b>যে item/event test করা হবে</b> ("interest calculation on overdue accounts")।<br>
+• <b>Test case</b> — input + execution precondition + <b>expected result</b> (expected result-ই একে প্রকৃত <i>case</i> বানায়, নিছক একটি trial run নয়)।<br>
+• <b>Test procedure (test script)</b> — test case-গুলো ক্রমানুসারে execute করার ধাপে-ধাপে নির্দেশনা।</div>
+
+<h3>Traceability (1.4.4)</h3>
+<div class="box und"><span class="box-tag">🧠 Understand — কেন trace করি</span>
+<b>Traceability</b> test basis ↔ test condition ↔ test case ↔ result-কে সংযুক্ত করে। এটি সক্ষম করে: <b>coverage evaluation</b>, পরিবর্তনের <b>impact analysis</b>, <b>audit</b>, এবং "requirement X tested" রিপোর্ট করা।</div>
+
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+• <b>Analysis</b>-এর উত্তর <i>কী</i> test করব; <b>design</b>-এর উত্তর <i>কীভাবে</i>।<br>
+• Activity-গুলো <b>একে অপরকে ছাপিয়ে যায় এবং iterate হয়</b> — কড়া ক্রমিক হওয়া জরুরি নয় (বিশেষত Agile-এ)।<br>
+• Expected result <b>execution-এর আগেই</b> নির্ধারণ করতে হবে — নাহলে "the output looked fine" বায়াস ঢুকে পড়ে।</div>
+</div>
+</section>
+
+<section>
+<h2>1.5 Skills, independence &amp; the tester in the team</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum"><i>What testers need to know, the five rungs of test independence, and why quality is everyone's job.</i></p>
+<p class="plain"><b>In plain words:</b> the further the tester sits from the author, the more objective the testing.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — skills (1.5.1)</span>
+Testing needs both <b>professional/technical</b> skills (test techniques, tools, standards, SDLC) and <b>interpersonal</b> skills (communication, critical thinking, analytical, teamwork). <b>Domain knowledge</b> helps; <b>independence</b> reduces the author's bias — "everyone tests better someone else's work".</div>
+
+<h3>The independence ladder (memorise in order)</h3>
+<div class="stair" role="img" aria-label="Independence staircase from author to third party">
+<div class="rung" style="min-height:46px"><b>①</b>author tests own code</div>
+<div class="rung" style="min-height:66px"><b>②</b>tester in the team</div>
+<div class="rung" style="min-height:86px"><b>③</b>test team in org</div>
+<div class="rung" style="min-height:106px"><b>④</b>testers outside org</div>
+<div class="rung" style="min-height:126px"><b>⑤</b>certified 3rd party</div>
+</div>
+<div class="box mem"><span class="box-tag">📖 Memorise — 5 levels, low → high</span>
+① No independence — the <b>author tests their own code</b><br>
+② Independent testers <b>within the team</b><br>
+③ Independent <b>test team/group</b> inside the organisation<br>
+④ Independent testers from <b>outside the organisation</b><br>
+⑤ Testers are neither developers nor the organisation's staff (<b>certified third party</b>)</div>
+<div class="box und"><span class="box-tag">🧠 Understand — the trade-off</span>
+More independence → more <b>objectivity</b>, but independent testers may <b>lack product/developer knowledge</b>, and independence <b>does not replace</b> developer testing.</div>
+
+<h3>Whole-team approach (1.5.2)</h3>
+<p class="kbadge">K2</p>
+<div class="box und"><span class="box-tag">🧠 Understand — the tester's role</span>
+<b>Quality is everyone's job.</b> Testers act as <b>coaches, catalysts, and information providers</b>; they collaborate with business representatives on <b>acceptance criteria</b> and with developers on <b>testability</b> (e.g., test automation interfaces). Testers also promote quality <b>thinking</b> — asking "what if…", challenging assumptions, making quality visible.</div>
+<div class="bn">
+<p class="sec-sum"><i>Tester-এর skill, independence-এর ৫-স্তরের মই (ক্রমটি মনে রাখো), এবং whole-team approach — tester হলেন coach, gatekeeper নন।</i></p>
+<div class="box mem"><span class="box-tag">📖 Memorise — skills (1.5.1)</span>
+Testing-এর জন্য দুই ধরনের skill-ই লাগে — <b>professional/technical</b> (test technique, tool, standard, SDLC) এবং <b>interpersonal</b> (যোগাযোগ, critical thinking, analytical, teamwork)। <b>Domain knowledge</b> সাহায্য করে; <b>independence</b> author-এর বায়াস কমায় — "সবাই অন্যের কাজ নিজের কাজের চেয়ে ভালোভাবে test করতে পারে"।</div>
+
+<h3>The independence ladder (ক্রম মনে রাখো)</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — ৫টি স্তর, কম → বেশি</span>
+① কোনো independence নেই — <b>author নিজের code নিজে test করে</b><br>
+② <b>Team-এর ভেতরের</b> independent tester<br>
+③ প্রতিষ্ঠানের ভেতরের independent <b>test team/group</b><br>
+④ <b>প্রতিষ্ঠানের বাইরের</b> independent tester<br>
+⑤ Tester-রা developer-ও নন, প্রতিষ্ঠানের কর্মীও নন (<b>certified third party</b>)</div>
+<div class="box und"><span class="box-tag">🧠 Understand — trade-off</span>
+independence যত বাড়ে → <b>objectivity</b> তত বাড়ে, কিন্তু independent tester-দের <b>product/developer সম্পর্কে জ্ঞান কম</b> থাকতে পারে, এবং independence কখনোই developer testing-এর <b>বিকল্প নয়</b>।</div>
+
+<h3>Whole-team approach (1.5.2)</h3>
+<div class="box und"><span class="box-tag">🧠 Understand — tester-এর ভূমিকা</span>
+<b>মান সবার দায়িত্ব।</b> Tester-রা কাজ করেন <b>coach, catalyst এবং information provider</b> হিসেবে; তাঁরা business representative-দের সাথে <b>acceptance criteria</b> নিয়ে এবং developer-দের সাথে <b>testability</b> নিয়ে (যেমন test automation interface) collaborate করেন। Tester-রা quality <b>চিন্তাভাবনা</b>-ও ছড়িয়ে দেন — "what if…" জিজ্ঞেস করা, অনুমানকে চ্যালেঞ্জ করা, মানকে দৃশ্যমান করা।</div>
+</div>
+</section>
+
+<section>
+<h2>1.6 The universal ethical principle</h2>
+<p class="kbadge">K1</p>
+<p class="sec-sum"><i>One rule: the public interest comes before employer or client.</i></p>
+<p class="plain"><b>In plain words:</b> when duties clash, public safety and the community win.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — public interest first</span>
+Certified testers shall act <b>in the public interest</b> — safety and the wider community <b>override employer/client interests</b> when they conflict. One-mark question at most; just recognise the wording "public" in the option.</div>
+<div class="bn">
+<p class="sec-sum"><i>জনস্বার্থ employer/client-এর স্বার্থের চেয়ে অগ্রাধিকার পায় — এক নম্বরের প্রশ্ন, শুধু "public" শব্দটি চিনলেই হলো।</i></p>
+<div class="box mem"><span class="box-tag">📖 Memorise — জনস্বার্থ আগে</span>
+Certified tester-কে <b>জনস্বার্থে (public interest)</b> কাজ করতে হবে — দ্বন্দ্ব দেখা দিলে নিরাপত্তা ও বৃহত্তর সমাজ <b>employer/client-এর স্বার্থের চেয়ে অগ্রাধিকার পায়</b>। সর্বোচ্চ এক নম্বরের প্রশ্ন; option-এ "public" শব্দটি চিনে নাও, এটুকুই।</div>
+</div>
+</section>
+
+<section>
+<h2 id="c1-confusion">Confusion table — quick contrasts</h2>
+<p class="sec-sum"><i>Five one-line contrasts the exam swaps — scan them the night before.</i></p>
+<p class="plain"><b>In plain words:</b> five look-alike pairs; the bolded word tells them apart.</p>
+<table class="good"><tbody>
+<tr><td>Testing / debugging</td><td><b>detect</b> failures / find &amp; <b>remove</b> defect causes</td></tr>
+<tr><td>Error / defect / failure</td><td><b>human</b> act / flaw in <b>product</b> / <b>observed</b> deviation</td></tr>
+<tr><td>Quality assurance / quality control</td><td><b>process</b>-oriented <b>prevention</b> / <b>product</b>-oriented <b>detection</b></td></tr>
+<tr><td>Test condition / test case</td><td><b>what</b> to test / <b>how</b> to test it (inputs + expected result)</td></tr>
+<tr><td>Verification / validation mindset</td><td>did we build it <b>right</b> (per spec) / did we build the <b>right thing</b> (per needs)</td></tr>
+</tbody></table>
+<div class="bn">
+<p class="sec-sum"><i>পরীক্ষায় গুলিয়ে ফেলানো পাঁচটি এক-লাইনের বৈপরীত্য: testing/debugging, error/defect/failure, QA/QC, condition/case, verification/validation।</i></p>
+<table class="good"><tbody>
+<tr><td>Testing / debugging</td><td>failure শনাক্ত করে / defect-এর কারণ খুঁজে দূর করে</td></tr>
+<tr><td>Error / defect / failure</td><td>মানুষের কাজ / product-এর ত্রুটি / পর্যবেক্ষণ করা বিচ্যুতি</td></tr>
+<tr><td>Quality assurance / quality control</td><td>process-মুখী প্রতিরোধ / product-মুখী শনাক্তকরণ</td></tr>
+<tr><td>Test condition / test case</td><td>কী test করব / কীভাবে test করব (input + expected result)</td></tr>
+<tr><td>Verification / validation mindset</td><td>সঠিকভাবে বানিয়েছি কি না (spec অনুযায়ী) / সঠিক জিনিসটাই বানিয়েছি কি না (চাহিদা অনুযায়ী)</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<section>
+<h2>Top exam traps in this chapter</h2>
+<p class="sec-sum"><i>The six wrong answers the exam keeps tempting you with.</i></p>
+<p class="plain"><b>In plain words:</b> six recurring bait options — know them cold before Friday.</p>
+<div class="box trap"><span class="box-tag">⚠️ All six, cold</span>
+1. "All tests passed, so the software is defect-free" → <b>principle 1</b>.<br>
+2. Any option implying testing = only executing code → ignores <b>planning/static testing</b>.<br>
+3. Scenario describes most bugs in a few modules → <b>defect clustering</b>, <i>not</i> pesticide paradox.<br>
+4. Pesticide paradox as "tests wear out" → the remedy is <b>new/modified tests</b>, not running them more often.<br>
+5. Independence question: "most independent" = testers from <b>outside/3rd party</b>; "independent team inside the organisation" is one level lower.<br>
+6. Root-cause question: "environmental conditions" as a <b>cause of failure</b> (correct) vs. as an <b>error cause</b> (an error is a human action).</div>
+<div class="bn">
+<p class="sec-sum"><i>ছয়টি trap মুখস্থ: defect-free দাবি, clustering-vs-pesticide, independence-এর স্তর, environment-কে failure বনাম error-এর কারণ হিসেবে দেখা।</i></p>
+<div class="box trap"><span class="box-tag">⚠️ ছয়টিই, মুখস্থ</span>
+1. "All tests passed, so the software is defect-free" → <b>principle 1</b>।<br>
+2. testing = শুধু code execute করা — এমন কোনো option → <b>planning/static testing</b> উপেক্ষা করে।<br>
+3. Scenario-তে বেশিরভাগ bug অল্প কিছু module-এ → <b>defect clustering</b>, pesticide paradox <i>নয়</i>।<br>
+4. Pesticide paradox-কে "tests wear out" হিসেবে দেখানো হলে → প্রতিকার <b>নতুন/পরিবর্তিত test</b>, আরও ঘন ঘন চালানো নয়।<br>
+5. Independence-এর প্রশ্নে: "most independent" = <b>বাইরের/3rd party</b> tester; "প্রতিষ্ঠানের ভেতরের independent team" এক স্তর নিচের।<br>
+6. Root cause-এর প্রশ্নে: "environmental conditions" যদি <b>failure-এর কারণ</b> হয় (সঠিক) বনাম <b>error-এর কারণ</b> হিসেবে দেওয়া হয় (error একটি মানুষের কাজ)।</div>
+</div>
+</section>
+
+<section>
+<h2>Knowledge check — say it out loud, then reveal</h2>
+<p class="sec-sum"><i>Ten recall checks — say each answer aloud, then reveal.</i></p>
+<p class="plain"><b>In plain words:</b> quiz yourself aloud; only then open the answer.</p>
+<details class="kc"><summary>1. A test team runs the same regression suite for a year; lately it finds no defects. Which principle applies, and what is the correct response?</summary><div class="a">Pesticide paradox; respond by updating/improving the tests — not running them more often.</div></details>
+<details class="kc"><summary>2. Name the three links in the error→defect→failure chain, and one reason a defect might never cause a failure.</summary><div class="a">Error (human act) → defect (flaw in a work product) → failure (observed deviation); the code may never be executed, or the inputs never trigger it.</div></details>
+<details class="kc"><summary>3. Which activity produces test conditions, and which produces test procedures?</summary><div class="a">Test analysis → conditions; test implementation → procedures.</div></details>
+<details class="kc"><summary>4. True/false: 100% branch testing of all code guarantees absence of defects.</summary><div class="a">False — testing shows the presence of defects, never their absence (principle 1).</div></details>
+<details class="kc"><summary>5. A tester hired from an external test services company is what level of independence?</summary><div class="a">Level 4 — independent testers from outside the organisation.</div></details>
+<details class="kc"><summary>6. Which single test objective is about prevention, and name two ways it is achieved?</summary><div class="a">Preventing defects in the work products (e.g., via requirements reviews and early test design). The other objectives — verifying requirements, checking the system works as expected, finding defects, providing information for stakeholders, reducing risk, building confidence, and compliance — are detection- or information-oriented.</div></details>
+<details class="kc"><summary>7. What makes a test case a test case (which element is mandatory)?</summary><div class="a">The expected result — without it you cannot judge the actual behaviour.</div></details>
+<details class="kc"><summary>8. Which principle does "reviewing requirements before coding starts" illustrate?</summary><div class="a">Early testing / shift-left (testing work products early).</div></details>
+<details class="kc"><summary>9. QA or QC: "measuring defect density per release"… and "training developers in defensive coding"?</summary><div class="a">Measuring defect density = QC (product); training developers = QA (process).</div></details>
+<details class="kc"><summary>10. What is the test basis, and name two traceability benefits.</summary><div class="a">The information a test is based on; benefits: coverage evaluation and change impact analysis (also audits, reporting).</div></details>
+<div class="bn">
+<p class="sec-sum"><i>১০টি recall check — প্রতিটির উত্তর জোরে বলো, তারপর reveal করো।</i></p>
+<p class="kc-bn"><b>প্রশ্ন ১.</b> একটি test team এক বছর ধরে একই regression suite চালাচ্ছে; সম্প্রতি এটি আর কোনো defect খুঁজে পায় না। কোন principle প্রযোজ্য, এবং সঠিক প্রতিক্রিয়া কী? <b>উত্তর:</b> Pesticide paradox; প্রতিক্রিয়া হলো test-গুলো update/improve করা — আরও ঘন ঘন চালানো নয়।</p>
+<p class="kc-bn"><b>প্রশ্ন ২.</b> Error→defect→failure চেইনের তিনটি সংযোগস্থলের নাম বলো, এবং একটি defect কেন কখনোই failure ঘটাতে পারে না তার একটি কারণ দাও। <b>উত্তর:</b> Error (মানুষের কাজ) → defect (work product-এর ত্রুটি) → failure (পর্যবেক্ষণ করা বিচ্যুতি); code সম্ভবত কখনো execute-ই হয় না, বা input কখনো সেটি trigger করে না।</p>
+<p class="kc-bn"><b>প্রশ্ন ৩.</b> কোন activity test condition তৈরি করে, আর কোনটি test procedure তৈরি করে? <b>উত্তর:</b> Test analysis → condition; test implementation → procedure।</p>
+<p class="kc-bn"><b>প্রশ্ন ৪.</b> সত্য/মিথ্যা: সব code-এর 100% branch testing করলে defect না থাকার নিশ্চয়তা পাওয়া যায়। <b>উত্তর:</b> মিথ্যা — testing defect-এর উপস্থিতি দেখায়, অনুপস্থিতি কখনোই নয় (principle 1)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৫.</b> বাইরের একটি test services company থেকে নিয়োগপ্রাপ্ত একজন tester-এর independence কোন স্তরের? <b>উত্তর:</b> Level 4 — প্রতিষ্ঠানের বাইরের independent tester।</p>
+<p class="kc-bn"><b>প্রশ্ন ৬.</b> কোন একটি test objective প্রতিরোধ (prevention) সম্পর্কে, এবং এটি দুটি উপায়ে অর্জিত হয় — নাম করো। <b>উত্তর:</b> Work product-এ defect প্রতিরোধ করা (যেমন requirements review ও দেরিতে-না-করা test design-এর মাধ্যমে)। বাকি objective-গুলো — requirements verify করা, সিস্টেম প্রত্যাশা অনুযায়ী কাজ করছে কি না পরীক্ষা, defect খোঁজা, stakeholder-দের তথ্য দেওয়া, risk কমানো, আত্মবিশ্বাস তৈরি, আর compliance — সবই detection- বা information-মুখী।</p>
+<p class="kc-bn"><b>প্রশ্ন ৭.</b> কোন বিষয়টি একটি test case-কে প্রকৃত test case বানায় (কোন element বাধ্যতামূলক)? <b>উত্তর:</b> Expected result — এটি ছাড়া প্রকৃত আচরণ বিচার করা সম্ভব নয়।</p>
+<p class="kc-bn"><b>প্রশ্ন ৮.</b> "Reviewing requirements before coding starts" কোন principle-এর উদাহরণ? <b>উত্তর:</b> Early testing / shift-left (work product আগেভাগে test করা)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৯.</b> QA নাকি QC: "measuring defect density per release"… এবং "training developers in defensive coding"? <b>উত্তর:</b> Defect density মাপা = QC (product); developer-দের প্রশিক্ষণ দেওয়া = QA (process)।</p>
+<p class="kc-bn"><b>প্রশ্ন ১০.</b> Test basis কী, এবং traceability-র দুটি সুবিধার নাম দাও। <b>উত্তর:</b> যে তথ্যের উপর ভিত্তি করে test করা হয়; সুবিধা: coverage evaluation এবং পরিবর্তনের impact analysis (এছাড়াও audit, reporting)।</p>
+</div>
+</section>
+
+<section id="recap" data-open>
+<h2>⏱ 60-second recap</h2>
+<p class="sec-sum"><i>The whole chapter in eight chips — sweep them the morning of the exam.</i></p>
+<div class="recap">
+<span class="rk">testing vs debugging — <i>detect vs remove causes</i></span>
+<span class="rk">error→defect→failure — <i>human→flaw→deviation</i></span>
+<span class="rk">7 principles — <i>presence, exhaustive, early, clustering, pesticide, context, fallacy</i></span>
+<span class="rk">process — <i>planning→…→completion</i></span>
+<span class="rk">independence — <i>①author→⑤3rd party</i></span>
+<span class="rk">ethics — <i>public first</i></span>
+</div>
+</section>
+
+<section>
+<h2>Exercises — closed book, click to answer (target 10/12)</h2>
+<p class="sec-sum"><i>Interactive quiz, target 10/12 — click to answer, instant feedback.</i></p>
+<p class="plain"><b>In plain words:</b> closed book — click an option, get instant feedback, aim for 10/12.</p>
+<div class="quiz" data-target="10">
+<div class="q" data-a="a"><p class="qt">1. Which of the following BEST describes software testing?</p><div class="opts">
+<button data-k="a">a) The process of evaluating a work product to determine whether it satisfies requirements and to detect differences between given and expected results</button><button data-k="b">b) Executing software with the intent of finding failures</button><button data-k="c">c) The activity of finding, analysing and removing the causes of failures in code</button><button data-k="d">d) Inspecting requirement documents to prevent defects</button></div>
+<div class="expl"><b>a</b> — the full definition; b is dynamic-only, c is debugging, d is one static part of testing.</div></div>
+
+<div class="q" data-a="c"><p class="qt">2. Which is a debugging activity, not a testing activity?</p><div class="opts">
+<button data-k="a">a) Designing a test case for a defect found in production</button><button data-k="b">b) Reproducing a failure reported by a tester</button><button data-k="c">c) Analysing the code to locate the cause of a failure and fixing it</button><button data-k="d">d) Reporting a failure with steps to reproduce</button></div>
+<div class="expl"><b>c</b> — debugging = find, analyse, remove causes. Reproducing (b) supports debugging but the fix is the hallmark.</div></div>
+
+<div class="q" data-a="b"><p class="qt">3. A tester examines a requirements document to find ambiguities, without running any code. This is:</p><div class="opts">
+<button data-k="a">a) Dynamic testing, because testing includes any quality activity</button><button data-k="b">b) Static testing, because the work product is examined without execution</button><button data-k="c">c) Debugging, because no execution is involved</button><button data-k="d">d) Quality assurance, and therefore not testing</button></div>
+<div class="expl"><b>b</b> — examining a work product without execution = static testing, and static testing IS testing.</div></div>
+
+<div class="q" data-a="c"><p class="qt">4. Which of the following is NOT a typical objective of testing?</p><div class="opts">
+<button data-k="a">a) Preventing defects through early requirements review</button><button data-k="b">b) Gaining confidence in the level of quality</button><button data-k="c">c) Proving the software contains no defects</button><button data-k="d">d) Providing information to stakeholders for decision-making</button></div>
+<div class="expl"><b>c</b> — testing can never prove the absence of defects (principle 1); the other three are syllabus objectives.</div></div>
+
+<div class="q" data-a="b"><p class="qt">5. A developer misreads a specification and writes an incorrect formula. The system runs the formula and produces a wrong invoice total. In order: what are the mistake, the flaw, and the observed deviation?</p><div class="opts">
+<button data-k="a">a) Failure, error, defect</button><button data-k="b">b) Error, defect, failure</button><button data-k="c">c) Defect, failure, error</button><button data-k="d">d) Error, failure, defect</button></div>
+<div class="expl"><b>b</b> — error (human act) → defect (wrong formula in code) → failure (wrong total observed).</div></div>
+
+<div class="q" data-a="d"><p class="qt">6. Which statement about defects and failures is TRUE?</p><div class="opts">
+<button data-k="a">a) Every defect eventually causes a failure</button><button data-k="b">b) A failure can only be caused by a defect in the code</button><button data-k="c">c) Failures never occur when the hardware and environment are stable</button><button data-k="d">d) A defect may exist in a work product without ever causing a failure</button></div>
+<div class="expl"><b>d</b> — a defect may never be executed or triggered; a) overstates, b) and c) ignore environmental causes of failure.</div></div>
+
+<div class="q" data-a="c"><p class="qt">7. Which of the following is a typical root cause of errors?</p><div class="opts">
+<button data-k="a">a) Executing too many test cases</button><button data-k="b">b) Excessive product documentation</button><button data-k="c">c) Time pressure combined with human fallibility</button><button data-k="d">d) Using equivalence partitioning</button></div>
+<div class="expl"><b>c</b> — classic root causes: time pressure, human fallibility, miscommunication, complexity, unfamiliar tech.</div></div>
+
+<div class="q" data-a="b"><p class="qt">8. A system passes all 12,000 planned test cases. Management concludes the system is defect-free. Which principle have they violated?</p><div class="opts">
+<button data-k="a">a) Defect clustering</button><button data-k="b">b) Testing shows the presence of defects, not their absence</button><button data-k="c">c) Pesticide paradox</button><button data-k="d">d) Testing is context dependent</button></div>
+<div class="expl"><b>b</b> — passing tests ≠ defect-free.</div></div>
+
+<div class="q" data-a="b"><p class="qt">9. Testing every possible combination of input values for a form with 10 fields, each accepting 50 values, is rejected by the test team. Which principle justifies their decision, and what is the correct alternative?</p><div class="opts">
+<button data-k="a">a) Pesticide paradox; improve the tests regularly</button><button data-k="b">b) Exhaustive testing is impossible; test based on risk and prioritisation</button><button data-k="c">c) Defect clustering; test the most complex modules</button><button data-k="d">d) Early testing; start reviewing requirements</button></div>
+<div class="expl"><b>b</b> — exhaustive testing is impossible; the alternative is risk-based prioritisation.</div></div>
+
+<div class="q" data-a="c"><p class="qt">10. 80% of production defects come from 3 of the system's 40 modules. The test manager allocates disproportionate effort to those modules. Which principle applies?</p><div class="opts">
+<button data-k="a">a) Shift-left</button><button data-k="b">b) Absence-of-errors fallacy</button><button data-k="c">c) Defect clustering</button><button data-k="d">d) The pesticide paradox</button></div>
+<div class="expl"><b>c</b> — defects concentrated in few modules = defect clustering (not pesticide paradox, which is about tests wearing out).</div></div>
+
+<div class="q" data-a="d"><p class="qt">11. A regression suite that found many defects last year finds nothing new for six months. The BEST response is to:</p><div class="opts">
+<button data-k="a">a) Run the suite more frequently</button><button data-k="b">b) Retire the suite entirely</button><button data-k="c">c) Reduce development quality checks</button><button data-k="d">d) Improve and update the tests to find new defects</button></div>
+<div class="expl"><b>d</b> — pesticide paradox remedy: update/improve the tests, not run them more often.</div></div>
+
+<div class="q" data-a="a"><p class="qt">12. A team replaced a safety-critical medical device's test approach with a lightweight e-commerce-style approach. Which principle did they ignore?</p><div class="opts">
+<button data-k="a">a) Testing is context dependent</button><button data-k="b">b) Testing shows presence of defects</button><button data-k="c">c) Error fallacy</button><button data-k="d">d) Defect clustering</button></div>
+<div class="expl"><b>a</b> — the test approach must fit the product's context (safety-critical ≠ e-commerce).</div></div>
+</div>
+</section>
+
+<div class="next"><a href="index.html">← Study hub</a><span></span><a href="final-day-cheatsheet.html">Next: Final-day cheat sheet → you're done — STOP at 16:00</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

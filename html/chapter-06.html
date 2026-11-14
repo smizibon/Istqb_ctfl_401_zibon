@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 6 — Test Tools · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body data-ch="ch6" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Chapter 6</nav>
+
+<header class="hero">
+<h1>Chapter 6 — Test Tools</h1>
+<div class="sub">Small, definitional, cheap marks. Categories · benefits/risk pairs · the pilot-project rule.</div>
+<div class="bn">ছোট, সংজ্ঞাভিত্তিক, কম পরিশ্রমে পাওয়া নম্বর। ক্যাটাগরিগুলো · benefits/risk জোড়াগুলো · আর pilot project-এর নিয়ম।</div>
+<div class="meta"><span class="chip">~3 exam questions</span><span class="chip">K2</span><span class="chip">Study: Thursday 12 Nov · ~45 min</span><span class="chip hot">Reward rank #4 🔥🔥</span></div>
+<div id="chapter-progress"></div>
+</header>
+
+<section>
+<h2>6.1 The six tool categories</h2><p class="kbadge">K2</p>
+<p class="sec-sum"><i>Name the category from the description — traps: performance = non-functional, Git = support, a compiler = static analysis.</i></p>
+<p class="plain"><b>In plain words:</b> six labelled boxes — match each tool to its box.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — with examples (exam gives a description, you name the category)</span>
+<table class="good"><tbody>
+<tr><td>Test management</td><td>plan, store, trace, report tests &amp; defects</td><td>test management platforms, <b>defect trackers</b></td></tr>
+<tr><td>Static analysis</td><td>examine code/models <b>without execution</b></td><td><b>compilers</b>, <b>linters</b>, security analysers</td></tr>
+<tr><td>Test design / implementation</td><td>generate tests &amp; data from models/specs</td><td>model-based generators, <b>test-data generators</b></td></tr>
+<tr><td>Test execution &amp; automation</td><td>run tests, compare results, drive GUI/API</td><td><b>capture/replay</b> frameworks, API runners</td></tr>
+<tr><td>Non-functional testing</td><td>measure quality characteristics</td><td><b>performance</b>/load tools, security scanners</td></tr>
+<tr><td>Support tools</td><td>keep test work efficient &amp; manageable</td><td><b>CI/CD</b>, build tools, <b>version control</b>, incident management, spreadsheets</td></tr>
+</tbody></table>
+</div>
+<div class="box trap"><span class="box-tag">⚠️ Top traps</span>
+• Performance tools are <b>non-functional</b> tools — not “test execution” tools.<br>
+• Version control is a <b>support</b>/configuration-management tool — not test management.<br>
+• A compiler <b>is</b> a static analysis tool.</div>
+<p><b>6.1.2</b> — tools can support <b>every</b> test activity: planning (scheduling), monitoring/control (dashboards), analysis (coverage of conditions), design (generators), implementation (data, environments), execution (automation, CI), completion (reports), incident logging. One tool may serve several activities; tools range from spreadsheets to frameworks.</p>
+<p class="plain"><b>In plain words:</b> tools can assist every test activity — planning through reporting — not just running tests.</p>
+<div class="bn">
+<p class="sec-sum"><i>বর্ণনা শুনে category-র নাম বলতে হবে — ফাঁদ: performance মানে non-functional, Git মানে support, আর compiler মানে static analysis।</i></p>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — উদাহরণসহ (পরীক্ষায় বর্ণনা দেবে, তুমি category-র নাম বলবে)</span>
+<table class="good"><tbody>
+<tr><td>Test management (টেস্ট ম্যানেজমেন্ট)</td><td>test ও defect প্ল্যান, সংরক্ষণ, trace ও রিপোর্ট করা</td><td>test management platform, defect tracker</td></tr>
+<tr><td>Static analysis (স্ট্যাটিক অ্যানালিসিস)</td><td>code/model পরীক্ষা করা <b>execute না করেই</b></td><td>compiler, linter, security analyser</td></tr>
+<tr><td>Test design / implementation (টেস্ট ডিজাইন/ইমপ্লিমেন্টেশন)</td><td>model/spec থেকে test ও data তৈরি করা</td><td>model-based generator, test-data generator</td></tr>
+<tr><td>Test execution &amp; automation (টেস্ট এক্সিকিউশন ও অটোমেশন)</td><td>test চালানো, ফলাফল তুলনা করা, GUI/API চালানো</td><td>capture/replay framework, API runner</td></tr>
+<tr><td>Non-functional testing (নন-ফাংশনাল টেস্টিং)</td><td>quality characteristic মাপা</td><td>performance/load tool, security scanner</td></tr>
+<tr><td>Support tools (সাপোর্ট টুলস)</td><td>test-এর কাজ দক্ষ ও নিয়ন্ত্রণযোগ্য রাখা</td><td>CI/CD, build tool, <b>version control</b>, incident management, spreadsheet</td></tr>
+</tbody></table>
+</div>
+<div class="box trap"><span class="box-tag">⚠️ সবচেয়ে বড় ফাঁদগুলো</span>
+• "Performance tools are test execution tools" — <b>ভুল</b>: performance tool আসলে <b>non-functional</b> tool — test execution tool <b>নয়</b>।<br>
+• "Version control is a test management tool" — <b>ভুল</b>: version control একটা <b>support</b>/configuration management tool — test management <b>নয়</b>।<br>
+• "A compiler is not a static analysis tool" — <b>ভুল</b>: compiler সত্যিই <b>static analysis</b> tool-ই বটে।</div>
+<p><b>৬.১.২</b> — tool <b>প্রতিটি</b> test activity-কেই সাহায্য করতে পারে: planning (scheduling), monitoring/control (dashboard), analysis (condition-এর coverage), design (generator), implementation (data, environment), execution (automation, CI), completion (রিপোর্ট), incident logging। একটা দিয়েই একাধিক activity চলতে পারে; spreadsheet থেকে framework পর্যন্ত সবই tool।</p>
+</div>
+</section>
+
+<section>
+<h2>6.2 Benefits · risks · pilot projects</h2><p class="kbadge">K2</p>
+<p class="sec-sum"><i>Benefits from automating repetition — tools help, never guarantee; know the risk list; try one small pilot before rollout.</i></p>
+<p class="plain"><b>In plain words:</b> why tools pay off, how they backfire, and test small first.</p>
+<div class="box und"><span class="box-tag">🧠 Understand — the benefit pattern</span>
+Benefits come from <b>automating repetitive work</b>: time savings, fewer human errors, consistency &amp; repeatability, better coverage assessment, faster feedback — enabling what manual testing can’t do economically (nightly regression of thousands of tests).<br><br>
+⚠️ The exam’s favourite true/false: a tool <b>helps but never guarantees</b> — it cannot replace tester skill/judgement, and benefits only materialise with proper introduction, trained people, and a purpose that fits the context.</div>
+<div class="box mem"><span class="box-tag">📖 Memorise — the risk list</span>
+• <b>Unrealistic expectations</b> (expecting the tool to fix a broken process)<br>
+• Underestimated <b>time, cost, effort</b> of introduction <b>and ongoing maintenance</b><br>
+• Over-reliance / neglect of human judgement<br>
+• <b>Vendor dependency</b> (support, licensing, lock-in)<br>
+• Version-control neglect of test assets<br>
+• Tool less reliable than the product (false confidence)</div>
+<div class="box work"><span class="box-tag">✏️ Pilot project — the go/no-go mechanism</span>
+Before organisation-wide rollout, run the tool on <b>one small, contained project</b>: does it fit our context and needs? What does it really cost (effort, training, maintenance)? Decide with realistic expectations before full investment. Scenario “team tries the tool on one project first” → <b>pilot project</b>.</div>
+<p class="plain"><b>In plain words:</b> pilot project = try the tool on one small job before committing.</p>
+<div class="bn">
+<p class="sec-sum"><i>Benefits আসে পুনরাবৃত্ত কাজ automate করা থেকে — tool সাহায্য করে, কখনো guarantee করে না; risk-এর লিস্টটা জেনে রাখো; পুরো rollout-এর আগে একটা ছোট pilot করে দেখো।</i></p>
+<div class="box und"><span class="box-tag">🧠 বুঝে নাও — benefits-এর প্যাটার্ন</span>
+Benefits আসে <b>পুনরাবৃত্ত কাজ automate করা</b> থেকে: সময় বাঁচে, মানুষের ভুল কমে, consistency ও repeatability বাড়ে, coverage মূল্যায়ন ভালো হয়, feedback দ্রুত মেলে — এমন কাজও সম্ভব হয় যা হাতে-করা testing-এ অর্থনৈতিকভাবে করা যায় না (হাজারো test-এর nightly regression)।<br><br>
+⚠️ পরীক্ষার প্রিয় true/false: কোনো tool <b>সাহায্য করে, কিন্তু কখনো guarantee করে না</b> — এটা tester-এর দক্ষতা/বিচারবুদ্ধির বিকল্প <b>নয়</b>, আর benefits তখনই আসে যখন সঠিকভাবে পরিচয় করিয়ে দেওয়া হয়, মানুষকে প্রশিক্ষণ দেওয়া হয়, আর উদ্দেশ্যটা context-এর সঙ্গে মানানসই হয়।</div>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — risk-এর লিস্ট</span>
+• <b>Unrealistic expectations</b> (ভাঙা process আসলেই tool ঠিক করে দেবে ভেবে নেওয়া)<br>
+• পরিচয় করিয়ে দেওয়ার <b>সময়, খরচ, শ্রম</b> এবং চলমান <b>maintenance</b>-এর খরচ কম ভেবে নেওয়া<br>
+• অতিরিক্ত নির্ভরতা / মানুষের বিচারবুদ্ধিকে অবহেলা করা<br>
+• <b>Vendor dependency</b> (support, licensing, lock-in)<br>
+• test asset-এর version control-এর অবহেলা<br>
+• product-এর চেয়ে tool কম নির্ভরযোগ্য হওয়া (মিথ্যা আত্মবিশ্বাস)</div>
+<div class="box work"><span class="box-tag">✏️ Pilot project — go/no-go মেকানিজম</span>
+পুরো সংস্থায় rollout করার আগে tool-টা <b>একটা ছোট, সীমাবদ্ধ project</b>-এ চালিয়ে দেখো: এটা কি আমাদের context ও প্রয়োজনের সঙ্গে মেলে? আসল খরচ কত (শ্রম, প্রশিক্ষণ, maintenance)? বাস্তবসম্মত প্রত্যাশা নিয়ে, পুরো বিনিয়োগের আগে সিদ্ধান্ত নাও। Scenario-তে "দল আগে একটা project-এ tool-টা চালিয়ে দেখে" → <b>pilot project</b>।</div>
+</div>
+</section>
+
+<section>
+<h2>Knowledge check — say it, then reveal</h2>
+<p class="sec-sum"><i>6 recall checks — say each answer aloud, then reveal.</i></p>
+<p class="plain"><b>In plain words:</b> answer out loud first, then open — no peeking.</p>
+<details class="kc"><summary>1. Classify: JMeter, Git, SonarQube, a defect tracker.</summary><div class="a">JMeter = non-functional (performance) · Git = support/CM · SonarQube = static analysis · defect tracker = test management.</div></details>
+<details class="kc"><summary>2. Three benefits of automation over manual regression?</summary><div class="a">Faster/repeatable runs; consistent result comparison; enables nightly full regression (any three from the pattern).</div></details>
+<details class="kc"><summary>3. Three risks of introducing a test tool?</summary><div class="a">Unrealistic expectations; underestimated introduction+maintenance cost; vendor dependency; over-reliance (any three).</div></details>
+<details class="kc"><summary>4. Pilot project — which two questions does it answer?</summary><div class="a">Does the tool fit our context/needs? What is its true cost of adoption and maintenance?</div></details>
+<details class="kc"><summary>5. True/false: “A test management tool guarantees complete traceability.”</summary><div class="a">False — tools help, they never guarantee.</div></details>
+<details class="kc"><summary>6. Which tool category supports nightly automated regression in CI?</summary><div class="a">Test execution &amp; automation tools (running inside the CI/CD support pipeline).</div></details>
+<div class="bn">
+<p class="sec-sum"><i>৬টা রিকল চেক — প্রতিটার উত্তর আগে মুখে বলো, তারপর দেখো।</i></p>
+<p class="kc-bn"><b>প্রশ্ন ১.</b> শ্রেণিবিভাগ করো: JMeter, Git, SonarQube, একটা defect tracker।</p>
+<p class="kc-bn">JMeter = non-functional (performance) · Git = support/CM · SonarQube = static analysis · defect tracker = test management।</p>
+<p class="kc-bn"><b>প্রশ্ন ২.</b> Manual regression-এর বদলে automation-এর তিনটা benefit?</p>
+<p class="kc-bn">দ্রুত ও পুনরাবৃত্তযোগ্য run; ফলাফল তুলনায় consistency; প্রতি রাতের পূর্ণ regression সম্ভব হয় (প্যাটার্ন থেকে যেকোনো তিনটা)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৩.</b> Test tool পরিচয় করিয়ে দেওয়ার তিনটা risk?</p>
+<p class="kc-bn">Unrealistic expectations; পরিচয় করানো ও রক্ষণাবেক্ষণের খরচ কম ভাবা; vendor dependency; অতিরিক্ত নির্ভরতা (যেকোনো তিনটা)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৪.</b> Pilot project — এটা কোন দুটো প্রশ্নের উত্তর দেয়?</p>
+<p class="kc-bn">tool-টা কি আমাদের context/প্রয়োজনের সঙ্গে মেলে? এর গ্রহণ ও maintenance-এর আসল খরচ কত?</p>
+<p class="kc-bn"><b>প্রশ্ন ৫.</b> True/false: "A test management tool guarantees complete traceability."</p>
+<p class="kc-bn">False — tool সাহায্য করে, কখনো guarantee করে না।</p>
+<p class="kc-bn"><b>প্রশ্ন ৬.</b> CI-তে প্রতি রাতের automated regression-এ কোন tool category সাহায্য করে?</p>
+<p class="kc-bn">Test execution &amp; automation tool (CI/CD support pipeline-এর ভেতরে চেলে)।</p>
+</div>
+</section>
+
+<section id="recap">
+<h2>⏱ 60-second recap</h2>
+<div class="recap">
+<span class="rk"><i>1</i> 6 tool categories — name it from the description</span>
+<span class="rk"><i>2</i> Performance = <b>non-functional</b>, not execution</span>
+<span class="rk"><i>3</i> Benefits = automating repetitive work; helps, never guarantees</span>
+<span class="rk"><i>4</i> Risks = unrealistic expectations · over-reliance · vendor dependency</span>
+<span class="rk"><i>5</i> Pilot project first — one small job before rollout</span>
+</div>
+</section>
+
+<section>
+<h2>Exercises — closed book (target 10/12)</h2>
+<p class="sec-sum"><i>Interactive quiz, target 10/12 — instant feedback.</i></p>
+<p class="plain"><b>In plain words:</b> 12 questions, closed book, aim for ten-plus.</p>
+<div class="quiz" data-target="10">
+<div class="q" data-a="a"><p class="qt">1. A tool that plans, stores and traces test cases and defects belongs to:</p><div class="opts">
+<button data-k="a">a) Test management tools</button><button data-k="b">b) Static analysis tools</button><button data-k="c">c) Test execution tools</button><button data-k="d">d) Support tools</button></div>
+<div class="expl"><b>a</b> — manage/trace/report tests and defects = test management.</div></div>
+
+<div class="q" data-a="c"><p class="qt">2. A tool simulating 10,000 concurrent users to measure response time is:</p><div class="opts">
+<button data-k="a">a) Test management</button><button data-k="b">b) Static analysis</button><button data-k="c">c) Non-functional testing (performance)</button><button data-k="d">d) Test design</button></div>
+<div class="expl"><b>c</b> — measuring a quality characteristic, not running functional tests.</div></div>
+
+<div class="q" data-a="b"><p class="qt">3. A compiler is an example of:</p><div class="opts">
+<button data-k="a">a) Test execution tooling</button><button data-k="b">b) Static analysis tooling</button><button data-k="c">c) Non-functional testing tooling</button><button data-k="d">d) Configuration management</button></div>
+<div class="expl"><b>b</b> — it analyses code without executing the analysed program.</div></div>
+
+<div class="q" data-a="c"><p class="qt">4. A CI/CD pipeline and version control system are classified as:</p><div class="opts">
+<button data-k="a">a) Test design tools</button><button data-k="b">b) Static analysis tools</button><button data-k="c">c) Support tools</button><button data-k="d">d) Non-functional tools</button></div>
+<div class="expl"><b>c</b> — they keep test work efficient and managed, not test-specific.</div></div>
+
+<div class="q" data-a="d"><p class="qt">5. A tool that generates test data matching production-like patterns is:</p><div class="opts">
+<button data-k="a">a) Test management</button><button data-k="b">b) Incident management</button><button data-k="c">c) Performance</button><button data-k="d">d) Test design/implementation support</button></div>
+<div class="expl"><b>d</b> — test data generation supports design/implementation.</div></div>
+
+<div class="q" data-a="b"><p class="qt">6. A genuine benefit of test execution tools:</p><div class="opts">
+<button data-k="a">a) They guarantee defect-free releases</button><button data-k="b">b) Faster, repeatable regression runs with consistent result comparison</button><button data-k="c">c) They remove the need for test planning</button><button data-k="d">d) They replace tester judgement</button></div>
+<div class="expl"><b>b</b> — all others are the “guarantee” trap; tools help, never guarantee.</div></div>
+
+<div class="q" data-a="c"><p class="qt">7. An UNREALISTIC expectation of a test tool is:</p><div class="opts">
+<button data-k="a">a) “It will speed up nightly regression”</button><button data-k="b">b) “It will require training”</button><button data-k="c">c) “It will find all defects automatically and improve quality by itself”</button><button data-k="d">d) “It will need maintenance”</button></div>
+<div class="expl"><b>c</b> — textbook unrealistic expectation; b and d are realistic.</div></div>
+
+<div class="q" data-a="b"><p class="qt">8. Which is a documented RISK of tool support?</p><div class="opts">
+<button data-k="a">a) Consistent test execution</button><button data-k="b">b) Underestimating the time, cost and effort of introduction and maintenance</button><button data-k="c">c) Faster feedback</button><button data-k="d">d) Better coverage assessment</button></div>
+<div class="expl"><b>b</b> — a, c, d are benefits; the hidden ongoing cost is the risk.</div></div>
+
+<div class="q" data-a="a"><p class="qt">9. Using a new automation tool on one small project before organisation-wide rollout is:</p><div class="opts">
+<button data-k="a">a) A pilot project</button><button data-k="b">b) A walkthrough</button><button data-k="c">c) A retrospective</button><button data-k="d">d) Static analysis</button></div>
+<div class="expl"><b>a</b> — the go/no-go risk-reduction mechanism.</div></div>
+
+<div class="q" data-a="b"><p class="qt">10. Vendor lock-in and loss of vendor support relate to:</p><div class="opts">
+<button data-k="a">a) Test design</button><button data-k="b">b) Tool dependency / vendor dependence</button><button data-k="c">c) Test monitoring</button><button data-k="d">d) Traceability</button></div>
+<div class="expl"><b>b</b> — straight from the risk list.</div></div>
+
+<div class="q" data-a="d"><p class="qt">11. Automation code never updated after application changes leads to:</p><div class="opts">
+<button data-k="a">a) Improved maintainability</button><button data-k="b">b) Better metrics</button><button data-k="c">c) No consequence</button><button data-k="d">d) False confidence and decaying, failing suites (maintenance neglect)</button></div>
+<div class="expl"><b>d</b> — automation must be maintained like production code.</div></div>
+
+<div class="q" data-a="a"><p class="qt">12. Which tool directly supports test MONITORING AND CONTROL?</p><div class="opts">
+<button data-k="a">a) A dashboard visualising planned vs executed tests and defect trends</button><button data-k="b">b) A code linter</button><button data-k="c">c) A data generator</button><button data-k="d">d) A load generator</button></div>
+<div class="expl"><b>a</b> — progress vs plan visualisation is monitoring; acting on it is control.</div></div>
+</div>
+</section>
+
+<div class="next"><a href="chapter-05.html">← Ch 5</a><span><a href="official-bank.html#ch6">Drill 8 official Ch 6 questions</a></span><a href="chapter-01.html">Ch 1 — insurance refresher →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

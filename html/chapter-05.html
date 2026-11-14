@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 5 — Managing the Test Activities · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>body.lang-bn .hero .sub .bn{display:block}</style>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body data-ch="ch5" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Chapter 5</nav>
+
+<header class="hero">
+<h1>Chapter 5 — Managing the Test Activities</h1>
+<div class="sub">Planning · estimation · risk · monitoring · defects. The biggest definitional chapter, plus your one K3 skill at Foundation level: judging a defect report.
+<span class="bn">Planning · estimation · risk · monitoring · defect — সংজ্ঞাধিষ্ঠিত সবচেয়ে বড় অধ্যায়, সঙ্গে Foundation লেভেলে তোমার একমাত্র K3 দক্ষতা: একটি defect report বিচার করা।</span></div>
+<div class="meta"><span class="chip">~9 exam questions</span><span class="chip">K2 + one K3</span><span class="chip">Study: Thursday 12 Nov</span><span class="chip hot">Reward rank #2 🔥🔥🔥</span></div>
+<div id="chapter-progress"></div>
+</header>
+
+<section>
+<h2>5.1 Test planning &amp; estimation</h2><p class="kbadge">K2</p>
+<p class="sec-sum"><i>Write down why/what/when/who/how; start and stop only on countable criteria; estimate from past data or expert judgement; pyramid &amp; quadrants classify your tests.</i></p>
+<p class="plain"><b>In plain words:</b> think of it like a pilot's pre-takeoff checklist — nobody flies (or stops) on a feeling.</p>
+<h3 id="c5-plan">5.1.1 Planning</h3>
+<p>Planning defines <i>why, what, when, who, how</i> — aligned with stakeholders and organisational goals. The plan may be standalone or part of a sprint plan; planning is <b>continuous</b> and adapts as context changes. Typical content: strategy, scope, entry/exit criteria, estimates, risks, environment definition.</p>
+
+<div class="box mem"><span class="box-tag">📖 Memorise — Entry &amp; exit criteria (5.1.2)</span>
+<b>Entry criteria</b> — what must hold to <i>begin</i> execution (environment ready, test data available, testable build). Starting too early wastes effort on false failures.<br>
+<b>Exit criteria</b> — what must hold to <i>declare testing complete</i> (planned tests executed, coverage achieved, defects below threshold, no critical opens). Agile cousin: <b>Definition of Done</b>.<br>
+⚠️ Criteria must be <b>measurable</b> — “the system feels stable” is the exam’s favourite anti-pattern.</div>
+
+<div class="pipeline">
+<div class="pgate">Entry gate ✅<br>environment ready · test data available · testable build<br><s>“system feels stable” ✗</s></div>
+<div class="parr">→</div>
+<div class="pstep">Test execution</div>
+<div class="parr">→</div>
+<div class="pgate">Exit gate 🏁<br>≥95% planned tests run · coverage achieved · 0 open critical defects<br><s>“feels stable enough” ✗</s></div>
+</div>
+
+<h3 id="c5-est">5.1.3 Estimation</h3>
+<div class="box und"><span class="box-tag">🧠 Understand — Estimation (5.1.3)</span>
+<b>Metrics-based</b> = estimate from <b>measures of past projects</b> (tests/hour, defects/test, velocity). Giveaway phrase: “historical data”.<br>
+<b>Expert-based</b> = estimate from <b>experience of experts</b> (planning poker, wideband Delphi). Giveaway: “the senior tester estimates…”. Practise combining both.</div>
+
+<h3 id="c5-prio">5.1.4 Prioritisation</h3>
+<p><b>Prioritisation (5.1.4):</b> order execution by risk, coverage goals, constraints — so if time runs out, the most valuable tests have already run.</p>
+
+<h3>5.1.5 The test pyramid</h3>
+<div class="pyramid">
+<div class="lvl l3">FEW · large end-to-end / system tests — slow, costly</div>
+<div class="lvl l2">FEWER · integration tests</div>
+<div class="lvl l1">MANY · small automated component (unit) tests — fast, cheap</div>
+<div class="cap">You want <b>most</b> tests at the base. Too many GUI tests → long feedback loops.</div>
+</div>
+
+<h3>5.1.6 The test quadrants</h3>
+<div class="quads">
+<div class="qd q1"><b>Q1 · technology-facing, supports the team</b>component &amp; integration tests, often automated</div>
+<div class="qd q2"><b>Q2 · business-facing, supports the team</b>functional examples, ATDD/BDD-style tests</div>
+<div class="qd q3"><b>Q3 · business-facing, critiques the product</b>acceptance, exploratory, usability, UAT</div>
+<div class="qd q4"><b>Q4 · technology-facing, critiques the product</b>non-functional: performance, security, reliability</div>
+</div>
+<div class="axis">← technology-facing · business-facing → &nbsp;|&nbsp; ↑ supports team · critiques product ↓</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>Performance testing is <b>Q4, technology-facing</b> — examiners love parking it in a business-facing quadrant.</div>
+
+<div class="bn">
+<p class="sec-sum"><i>Plan মানে কেন/কী/কখন/কে/কীভাবে; মাপা যায় এমন entry/exit criteria; metrics- বনাম expert-based estimation; test pyramid ও test quadrants।</i></p>
+<p><b>Planning (5.1.1)</b> ঠিক করে দেয় <i>কেন, কী, কখন, কে, কীভাবে</i> — stakeholder আর সংস্থার লক্ষ্যের সঙ্গে মিলিয়ে। Plan আলাদা দলিল হতে পারে, আবার sprint plan-এর অংশও হতে পারে; planning একটি <b>continuous</b> প্রক্রিয়া — পরিস্থিতি বদলালে plan-ও মানিয়ে নেয়। সাধারণ বিষয়াবলি: strategy, scope, entry/exit criteria, estimate, risk, environment definition।</p>
+
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — Entry ও exit criteria (5.1.2)</span>
+<b>Entry criteria</b> — execution <i>শুরু</i> করতে হলে কী কী পূরণ থাকতে হবে (environment প্রস্তুত, test data available, testable build)। খুব আগে শুরু করলে false failure-এ শ্রম নষ্ট হয়।<br>
+<b>Exit criteria</b> — <i>testing সম্পূর্ণ</i> ঘোষণা করতে হলে কী কী পূরণ থাকতে হবে (planned test চালানো হয়েছে, coverage অর্জিত, defects সীমার নিচে, কোনো critical open নেই)। Agile-এর আত্মীয়: <b>Definition of Done</b>।<br>
+⚠️ Criteria অবশ্যই <b>measurable</b> হতে হবে — “the system feels stable” জাতীয় কথাই পরীক্ষার প্রিয় anti-pattern।</div>
+
+<div class="box und"><span class="box-tag">🧠 বোঝো — Estimation (5.1.3)</span>
+<b>Metrics-based</b> = <b>অতীত প্রকল্পের measure</b> থেকে estimate (tests/hour, defects/test, velocity)। চেনার শব্দ: “historical data”।<br>
+<b>Expert-based</b> = <b>expert-দের অভিজ্ঞতা</b> থেকে estimate (planning poker, wideband Delphi)। চেনার শব্দ: “the senior tester estimates…”। দুটো একসঙ্গে মেলানোর অভ্যাস করো।</div>
+<p><b>Prioritisation (5.1.4):</b> risk, coverage-এর লক্ষ্য আর constraint অনুযায়ী execution-এর ক্রম সাজাও — যাতে সময় শেষ হয়ে আসার আগেই সবচেয়ে মূল্যবান test গুলো চলে যায়।</p>
+
+<h3>5.1.5 The test pyramid</h3>
+<div class="pyramid">
+<div class="lvl l3">FEW · large end-to-end / system tests — ধীর, ব্যয়বহুল</div>
+<div class="lvl l2">FEWER · integration tests</div>
+<div class="lvl l1">MANY · ছোট automated component (unit) test — দ্রুত, সস্তা</div>
+<div class="cap">টেস্টের <b>অধিকাংশ</b> থাকা উচিত ভিত্তিতে (base-এ)। GUI test বেশি হলে feedback loop দীর্ঘ হয়ে যায়।</div>
+</div>
+
+<h3>5.1.6 The test quadrants</h3>
+<div class="quads">
+<div class="qd q1"><b>Q1 · technology-facing, supports the team</b>component ও integration test, প্রায়ই automated</div>
+<div class="qd q2"><b>Q2 · business-facing, supports the team</b>functional উদাহরণ, ATDD/BDD-ধাঁচের test</div>
+<div class="qd q3"><b>Q3 · business-facing, critiques the product</b>acceptance, exploratory, usability, UAT</div>
+<div class="qd q4"><b>Q4 · technology-facing, critiques the product</b>non-functional: performance, security, reliability</div>
+</div>
+<div class="axis">← technology-facing · business-facing → &nbsp;|&nbsp; ↑ supports team · critiques product ↓</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>Performance testing is <b>Q4, technology-facing</b> — পরীক্ষকরা একে business-facing quadrant-এ রাখতে বড় ভালোবাসেন; ওখানে রাখা যাবে <b>না</b>।</div>
+</div>
+</section>
+
+<section>
+<h2>5.2 Risk &amp; risk-based testing</h2><p class="kbadge">K2</p>
+<p class="sec-sum"><i>Score each risk by multiplying likelihood × impact, handle the biggest number first, and report what risk remains.</i></p>
+<p class="plain"><b>In plain words:</b> think of it like triage in an emergency room — treat the highest score first, not the scariest-looking.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise</span>
+<b>Risk = likelihood × impact.</b> Risk analysis determines the level; <b>risk assessment</b> = identify + analyse + define mitigation. Testing itself is a mitigation activity. Risk-based testing attacks the riskiest items first, most intensely — and the risk that remains afterwards is <b>residual risk</b>, which must be communicated to stakeholders.</div>
+<div class="rule"><b>Exam skill:</b> rank by multiplication, never eyeball — A = 2×5 = 10, B = 4×3 = 12, so <b>B</b> is the higher risk and gets tested first, with the <b>strongest technique</b>.</div>
+
+<div class="hgrid" style="grid-template-columns:auto repeat(3,1fr)">
+<div class="hcell hlab">Likelihood ↓ / Impact →</div><div class="hcell hlab">Impact 3</div><div class="hcell hlab">Impact 5</div><div class="hcell hlab">Impact 9</div>
+<div class="hcell hlab">L 2</div><div class="hcell h-lo">6</div><div class="hcell h-md">10 · A</div><div class="hcell h-hi">18</div>
+<div class="hcell hlab">L 4</div><div class="hcell h-md">12 · B ← test first</div><div class="hcell h-hi">20</div><div class="hcell h-hi">36</div>
+<div class="hcell hlab">L 5</div><div class="hcell h-md">15</div><div class="hcell h-hi">25</div><div class="hcell h-hi">45</div>
+</div>
+<p class="plain"><b>Read it like this:</b> A sits at likelihood 2 × impact 5 = <b>10</b>; B at 4 × 3 = <b>12</b>. B scores higher despite A's scarier impact — <b>multiply, never eyeball</b>.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — Product vs project risk (5.2.3)</span>
+<b>Product risk</b> — the <b>work product</b> may fail its users: security holes, poor usability, bad data, unreliable behaviour. (“Customer data might leak.”)<br>
+<b>Project risk</b> — threats to <b>the project itself</b>: staffing, skills, conflicts, supplier trouble, bad estimates, scope creep, tool issues. (“The tool vendor may go bankrupt.” “The release might be late.”)</div>
+
+<div class="bn">
+<p class="sec-sum"><i>Risk = likelihood × impact — গুণ করে rank করো; product বনাম project ভাগ আলাদা; residual risk জানাতে হয়।</i></p>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো</span>
+<b>Risk = likelihood × impact।</b> Risk analysis নির্ধারণ করে risk-এর মাত্রা; <b>risk assessment</b> = চিহ্নিত করা + analysis করা + mitigation ঠিক করা। Testing নিজেই একটি mitigation কাজ। Risk-based testing সবচেয়ে ঝুঁকিপূর্ণ item-গুলোকে আগে ও সবচেয়ে জোরালোভাবে আক্রমণ করে — তারপরেও যে risk থেকে যায়, সেটাই <b>residual risk</b>, যা stakeholder-দের কাছে জানাতেই হবে।</div>
+<div class="rule"><b>Exam skill:</b> কখনো চোখ বুজে অনুমান নয়, গুণ করে rank করো — A = 2×5 = 10, B = 4×3 = 12, তাই <b>B</b>-ই বেশি ঝুঁকিপূর্ণ; ওটাই আগে test হবে, আর <b>সবচেয়ে শক্তিশালী কৌশলে</b>।</div>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — Product বনাম project risk (5.2.3)</span>
+<b>Product risk</b> — <b>work product</b> ব্যবহারকারীদের কাছে ব্যর্থ হতে পারে: security-র ফাঁক, খারাপ usability, ভুল data, অবিশ্বস্ত আচরণ। (“Customer data might leak.”)<br>
+<b>Project risk</b> — <b>প্রকল্পটির নিজের</b> ওপর হুমকি: staffing, skills, দ্বন্দ্ব, supplier ঝামেলা, ভুল estimate, scope creep, tool-এর সমস্যা। (“The tool vendor may go bankrupt.” “The release might be late.”)</div>
+</div>
+</section>
+
+<section>
+<h2>5.3 Monitoring, control &amp; completion</h2><p class="kbadge">K2</p>
+<p class="sec-sum"><i>Watch progress against the plan, act when it drifts, report to fit the reader, and close out with a report and archived testware.</i></p>
+<p class="plain"><b>In plain words:</b> think of it like a car dashboard — monitoring is glancing at the gauges, control is turning the wheel.</p>
+<h3 id="c5-mon">Monitoring &amp; control</h3>
+<ul>
+<li><b>Monitoring</b> = gather data, compare progress vs plan. <b>Control</b> = act on it — re-prioritise, adjust schedule, add automation. (Observe → correct.)</li>
+</ul>
+<h3 id="c5-report">Reporting &amp; metrics</h3>
+<ul>
+<li><b>Reports fit the audience:</b> management gets a short summary of cost, schedule, quality, risk; the test team gets execution detail.</li>
+<li><b>Metrics to know:</b> planned-vs-executed tests, pass rate, <b>defect find/fix trends</b>, defect density, requirements/code coverage, residual risk. They answer: on track? good enough? when to stop?</li>
+</ul>
+<h3 id="c5-comp">Test completion</h3>
+<ul>
+<li><b>Test completion</b> happens at milestones (release, end of iteration, end of a test level): check exit criteria, write the <b>completion report</b> (results vs plan, obstacles, lessons learned, residual risk), archive testware.</li>
+</ul>
+<h3>5.4 Configuration management</h3>
+<p><b>Testware</b> (plans, cases, data, automation) must be <b>version-controlled, traceable, change-managed</b> — so the right testware matches the right build, results are reproducible, nothing is lost. Scenario giveaway: “tests ran against the wrong build” or “nobody could find the latest test cases” → CM failure.</p>
+
+<div class="bn">
+<p class="sec-sum"><i>Monitoring মানে plan-এর সঙ্গে তুলনা করে দেখা, control মানে ব্যবস্থা নেওয়া; report পাঠক অনুযায়ী সাজানো; completion মানে exit criteria, report, archive; CM testware-এর version নিয়ন্ত্রণ করে।</i></p>
+<ul>
+<li><b>Monitoring</b> = data জোগাড় করে progress আর plan-এর তুলনা করা। <b>Control</b> = সেই তথ্যের ভিত্তিতে ব্যবস্থা নেওয়া — re-prioritise, schedule ঠিক করা, automation যোগ করা। (দেখা → সংশোধন।)</li>
+<li><b>Report পাঠক অনুযায়ী:</b> management পায় cost, schedule, quality, risk-এর ছোট সারাংশ; test team পায় execution-এর বিস্তারিত।</li>
+<li><b>যে metrics জানতে হবে:</b> planned বনাম executed test, pass rate, <b>defect find/fix trend</b>, defect density, requirements/code coverage, residual risk। এগুলোর উত্তর দেয়: গতি ঠিক আছে কি না, মান যথেষ্ট কি না, কখন থামব।</li>
+<li><b>Test completion</b> ঘটে milestone-এ (release, iteration-এর শেষ, কোনো test level-এর শেষ): exit criteria যাচাই করা, <b>completion report</b> লেখা (ফলাফল বনাম plan, বাধা, lessons learned, residual risk), testware archive করা।</li>
+</ul>
+<h3>5.4 Configuration management</h3>
+<p><b>Testware</b> (plan, case, data, automation) অবশ্যই <b>version-controlled, traceable, change-managed</b> হতে হবে — যাতে সঠিক testware মেলে সঠিক build-এর সঙ্গে, ফলাফল reproducible হয়, কিছুই হারিয়ে না যায়। Scenario-র চেনা লক্ষণ: “tests ran against the wrong build” বা “nobody could find the latest test cases” → CM-এর ব্যর্থতা।</p>
+</div>
+</section>
+
+<section>
+<h2>5.5 Defect management — the K3 home</h2><p class="kbadge k3">K3</p>
+<p class="sec-sum"><i>A defect walks a loop — New → Assigned → Fixed → confirmed → Closed — and a good report gives anyone the steps, expected vs actual, build and severity to reproduce it. No blame.</i></p>
+<p class="plain"><b>In plain words:</b> think of it like a hospital referral slip — where it is, who has it, and exactly how to see the symptom again.</p>
+<h3>Lifecycle (memorise the loop)</h3>
+<svg class="diag" viewBox="0 0 640 200" role="img" aria-label="Defect lifecycle: New to Assigned to Fixed to Verified to Closed; failed confirmation reopens back to Assigned; side states Rejected, Duplicate, Deferred">
+<defs><marker id="darrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs>
+<rect class="dbox" x="10" y="30" width="90" height="36"/><text class="dtxt" x="55" y="52" text-anchor="middle">New</text>
+<rect class="dbox" x="130" y="30" width="100" height="36"/><text class="dtxt" x="180" y="52" text-anchor="middle">Assigned</text>
+<rect class="dbox" x="260" y="30" width="80" height="36"/><text class="dtxt" x="300" y="52" text-anchor="middle">Fixed</text>
+<rect class="dbox" x="370" y="30" width="100" height="36"/><text class="dtxt" x="420" y="46" text-anchor="middle">Confirmation</text><text class="dsmall" x="420" y="60" text-anchor="middle">test</text>
+<rect class="dbox" x="500" y="30" width="90" height="36"/><text class="dtxt" x="545" y="52" text-anchor="middle">Closed</text>
+<path class="dedge" d="M100,48 H126"/><path class="dedge" d="M230,48 H256"/><path class="dedge" d="M340,48 H366"/><path class="dedge" d="M470,48 H496"/>
+<text class="dsmall" x="475" y="40" text-anchor="middle">passes</text>
+<path class="dedge" d="M420,66 V116"/>
+<rect class="dbox" x="370" y="120" width="100" height="30"/><text class="dtxt" x="420" y="139" text-anchor="middle">Reopened ↺</text>
+<text class="dtrap" x="432" y="95">fails</text>
+<path class="dedge" d="M370,135 H180 V70"/>
+<text class="dsmall" x="270" y="128">back to Assigned</text>
+<path class="dedge" d="M55,66 V126"/>
+<text class="dsmall" x="60" y="100">side exits</text>
+<rect class="dsub" x="10" y="130" width="90" height="26"/><text class="dsmall" x="55" y="147" text-anchor="middle">Rejected</text>
+<rect class="dsub" x="110" y="130" width="90" height="26"/><text class="dsmall" x="155" y="147" text-anchor="middle">Duplicate</text>
+<rect class="dsub" x="210" y="130" width="90" height="26"/><text class="dsmall" x="255" y="147" text-anchor="middle">Deferred</text>
+</svg>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>“Fixed” is <b>not</b> the end: the confirmation test <b>precedes</b> closing. A failing confirmation reopens the defect.</div>
+
+<h3>A good defect report contains (5.5.2 — K3)</h3>
+<ul>
+<li><b>Unique ID</b> · concise, searchable <b>title</b> · date &amp; reporter</li>
+<li><b>Environment / build under test</b></li>
+<li><b>Steps to reproduce</b> — ordered, precise</li>
+<li><b>Expected vs actual result</b> (both!)</li>
+<li><b>Severity</b> (technical impact); priority if the org uses it</li>
+<li>Evidence (logs, screenshots), references (test case, requirement), status</li>
+</ul>
+<div class="box mem"><span class="box-tag">📖 Memorise — Severity vs priority</span>
+<b>Severity = technical impact</b> (“crashes when saving”). <b>Priority = business urgency</b> (“must fix before Friday’s demo”). They diverge: homepage typo on launch eve = <b>low severity, high priority</b>.</div>
+<div class="box und"><span class="box-tag">🧠 K3 question pattern</span>“Which report is best / what should be added?” → reward: reproducible steps, expected <b>and</b> actual, build ID. Penalise: blame (“Sam’s fault”), vagueness (“crashes sometimes”), several defects bundled in one report, missing expected result.</div>
+
+<div class="bn">
+<p class="sec-sum"><i>Lifecycle New→Assigned→Fixed→Confirmation→Closed; ভালো report = steps, expected বনাম actual, build, severity — দোষারোপ নয়।</i></p>
+<h3>Lifecycle (flow-টা মুখস্থ করো)</h3>
+<div class="flow">
+<span class="st">New</span><span class="ar">→</span><span class="st alt">Assigned</span><span class="ar">→</span><span class="st">Fixed</span><span class="ar">→</span><span class="st alt">Confirmation test</span><span class="ar">→ pass করলে →</span><span class="st">Closed</span>
+</div>
+<div class="flow">
+<span class="st" style="background:#b91c1c">fail করলে → Reopened ↺ আবার Assigned-এ ফেরে</span>
+<span class="st alt">পাশের state: Rejected · Duplicate · Deferred</span>
+</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>“Fixed” is <b>not</b> the end — অর্থাৎ “Fixed” মানেই শেষ <b>নয়</b>: defect বন্ধ করার <b>আগে</b> confirmation test অবশ্যই চলে। Confirmation fail করলে defect আবার Reopened হয়ে যায়।</div>
+
+<h3>একটি ভালো defect report-এ যা থাকে (5.5.2 — K3)</h3>
+<ul>
+<li><b>Unique ID</b> · ছোট, খোঁজা যায় এমন <b>title</b> · তারিখ ও reporter</li>
+<li><b>Environment / build under test</b></li>
+<li><b>Steps to reproduce</b> — ক্রমানুসারে, নির্দিষ্ট করে লেখা</li>
+<li><b>Expected বনাম actual result</b> (দুটোই!)</li>
+<li><b>Severity</b> (technical impact); সংস্থা ব্যবহার করলে priority</li>
+<li>Evidence (log, screenshot), reference (test case, requirement), status</li>
+</ul>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — Severity বনাম priority</span>
+<b>Severity = technical impact</b> (“crashes when saving”)। <b>Priority = ব্যবসায়িক তাড়া</b> (“must fix before Friday’s demo”)। দুটো এক হয় না, আলাদা দিকে যেতে পারে: launch-এর আগের রাতে homepage-এর ছোট্ট typo = <b>কম severity, বেশি priority</b>।</div>
+<div class="box und"><span class="box-tag">🧠 K3 প্রশ্নের ধাঁচ</span>“Which report is best / what should be added?” → পুরস্কার পায়: reproduce করা যায় এমন steps, expected <b>এবং</b> actual, build ID। শাস্তি পায়: দোষারোপ (“Sam’s fault”), অস্পষ্ট ভাষা (“crashes sometimes”), এক report-এ কয়েকটি defect গাদাগাদি, expected result না থাকা।</div>
+</div>
+</section>
+
+<section>
+<h2>Confusion table</h2>
+<p class="sec-sum"><i>Six word-pairs the exam loves to swap — check the second word of each pair before answering.</i></p>
+<p class="plain"><b>In plain words:</b> each pair differs by one idea — catch that idea and the answer is mechanical.</p>
+<table><tbody>
+<tr><td>Entry / exit criteria</td><td>preconditions to start / conditions to stop</td></tr>
+<tr><td>Metrics- / expert-based</td><td>past data / judgement</td></tr>
+<tr><td>Product / project risk</td><td>quality of the deliverable / success of the project</td></tr>
+<tr><td>Severity / priority</td><td>technical impact / business urgency</td></tr>
+<tr><td>Monitoring / control</td><td>observe &amp; compare / act &amp; correct</td></tr>
+<tr><td>Pyramid / quadrants</td><td>automation depth layers / audience &amp; purpose classification</td></tr>
+</tbody></table>
+
+<div class="bn">
+<p class="sec-sum"><i>ছয় জোড়া জিনিস পরীক্ষায় ঘুরিয়ে ফেলে: entry/exit, metrics/expert, product/project, severity/priority, monitoring/control, pyramid/quadrants।</i></p>
+<table><tbody>
+<tr><td>Entry / exit criteria</td><td>শুরু করার পূর্বশর্ত / থামার শর্ত</td></tr>
+<tr><td>Metrics- / expert-based</td><td>অতীতের data / বিচারবুদ্ধি</td></tr>
+<tr><td>Product / project risk</td><td>deliverable-এর গুণমান / প্রকল্পের সাফল্য</td></tr>
+<tr><td>Severity / priority</td><td>technical impact / ব্যবসায়িক তাড়া</td></tr>
+<tr><td>Monitoring / control</td><td>দেখা ও তুলনা করা / ব্যবস্থা নেওয়া ও সংশোধন</td></tr>
+<tr><td>Pyramid / quadrants</td><td>automation-এর স্তরভিত্তিক সাজানো / পাঠক ও উদ্দেশ্য অনুযায়ী ভাগ</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<section>
+<h2>Knowledge check — say it out loud, then reveal</h2>
+<p class="sec-sum"><i>10 recall checks — say each answer aloud, then reveal.</i></p>
+<p class="plain"><b>In plain words:</b> if you can say it out loud without peeking, it's exam-ready.</p>
+<details class="kc"><summary>1. Two measurable exit criteria for system test?</summary><div class="a">e.g. ≥95% planned cases executed; zero open critical defects; agreed coverage achieved.</div></details>
+<details class="kc"><summary>2. Planning poker sizes testing work — which technique?</summary><div class="a">Expert-based estimation (team judgement, not historical measures).</div></details>
+<details class="kc"><summary>3. Rank: A = 2×5, B = 4×3 — which is tested first?</summary><div class="a">A = 10, B = 12 → B first. Multiply, never eyeball.</div></details>
+<details class="kc"><summary>4. “Test tool vendor may go bankrupt” — product or project risk?</summary><div class="a">Project risk (threatens delivery, not product quality).</div></details>
+<details class="kc"><summary>5. Four quadrants with one example each?</summary><div class="a">Q1 component tests · Q2 BDD/functional examples · Q3 exploratory/UAT · Q4 performance/security.</div></details>
+<details class="kc"><summary>6. What does 100% branch coverage as exit criterion NOT guarantee?</summary><div class="a">Absence of defects — and it can’t detect missing functionality.</div></details>
+<details class="kc"><summary>7. “Payment broken again, Sam’s fault. Please fix.” — three report defects?</summary><div class="a">Blame; no steps; no expected/actual result; no build/environment; vague — any three.</div></details>
+<details class="kc"><summary>8. State after “Fixed”, and what decides the next one?</summary><div class="a">Confirmation test; pass → Closed, fail → Reopened.</div></details>
+<details class="kc"><summary>9. Why more component than end-to-end tests in the pyramid?</summary><div class="a">Higher levels are slower, costlier, harder to maintain — long feedback loops.</div></details>
+<details class="kc"><summary>10. Two metrics for management, two for the team?</summary><div class="a">Mgmt: cost/schedule summary, defect trends, residual risk. Team: planned-vs-executed, pass rate, coverage detail.</div></details>
+
+<div class="bn">
+<p class="kc-bn"><b>প্রশ্ন ১.</b> System test-এর জন্য দুটো measurable exit criteria? — <i>উত্তর:</i> যেমন ≥95% planned case চালানো হয়েছে; কোনো open critical defect নেই; সম্মত coverage অর্জিত।</p>
+<p class="kc-bn"><b>প্রশ্ন ২.</b> Planning poker দিয়ে testing-এর কাজের আকার মাপা হয় — এটা কোন কৌশল? — <i>উত্তর:</i> Expert-based estimation (দলের বিচারবুদ্ধি, অতীতের measure নয়)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৩.</b> Rank: A = 2×5, B = 4×3 — কোনটা আগে test হবে? — <i>উত্তর:</i> A = 10, B = 12 → আগে B। গুণ করো, চোখে দেখে অনুমানে নয়।</p>
+<p class="kc-bn"><b>প্রশ্ন ৪.</b> “Test tool vendor may go bankrupt” — product না project risk? — <i>উত্তর:</i> Project risk (deliverable-এর গুণমানে নয়, delivery-র ওপর হুমকি)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৫.</b> চারটি quadrant, প্রতিটির একটি করে উদাহরণ? — <i>উত্তর:</i> Q1 component test · Q2 BDD/functional উদাহরণ · Q3 exploratory/UAT · Q4 performance/security।</p>
+<p class="kc-bn"><b>প্রশ্ন ৬.</b> Exit criteria হিসেবে 100% branch coverage কী নিশ্চয়তা দেয় না? — <i>উত্তর:</i> defect নেই — এমন নিশ্চয়তা দেয় না; আর অনুপস্থিত functionality ধরতেও পারে না।</p>
+<p class="kc-bn"><b>প্রশ্ন ৭.</b> “Payment broken again, Sam’s fault. Please fix.” — report-টির তিনটি ত্রুটি? — <i>উত্তর:</i> দোষারোপ; steps নেই; expected/actual result নেই; build/environment নেই; অস্পষ্ট — যেকোনো তিনটি।</p>
+<p class="kc-bn"><b>প্রশ্ন ৮.</b> “Fixed”-এর পরের state কোনটি, আর পরেরটা কী ঠিক করে? — <i>উত্তর:</i> Confirmation test; pass করলে Closed, fail করলে Reopened।</p>
+<p class="kc-bn"><b>প্রশ্ন ৯.</b> Pyramid-এ end-to-end-এর বদলে component test বেশি কেন? — <i>উত্তর:</i> উপরের স্তর ধীর, ব্যয়বহুল, রক্ষণাবেক্ষণ কঠিন — feedback loop দীর্ঘ হয়ে যায়।</p>
+<p class="kc-bn"><b>প্রশ্ন ১০.</b> Management-এর জন্য দুটি, দলের জন্য দুটি metric? — <i>উত্তর:</i> Management: cost/schedule সারাংশ, defect trend, residual risk। দল: planned বনাম executed, pass rate, coverage-এর খুঁটিনাটি।</p>
+</div>
+</section>
+
+<section id="recap">
+<h2>⏱ 60-second recap</h2>
+<div class="recap">
+<span class="rk">Plan <i>= why · what · when · who · how</i></span>
+<span class="rk">Entry <i>= ready to start</i> · Exit <i>= done enough — both measurable</i></span>
+<span class="rk">Risk <i>= likelihood × impact</i></span>
+<span class="rk">Product risk <i>= QUALITY of product</i> vs Project risk <i>= DELIVERY</i></span>
+<span class="rk">Severity <i>= TECHNICAL impact</i> vs Priority <i>= BUSINESS urgency</i></span>
+<span class="rk">Defect lifecycle <i>= New→Assigned→Fixed→Confirmed→Closed, fail ↺ Reopened</i></span>
+<span class="rk">Good report <i>= reproducible: steps, expected vs actual, build</i></span>
+<span class="rk">Estimation <i>= metrics-based (past data) vs expert-based (judgement)</i></span>
+</div>
+</section>
+
+<section>
+<h2>Exercises — closed book, click to answer (target 16/20)</h2>
+<p class="sec-sum"><i>Interactive quiz, target 16/20 — instant feedback.</i></p>
+<div class="quiz" data-target="16">
+<div class="q" data-a="b"><p class="qt">1. Which of the following is a MEASURABLE exit criterion?</p><div class="opts">
+<button data-k="a">a) “The system feels stable”</button><button data-k="b">b) “95% of planned test cases executed, no open critical defects”</button><button data-k="c">c) “Testing has gone on long enough”</button><button data-k="d">d) “The team is confident”</button></div>
+<div class="expl"><b>b</b> — countable thresholds make criteria measurable; feelings don’t.</div></div>
+
+<div class="q" data-a="b"><p class="qt">2. Entry criteria primarily prevent:</p><div class="opts">
+<button data-k="a">a) Excessive documentation</button><button data-k="b">b) Starting execution too early, wasting effort on untestable builds</button><button data-k="c">c) Stakeholder involvement</button><button data-k="d">d) Test automation</button></div>
+<div class="expl"><b>b</b> — that is their stated purpose (prevent wasted effort &amp; false failures).</div></div>
+
+<div class="q" data-a="b"><p class="qt">3. Estimating from defect counts and velocity of previous releases is:</p><div class="opts">
+<button data-k="a">a) Expert-based</button><button data-k="b">b) Metrics-based</button><button data-k="c">c) Defect-based analysis</button><button data-k="d">d) Risk-based</button></div>
+<div class="expl"><b>b</b> — “measures of past projects” is the giveaway for metrics-based.</div></div>
+
+<div class="q" data-a="b"><p class="qt">4. Planning poker to size testing tasks is:</p><div class="opts">
+<button data-k="a">a) Metrics-based estimation</button><button data-k="b">b) Expert-based estimation</button><button data-k="c">c) A risk analysis technique</button><button data-k="d">d) A review type</button></div>
+<div class="expl"><b>b</b> — judgement of the participants, no historical data needed.</div></div>
+
+<div class="q" data-a="c"><p class="qt">5. The test pyramid recommends:</p><div class="opts">
+<button data-k="a">a) Many end-to-end tests, few component tests</button><button data-k="b">b) Equal numbers at every level</button><button data-k="c">c) Many fast component tests at the base, fewer integration and few end-to-end above</button><button data-k="d">d) Manual testing only at the top</button></div>
+<div class="expl"><b>c</b> — broad automated base, narrow slow top.</div></div>
+
+<div class="q" data-a="d"><p class="qt">6. Performance and security testing belong to which quadrant?</p><div class="opts">
+<button data-k="a">a) Q1 technology-facing, supporting the team</button><button data-k="b">b) Q2 business-facing, supporting the team</button><button data-k="c">c) Q3 business-facing, critiquing the product</button><button data-k="d">d) Q4 technology-facing, critiquing the product</button></div>
+<div class="expl"><b>d</b> — non-functional tests critique the product from a technology angle.</div></div>
+
+<div class="q" data-a="b"><p class="qt">7. Risk level is calculated as:</p><div class="opts">
+<button data-k="a">a) Impact ÷ likelihood</button><button data-k="b">b) Likelihood × impact</button><button data-k="c">c) Likelihood + impact</button><button data-k="d">d) Impact − likelihood</button></div>
+<div class="expl"><b>b</b> — the formula, memorise it cold.</div></div>
+
+<div class="q" data-a="b"><p class="qt">8. A: likelihood 3, impact 2. B: likelihood 1, impact 9. Which justifies more effort?</p><div class="opts">
+<button data-k="a">a) A (risk level 6)</button><button data-k="b">b) B (risk level 9)</button><button data-k="c">c) Equal effort</button><button data-k="d">d) Neither — risk never changes effort</button></div>
+<div class="expl"><b>b</b> — 9 &gt; 6; the highest risk gets the strongest testing.</div></div>
+
+<div class="q" data-a="a"><p class="qt">9. “Customer credit card data could be exposed by a weak payment module.” This is a:</p><div class="opts">
+<button data-k="a">a) Product risk</button><button data-k="b">b) Project risk</button><button data-k="c">c) Testing risk</button><button data-k="d">d) Schedule risk</button></div>
+<div class="expl"><b>a</b> — the product might fail its users (quality problem).</div></div>
+
+<div class="q" data-a="d"><p class="qt">10. “The test tool vendor may withdraw support mid-project.” This is a:</p><div class="opts">
+<button data-k="a">a) Product risk</button><button data-k="b">b) Defect</button><button data-k="c">c) Failure</button><button data-k="d">d) Project risk</button></div>
+<div class="expl"><b>d</b> — threatens the project’s success, not the deliverable’s quality.</div></div>
+
+<div class="q" data-a="a"><p class="qt">11. Risk-based testing reduces:</p><div class="opts">
+<button data-k="a">a) Risk level by mitigating highest risks first; remaining risk is residual and communicated</button><button data-k="b">b) All risk to zero</button><button data-k="c">c) Only project risks</button><button data-k="d">d) The need for exit criteria</button></div>
+<div class="expl"><b>a</b> — residual risk is never zero and must be reported.</div></div>
+
+<div class="q" data-a="a"><p class="qt">12. Comparing progress against the plan, then re-prioritising when behind, are respectively:</p><div class="opts">
+<button data-k="a">a) Monitoring; control</button><button data-k="b">b) Control; monitoring</button><button data-k="c">c) Estimation; completion</button><button data-k="d">d) Analysis; design</button></div>
+<div class="expl"><b>a</b> — observe &amp; compare = monitoring; act &amp; correct = control.</div></div>
+
+<div class="q" data-a="c"><p class="qt">13. A report for senior management should be:</p><div class="opts">
+<button data-k="a">a) Every test case with full steps</button><button data-k="b">b) Raw log files</button><button data-k="c">c) A concise summary of cost, schedule, quality and risk</button><button data-k="d">d) Every defect comment thread</button></div>
+<div class="expl"><b>c</b> — audience-tailored reporting; managers want dashboards, not detail.</div></div>
+
+<div class="q" data-a="a"><p class="qt">14. Which metric helps decide whether testing can stop?</p><div class="opts">
+<button data-k="a">a) Defect find/fix trend and open-defect counts against exit criteria</button><button data-k="b">b) Total number of test cases designed</button><button data-k="c">c) Lines of code written</button><button data-k="d">d) Number of meetings held</button></div>
+<div class="expl"><b>a</b> — trends + exit criteria answer “when can we stop?” A design count says nothing about execution or defect status.</div></div>
+
+<div class="q" data-a="d"><p class="qt">15. Test completion activities include all EXCEPT:</p><div class="opts">
+<button data-k="a">a) Checking exit criteria fulfilment</button><button data-k="b">b) Writing a completion report with lessons learned</button><button data-k="c">c) Archiving testware</button><button data-k="d">d) Re-running all passed tests unchanged to increase execution counts</button></div>
+<div class="expl"><b>d</b> — busywork that pads execution counts, not a completion activity; the other three are canonical completion activities.</div></div>
+
+<div class="q" data-a="b"><p class="qt">16. Configuration management of testware ensures:</p><div class="opts">
+<button data-k="a">a) Tests always run faster</button><button data-k="b">b) Right testware versions match right product versions; results reproducible</button><button data-k="c">c) Defects are fixed faster</button><button data-k="d">d) Tools never need updates</button></div>
+<div class="expl"><b>b</b> — versioning, traceability, reproducibility.</div></div>
+
+<div class="q" data-a="d"><p class="qt">17. In the defect lifecycle, the state after “Fixed” is typically:</p><div class="opts">
+<button data-k="a">a) Closed immediately</button><button data-k="b">b) Rejected</button><button data-k="c">c) New</button><button data-k="d">d) Awaiting confirmation test; then Closed if it passes, Reopened if it fails</button></div>
+<div class="expl"><b>d</b> — confirmation precedes closure. Trap answer “a” skips the re-test.</div></div>
+
+<div class="q" data-a="c"><p class="qt">18. Which set of elements makes a defect report USABLE?</p><div class="opts">
+<button data-k="a">a) Blame, opinions, vague symptoms</button><button data-k="b">b) Only the tester’s name</button><button data-k="c">c) Unique ID, steps to reproduce, expected vs actual result, environment/build, severity</button><button data-k="d">d) Only the fix description</button></div>
+<div class="expl"><b>c</b> — the K3 field list; anyone can reproduce and evaluate.</div></div>
+
+<div class="q" data-a="d"><p class="qt">19. A minor cosmetic typo on the homepage one day before a major public launch is likely:</p><div class="opts">
+<button data-k="a">a) High severity, high priority</button><button data-k="b">b) Low severity, low priority</button><button data-k="c">c) High severity, low priority</button><button data-k="d">d) Low severity, high priority</button></div>
+<div class="expl"><b>d</b> — tiny technical impact, big business urgency: severity and priority diverge.</div></div>
+
+<div class="q" data-a="a"><p class="qt">20. Residual risk means:</p><div class="opts">
+<button data-k="a">a) The risk remaining after mitigation, which stakeholders must accept or address</button><button data-k="b">b) Risk that testing eliminated</button><button data-k="c">c) Only hardware risks</button><button data-k="d">d) Risks in the test plan template</button></div>
+<div class="expl"><b>a</b> — what’s left after your mitigations; communicate it, never hide it.</div></div>
+</div>
+</section>
+
+<div class="next"><a href="chapter-04.html">← Ch 4 (Friday)</a><span><a href="official-bank.html#ch5">Drill 44 official Ch 5 questions</a></span><a href="chapter-06.html">Next: Ch 6 — Test Tools →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

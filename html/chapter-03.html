@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 3 — Static Testing · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body data-ch="ch3" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Chapter 3</nav>
+
+<header class="hero">
+<h1>Chapter 3 — Static Testing</h1>
+<div class="sub">No execution, all substance. Reviews vs static analysis · the formality ladder · six roles you must know cold.</div>
+<div class="bn">কোড চালানো ছাড়াই আসল কাজ — review বনাম static analysis, ফরমালিটির ধাপগুলো, আর ছয়টা role যেগুলো মুখস্থ করতেই হবে।</div>
+<div class="meta"><span class="chip">~4 exam questions</span><span class="chip">K2 (roles K1)</span><span class="chip">Study: Wednesday 11 Nov</span><span class="chip hot">Reward rank #3 🔥🔥</span></div>
+<div id="chapter-progress"></div>
+</header>
+
+<section>
+<h2>3.1 Static testing basics</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum">Read, don't run. People (reviews) and tools (static analysis) check documents and code before anything executes — catching defects early, cheaply, and sometimes that dynamic testing can never see.</p>
+<p class="plain"><b>In plain words:</b> reading the work product carefully instead of running it.</p>
+<p><b>Definition:</b> static testing examines work products <b>without executing the code</b> — manually (<b>reviews</b>) or automatically (<b>static analysis</b>). It works on <b>any work product</b>: requirements, user stories, epics, code, design models, test plans, tests, contracts — anything that can be read.</p>
+<div class="box und"><span class="box-tag">🧠 Understand — the key exam point</span>
+Static testing finds defects <b>directly in work products</b>, <b>early</b> (shift-left) and cheaply. It can detect defects that dynamic testing <b>would only find as failures at much higher cost — or not at all</b>.</div>
+
+<h3>Typical findings per work-product type</h3>
+<div class="box mem"><span class="box-tag">📖 Memorise — findings lists</span>
+<b>Requirements:</b> ambiguities, contradictions, omissions, duplicates, impractical designs, security holes in design, testability problems (a requirement that can't be verified)<br><br>
+<b>Code:</b> syntax errors (some), incorrectly spelled variables, undeclared variables, unreachable/duplicate code, excessive complexity, security vulnerabilities, coding-standard violations<br><br>
+<b>Representations (models):</b> missing steps, incorrect steps, wrong order</div>
+
+<h3>Reviews vs. static analysis (3.1.2)</h3>
+<table>
+<thead><tr><th></th><th>Reviews</th><th>Static analysis</th></tr></thead>
+<tbody>
+<tr><td><b>How</b></td><td><b>Human</b> examination of documents/code</td><td><b>Tool-based</b> analysis of code (and models)</td></tr>
+<tr><td><b>Finds</b></td><td>Deviations from standards/requirements, defects, improvement points, misunderstandings</td><td><b>Structure-related defects</b>: unreachable code, undeclared/mis-spelled variables, duplicate code, excessive complexity, security vulnerabilities, standards violations</td></tr>
+<tr><td><b>Needs</b></td><td>People, preparation, meeting or async examination</td><td>Tool, runs continuously (often inside IDE/CI)</td></tr>
+</tbody></table>
+
+<p><b>3.1.3 Strengths of static analysis:</b> finds defects <b>before dynamic testing can</b>, can find defects hard or impossible to observe at runtime (e.g., unreached code), prevents defect injection improving maintainability. <b>Tool examples:</b> compilers (yes — a compiler is a static analysis tool), static code analysers (linters, SonarQube-style), security analysers, checkers for coding standards. A tool described as flagging "unused variable" or "cyclomatic complexity too high" without running the program → <b>static analysis</b>.</p>
+
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>
+Static testing finds the <b>defect in the document/code itself</b>; dynamic testing observes <b>failures</b> from which defects are inferred. Static testing does <b>not</b> need runnable code or test execution.</div>
+
+<div class="bn">
+<p class="sec-sum"><i>কোড execute না করেও কাজ হয়: review (মানুষ) আর static analysis (tool) দিয়ে document বা code-এর defect খুব আগেই, কম খরচে ধরা যায় — এমন defect-ও ধরা পড়ে যেগুলো dynamic testing কখনোই দেখতে পাবে না।</i></p>
+<p><b>সংজ্ঞা:</b> static testing (স্ট্যাটিক টেস্টিং) হলো work product পরীক্ষা করা <b>কোড execute না করে</b> — হাতে (<b>review</b>) অথবা স্বয়ংক্রিয়ভাবে (<b>static analysis</b>)। এটা <b>যেকোনো work product</b>-এ চলে: requirements, user story, epic, code, design model, test plan, test, contract — যা পড়া যায় তা-ই।</p>
+<div class="box und"><span class="box-tag">🧠 বুঝে নাও — পরীক্ষার মূল পয়েন্ট</span>
+static testing সরাসরি <b>work product-এর ভেতরের defect</b> ধরে, খুব <b>আগে</b> (shift-left) এবং কম খরচে। এমন defect-ও এটা ধরতে পারে যেগুলো dynamic testing <b>হয় অনেক বেশি খরচে failure হিসেবে ধরতে পেত, নয়তো একেবারেই পারত না</b>।</div>
+
+<h3>প্রতি ধরনের work product-এ সাধারণত যা পাওয়া যায়</h3>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — findings-এর তালিকা</span>
+<b>Requirements:</b> অস্পষ্টতা, পরস্পরবিরোধ, বাদ পড়ে যাওয়া বিষয়, duplicate, অবাস্তব design, design-এ নিরাপত্তা ফাঁক, testability সমস্যা (এমন requirement যার যাচাই করা যায় না)<br><br>
+<b>Code:</b> syntax error (কিছু কিছু), ভুল বানানের variable, undeclared variable, unreachable/duplicate code, অতিরিক্ত complexity, security vulnerability, coding standard লঙ্ঘন<br><br>
+<b>Representation (model):</b> ধাপ বাদ পড়া, ভুল ধাপ, ভুল ক্রম</div>
+
+<h3>Review বনাম static analysis (3.1.2)</h3>
+<table>
+<thead><tr><th></th><th>Reviews</th><th>Static analysis</th></tr></thead>
+<tbody>
+<tr><td><b>কীভাবে</b></td><td>document/code পরীক্ষা করে <b>মানুষ</b></td><td>code (এবং model) বিশ্লেষণ করে <b>tool</b></td></tr>
+<tr><td><b>কী খুঁজে বের করে</b></td><td>standard/requirements থেকে বিচ্যুতি, defect, উন্নতির পয়েন্ট, ভুল বোঝাবুঝি</td><td><b>গঠন-সংক্রান্ত defect</b>: unreachable code, undeclared/ভুল বানানের variable, duplicate code, অতিরিক্ত complexity, security vulnerability, standard লঙ্ঘন</td></tr>
+<tr><td><b>কী লাগে</b></td><td>মানুষ, প্রস্তুতি, মিটিং বা async পরীক্ষা</td><td>Tool, চলতে থাকে (প্রায়ই IDE/CI-র ভেতরে)</td></tr>
+</tbody></table>
+
+<p><b>3.1.3 Static analysis-এর শক্তি:</b> dynamic testing-এর আগেই defect ধরে, এমন defect-ও পায় যা runtime-এ দেখা কঠিন বা অসম্ভব (যেমন unreachable code), defect ঢোকানো আটকে দিয়ে maintainability বাড়ায়। <b>Tool-এর উদাহরণ:</b> compiler (হ্যাঁ — compiler নিজেই একটা static analysis tool), static code analyser (linter, SonarQube-ধাঁচের), security analyser, coding standard যাচাইয়ের tool। কোনো tool প্রোগ্রাম না চালিয়েই "unused variable" বা "cyclomatic complexity too high" বলে ফ্ল্যাগ করলে → সেটা <b>static analysis</b>।</p>
+
+<div class="box trap"><span class="box-tag">⚠️ ফাঁদ</span>
+Static testing ধরে <b>document/code-এর ভেতরের defect</b>; dynamic testing দেখে <b>failure</b>, সেখান থেকে defect অনুমান করা হয়। static testing-এর জন্য runnable code বা test execution <b>লাগে না</b>।</div>
+</div>
+</section>
+
+<section>
+<h2>3.2 The review process</h2>
+<p class="kbadge">K2</p>
+<p class="sec-sum">From casual pair-checking to full-formal inspections, four review types climb a formality ladder — and six named roles split the work. Learn which type is which, and who does what.</p>
+<p class="plain"><b>In plain words:</b> how reviews run, and who plays which part.</p>
+<h3>Benefits of early reviews / feedback loop (3.2.1)</h3>
+<table>
+<thead><tr><th>Benefit</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td><b>Early feedback</b></td><td>Defects caught cheaply, before code exists</td></tr>
+<tr><td><b>Shorter feedback loop</b></td><td>Problems surface sooner, so rework shrinks</td></tr>
+<tr><td><b>Defect prevention</b></td><td>Better inputs (e.g., requirements) mean fewer defects injected into later products</td></tr>
+<tr><td><b>Knowledge spread</b></td><td>Author learns standards; reviewers learn the product</td></tr>
+<tr><td><b>Consistency &amp; maintainability</b></td><td>Work products become more consistent, maintainable and testable</td></tr>
+</tbody></table>
+
+<h3>Review types (3.2.3) — the formality ladder</h3>
+<div class="flow">
+<span class="st alt">Informal</span><span class="ar">→</span>
+<span class="st alt">Walkthrough</span><span class="ar">→</span>
+<span class="st">Technical review</span><span class="ar">→</span>
+<span class="st">Inspection</span>
+</div>
+<p class="axis">Formality rises with: moderator-not-author · defined roles · entry/exit criteria · metrics &amp; checklists</p>
+
+<table>
+<thead><tr><th>Type</th><th>Formality</th><th>Key characteristics</th></tr></thead>
+<tbody>
+<tr><td><b>Informal review</b></td><td>Lowest</td><td>No process, no roles, no documents; <b>pair review / pair programming</b>, desk-check; cheap, immediate feedback; main objective: cheap and fast defect detection</td></tr>
+<tr><td><b>Walkthrough</b></td><td>Mid-low</td><td>Led by the <b>author</b>; goal often <b>education / consensus-building</b>, gathering comments, explaining/evaluating; scenarios and dry runs possible</td></tr>
+<tr><td><b>Technical review</b></td><td>Mid-high</td><td>Trained moderator (not the author), technical/qualified reviewers; <b>peer review</b> among technical peers; objectives: consensus, detect defects, make decisions, generate alternatives</td></tr>
+<tr><td><b>Inspection</b></td><td>Highest</td><td><b>Most formal</b>: rules/checklists, defined roles, detailed entry/exit criteria, <b>metrics</b> gathered, formal follow-up; led by a <b>trained moderator (not the author)</b>; objectives: maximum defect detection, quality improvement, process improvement</td></tr>
+</tbody></table>
+<p><b>Exam logic:</b> "author presents to the team to reach shared understanding" = <b>walkthrough</b>; "rule-based, checklist, metrics, trained moderator" = <b>inspection</b>.</p>
+<p class="plain"><b>In plain words:</b> walkthrough — the author walks the team through it; inspection — the full-formal, checklist-and-metrics review; informal — the cheapest, chat-over-the-desk check; technical review — qualified peers with a trained moderator.</p>
+
+<h3>Review roles (3.2.2)</h3>
+<p class="kbadge">K1</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — the six roles</span>
+<table class="good"><tbody>
+<tr><td>Author</td><td>Created the work product; fixes defects after the review</td></tr>
+<tr><td>Facilitator (moderation)</td><td>Ensures the review runs effectively: planning, running the meeting, neutral conduct</td></tr>
+<tr><td>Reviewer (inspector)</td><td>Reviews the product; ideally not the author, may be subject-matter experts</td></tr>
+<tr><td>Scribe (recorder)</td><td>Collects defects/comments during the meeting</td></tr>
+<tr><td>Review leader</td><td>Takes overall <b>responsibility for the review</b>: planning, decides exit, follow-up</td></tr>
+<tr><td>Manager</td><td>Decides <b>whether</b> a review happens and its objectives; accounts for review outcomes; not necessarily present in the meeting</td></tr>
+</tbody></table>
+A person may hold <b>multiple roles</b>; small reviews merge them. Exam scenarios: "who records the issues raised?" → <b>scribe</b>; "who ensures an effective meeting?" → <b>facilitator</b>; "who decides on executing the review?" → <b>manager</b>.</div>
+
+<h3>Review success factors (3.2.4)</h3>
+<ul>
+<li>Right <b>reviewers</b> (mix of expertise)</li>
+<li>Adequate <b>preparation time</b> (typically ≥ meeting time)</li>
+<li><b>Review rate limits</b> (pages/hour caps — small chunks beat marathons)</li>
+<li><b>Defect-focused, no-blame culture</b> (critique the product, never the person; "egoless")</li>
+</ul>
+
+<h3>Confusion table</h3>
+<table>
+<thead><tr><th>Easily confused</th><th>Distinction</th></tr></thead>
+<tbody>
+<tr><td>Static / dynamic testing</td><td>Without execution / with execution</td></tr>
+<tr><td>Review / static analysis</td><td>Human / tool-based</td></tr>
+<tr><td>Walkthrough / technical review</td><td><b>AUTHOR</b>-led, educational / <b>PEER</b>-based, defect- and decision-focused, <b>trained moderator</b></td></tr>
+<tr><td>Technical review / inspection</td><td>Peer consensus &amp; decisions / <b>MOST FORMAL</b>: rules, <b>checklists</b>, <b>metrics</b>, entry/exit criteria</td></tr>
+<tr><td>Facilitator / review leader / manager</td><td><b>RUNS</b> the meeting / <b>RESPONSIBLE</b> for the review / <b>DECIDES</b> the review happens</td></tr>
+<tr><td>Informal / walkthrough</td><td><b>CHEAPEST</b>, no process or roles / author-led session with the team</td></tr>
+<tr><td>Scribe / facilitator</td><td><b>RECORDS</b> the issues / <b>RUNS</b> the meeting</td></tr>
+</tbody></table>
+
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+• "Reviews are only about finding defects" → they also <b>spread knowledge, build consensus</b>, improve consistency and maintainability.<br>
+• "Reviews require a meeting" → informal and many reviews can be <b>asynchronous, no meeting</b> needed.</div>
+
+<div class="bn">
+<p class="sec-sum"><i>ফরমালিটির মই (informal → walkthrough → technical review → inspection), সঙ্গে ছয়টা review role — যেগুলো মুখস্থ করতেই হবে।</i></p>
+<h3>আগেভাগে review-এর উপকারিতা / feedback loop (3.2.1)</h3>
+<p>Review <b>আগে মতামত</b> দেয় (code-এর আগেই, কম খরচে defect ধরা যায়), feedback loop ছোট করে, আর <b>defect prevention</b>-এ সাহায্য করে: work product (যেমন requirements) review করে উন্নত করলে পরের ধাপের product-এ ঢুকে যাওয়া defect কমে। এছাড়া review জ্ঞান ছড়ায় (author standard শেখে; reviewer product শেখে), consistency বাড়ায়, আর এমন work product তৈরি করে যা আরও <b>maintainable ও testable</b>।</p>
+
+<h3>Review-এর ধরন (3.2.3) — ফরমালিটির মই</h3>
+<div class="flow">
+<span class="st alt">Informal</span><span class="ar">→</span>
+<span class="st alt">Walkthrough</span><span class="ar">→</span>
+<span class="st">Technical review</span><span class="ar">→</span>
+<span class="st">Inspection</span>
+</div>
+<p class="axis">Formality বাড়ে এসবের সঙ্গে: moderator author নন · নির্দিষ্ট role · entry/exit criteria · metrics ও checklist</p>
+
+<table>
+<thead><tr><th>Type</th><th>Formality</th><th>Key characteristics</th></tr></thead>
+<tbody>
+<tr><td><b>Informal review</b></td><td>সবচেয়ে কম</td><td>কোনো process নেই, role নেই, document নেই; <b>pair review / pair programming</b>, desk-check; সস্তা, সাথে সাথে মতামত; মূল লক্ষ্য: সস্তা ও দ্রুত defect ধরা</td></tr>
+<tr><td><b>Walkthrough</b></td><td>কম-মাঝারি</td><td>পরিচালনা করেন <b>author</b>; লক্ষ্য প্রায়ই <b>শেখানো / ঐকমত্য তৈরি</b>, মন্তব্য সংগ্রহ, ব্যাখ্যা/মূল্যায়ন; দৃশ্যকাহিনী (scenario) ও dry run হতে পারে</td></tr>
+<tr><td><b>Technical review</b></td><td>মাঝারি-বেশি</td><td>প্রশিক্ষিত moderator (author নন), technical/যোগ্য reviewer; technical সমপর্যায়ের peer-দের মধ্যে <b>peer review</b>; লক্ষ্য: ঐকমত্য, defect ধরা, সিদ্ধান্ত নেওয়া, বিকল্প তৈরি করা</td></tr>
+<tr><td><b>Inspection</b></td><td>সর্বোচ্চ</td><td><b>সবচেয়ে formal</b>: নিয়ম/checklist, নির্দিষ্ট role, বিস্তারিত entry/exit criteria, <b>metrics</b> সংগ্রহ, formal follow-up; পরিচালনা করেন <b>প্রশিক্ষিত moderator (author নন)</b>; লক্ষ্য: সর্বোচ্চ defect ধরা, গুণগত উন্নতি, process-এর উন্নতি</td></tr>
+</tbody></table>
+<p><b>পরীক্ষার যুক্তি:</b> "author দলের কাছে বুঝিয়ে বলে, সবার সমঝোতা তৈরি হয়" = <b>walkthrough</b>; "নিয়মভিত্তিক, checklist, metrics, প্রশিক্ষিত moderator" = <b>inspection</b>।</p>
+
+<h3>Review-এর role (3.2.2)</h3>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — ছয়টি role</span>
+<table class="good"><tbody>
+<tr><td>Author</td><td>work product তৈরি করেছেন; review-এর পরে defect ঠিক করেন</td></tr>
+<tr><td>Facilitator (moderation)</td><td>review কার্যকরভাবে চলা নিশ্চিত করেন: পরিকল্পনা, মিটিং পরিচালনা, নিরপেক্ষ আচরণ</td></tr>
+<tr><td>Reviewer (inspector)</td><td>product পরীক্ষা করেন; আদর্শভাবে author নন, subject-matter expert হতে পারেন</td></tr>
+<tr><td>Scribe (recorder)</td><td>মিটিং চলাকালে defect/মন্তব্য সংগ্রহ করেন</td></tr>
+<tr><td>Review leader</td><td>review-এর <b>সামগ্রিক দায়িত্ব</b> নেন: পরিকল্পনা, exit ঠিক করা, follow-up</td></tr>
+<tr><td>Manager</td><td>ঠিক করেন review <b>হবে কি না</b> এবং এর লক্ষ্য কী; review-এর ফলাফলের জবাবদিহি করেন; মিটিংয়ে উপস্থিত থাকার দরকার নেই</td></tr>
+</tbody></table>
+একজন মানুষ <b>একাধিক role</b> রাখতে পারেন; ছোট review-তে এগুলো একত্র হয়ে যায়। পরীক্ষার scenario: "উত্থাপিত issue কে লিখে রাখেন?" → <b>scribe</b>; "কার্যকর মিটিং নিশ্চিত করেন কে?" → <b>facilitator</b>; "review করা হবে কি না সিদ্ধান্ত কে নেন?" → <b>manager</b>।</div>
+
+<h3>Review সফল হওয়ার শর্ত (3.2.4)</h3>
+<ul>
+<li>সঠিক <b>reviewer</b> (expertise-র সঠিক মিশ্রণ)</li>
+<li>পর্যাপ্ত <b>প্রস্তুতির সময়</b> (সাধারণত মিটিংয়ের সময়ের সমান বা বেশি) এবং <b>review-এর হারের সীমা</b> (প্রতি ঘণ্টায় পৃষ্ঠার সীমা — লম্বা ম্যারাথনের চেয়ে ছোট ছোট ভাগ ভালো)</li>
+<li><b>Defect-কেন্দ্রিক, দোষারোপহীন সংস্কৃতি</b> (product-এর সমালোচনা করো, মানুষের নয়; "egoless")</li>
+<li>Management-এর review-কে মূল্যবান মনে করে সমর্থন দেওয়া (সময় বরাদ্দ)</li>
+<li>স্পষ্ট উদ্দেশ্য এবং উদ্দেশ্য অনুযায়ী সঠিক review-এর ধরন</li>
+</ul>
+
+<h3>গুলিয়ে ফেলার টেবিল</h3>
+<table>
+<thead><tr><th>Easily confused</th><th>Distinction</th></tr></thead>
+<tbody>
+<tr><td>Static / dynamic testing</td><td>execution ছাড়া / execution সহ</td></tr>
+<tr><td>Review / static analysis</td><td>মানুষ / tool-ভিত্তিক</td></tr>
+<tr><td>Walkthrough / technical review</td><td>author-পরিচালিত, শেখানোর উদ্দেশ্যে / peer-ভিত্তিক, defect ও সিদ্ধান্তে কেন্দ্রিত, প্রশিক্ষিত moderator</td></tr>
+<tr><td>Technical review / inspection</td><td>peer-দের ঐকমত্য ও সিদ্ধান্ত / সবচেয়ে formal: নিয়ম, checklist, metrics, entry/exit criteria</td></tr>
+<tr><td>Facilitator / review leader / manager</td><td>মিটিং চালান / review-এর সাফল্যের মালিক / review হবে কি না তা ঠিক করেন</td></tr>
+</tbody></table>
+
+<div class="box trap"><span class="box-tag">⚠️ ফাঁদ</span>
+• "Reviews are only about finding defects" → না, এগুলো জ্ঞানও ছড়ায়, ঐকমত্যও তৈরি করে, consistency আর maintainability-ও বাড়ায়।<br>
+• "Reviews require a meeting" → না, informal এবং অনেক review <b>asynchronous হতে পারে, মিটিং লাগে না</b>।</div>
+</div>
+</section>
+
+<section>
+<h2>Knowledge check — say it, then reveal</h2>
+<p class="sec-sum">Eight quick recall drills. Say each answer out loud before opening it; miss two or more and go back over 3.1–3.2.</p>
+<p class="plain"><b>In plain words:</b> cover the answer, speak it, then check.</p>
+<details class="kc"><summary>1. A linter flags an unreachable branch without the program running. Static or dynamic, review or analysis?</summary><div class="a">Static testing via static analysis.</div></details>
+<details class="kc"><summary>2. Who leads a walkthrough, and who must never lead an inspection?</summary><div class="a">Walkthrough: the author leads. Inspection: a trained moderator who is NOT the author.</div></details>
+<details class="kc"><summary>3. Which review type produces metrics and uses checklists with formal entry/exit criteria?</summary><div class="a">Inspection.</div></details>
+<details class="kc"><summary>4. Name three defects a review can find in requirements.</summary><div class="a">Ambiguities, contradictions, omissions, duplicates, impractical designs, security issues, testability problems (any three).</div></details>
+<details class="kc"><summary>5. Why can static analysis find defects that dynamic testing cannot?</summary><div class="a">It examines structure; some defects (e.g., unreachable code) are never exercised at runtime.</div></details>
+<details class="kc"><summary>6. Which role decides whether a review is performed?</summary><div class="a">The manager.</div></details>
+<details class="kc"><summary>7. Is a compiler a static analysis tool? Justify.</summary><div class="a">Yes — it analyses code without executing it.</div></details>
+<details class="kc"><summary>8. Give three review success factors.</summary><div class="a">Right reviewers with expertise; adequate preparation time with capped review rates; blame-free, defect-focused culture (any three).</div></details>
+
+<div class="bn">
+<p class="sec-sum"><i>৮টি স্মরণ-অনুশীলনী — উত্তর দেখানোর আগে প্রতিটি উত্তর জোরে বলো; দুটো বা তার বেশি মিস হলে 3.1–3.2 আবার পড়ো।</i></p>
+<p class="kc-bn"><b>প্রশ্ন ১.</b> একটি linter প্রোগ্রাম না চালিয়েই একটি unreachable branch ফ্ল্যাগ করল। এটা static না dynamic? review না analysis?</p>
+<p class="kc-bn">উত্তর: static analysis-র মাধ্যমে static testing।</p>
+<p class="kc-bn"><b>প্রশ্ন ২.</b> Walkthrough কে পরিচালনা করেন, আর inspection কখনোই কে পরিচালনা করতে পারবেন না?</p>
+<p class="kc-bn">উত্তর: Walkthrough: author পরিচালনা করেন। Inspection: প্রশিক্ষিত moderator, যিনি author <b>নন</b>।</p>
+<p class="kc-bn"><b>প্রশ্ন ৩.</b> কোন review-এর ধরনে metrics তৈরি হয় এবং formal entry/exit criteria সহ checklist ব্যবহার হয়?</p>
+<p class="kc-bn">উত্তর: Inspection।</p>
+<p class="kc-bn"><b>প্রশ্ন ৪.</b> Requirements-এ review যে তিনটি defect খুঁজে পেতে পারে তার নাম বলো।</p>
+<p class="kc-bn">উত্তর: অস্পষ্টতা, পরস্পরবিরোধ, বাদ পড়া বিষয়, duplicate, অবাস্তব design, security সমস্যা, testability সমস্যা (যেকোনো তিনটি)।</p>
+<p class="kc-bn"><b>প্রশ্ন ৫.</b> Static analysis এমন defect কীভাবে খুঁজে পায় যা dynamic testing পারে না?</p>
+<p class="kc-bn">উত্তর: এটা গঠন (structure) পরীক্ষা করে; কিছু defect (যেমন unreachable code) runtime-এ কখনোই ব্যবহৃতই হয় না।</p>
+<p class="kc-bn"><b>প্রশ্ন ৬.</b> কোন role ঠিক করেন review করা হবে কি না?</p>
+<p class="kc-bn">উত্তর: Manager।</p>
+<p class="kc-bn"><b>প্রশ্ন ৭.</b> Compiler কি static analysis tool? যুক্তি দাও।</p>
+<p class="kc-bn">উত্তর: হ্যাঁ — এটা code execute না করেই বিশ্লেষণ করে।</p>
+<p class="kc-bn"><b>প্রশ্ন ৮.</b> Review সফল হওয়ার তিনটি শর্ত বলো।</p>
+<p class="kc-bn">উত্তর: সঠিক reviewer যাদের expertise আছে; পর্যাপ্ত প্রস্তুতির সময় ও সীমিত review-এর হার; দোষারোপমুক্ত, defect-কেন্দ্রিক সংস্কৃতি (যেকোনো তিনটি)।</p>
+</div>
+</section>
+
+<section id="recap">
+<h2>⏱ 60-second recap</h2>
+<div class="recap">
+<span class="rk">Static = <b>no execution</b> — read it, don't run it</span>
+<span class="rk">Reviews = <b>human</b> · static analysis = <b>tool</b></span>
+<span class="rk">4 types on the formality ladder: informal (cheapest) → walkthrough (author-led) → technical review (peers, trained moderator) → inspection (most formal: checklists + metrics)</span>
+<span class="rk">6 roles, one job each: scribe <b>records</b>, facilitator <b>runs</b> the meeting, leader is <b>responsible</b>, manager <b>decides</b></span>
+<span class="rk">A compiler <b>IS</b> a static analysis tool</span>
+<span class="rk">Success = right people + enough time (rate caps) + <b>no blame</b></span>
+</div>
+</section>
+
+<section>
+<h2>Exercises — closed book (target 12/15)</h2>
+<p class="sec-sum">Fifteen multiple-choice questions, closed book. Aim to get twelve or more right before Friday.</p>
+<p class="plain"><b>In plain words:</b> no notes, no peeking — just you vs the questions.</p>
+<div class="quiz" data-target="12">
+<div class="q" data-a="b"><p class="qt">1. Static testing differs from dynamic testing because static testing:</p><div class="opts">
+<button data-k="a">a) Requires executable code</button><button data-k="b">b) Examines work products without executing them</button><button data-k="c">c) Only finds failures</button><button data-k="d">d) Is always automated</button></div>
+<div class="expl"><b>b</b> — the definition of static testing.</div></div>
+
+<div class="q" data-a="b"><p class="qt">2. Which finding is typical for static testing of a requirements document?</p><div class="opts">
+<button data-k="a">a) A runtime crash when saving</button><button data-k="b">b) An ambiguous requirement that can be interpreted two ways</button><button data-k="c">c) A slow database query</button><button data-k="d">d) A memory leak under load</button></div>
+<div class="expl"><b>b</b> — document defects: ambiguity, contradiction, omission; a, c, d are runtime (dynamic) observations.</div></div>
+
+<div class="q" data-a="c"><p class="qt">3. A tool reports an unused variable and an unreachable branch without running the program. This is:</p><div class="opts">
+<button data-k="a">a) Dynamic testing</button><button data-k="b">b) A review</button><button data-k="c">c) Static analysis</button><button data-k="d">d) Debugging</button></div>
+<div class="expl"><b>c</b> — tool-based, no execution = static analysis.</div></div>
+
+<div class="q" data-a="d"><p class="qt">4. Which of these is a static analysis tool?</p><div class="opts">
+<button data-k="a">a) Load generator</button><button data-k="b">b) Capture/replay tool</button><button data-k="c">c) Test management platform</button><button data-k="d">d) Compiler</button></div>
+<div class="expl"><b>d</b> — a compiler analyses code without running it — a legitimate static analysis tool.</div></div>
+
+<div class="q" data-a="b"><p class="qt">5. Static analysis can find defects that dynamic testing cannot because it:</p><div class="opts">
+<button data-k="a">a) Executes more test cases</button><button data-k="b">b) Examines structure (e.g., unreachable code) that may never be executed at runtime</button><button data-k="c">c) Uses faster hardware</button><button data-k="d">d) Is done by more experienced testers</button></div>
+<div class="expl"><b>b</b> — structure-level defects (unreachable code, unused variables) may never surface at runtime.</div></div>
+
+<div class="q" data-a="c"><p class="qt">6. In a review, the person who collects comments and defects raised during the meeting is the:</p><div class="opts">
+<button data-k="a">a) Author</button><button data-k="b">b) Facilitator</button><button data-k="c">c) Scribe</button><button data-k="d">d) Manager</button></div>
+<div class="expl"><b>c</b> — scribe records; facilitator runs the meeting.</div></div>
+
+<div class="q" data-a="a"><p class="qt">7. The review role responsible for the review's overall success, including planning and follow-up, is the:</p><div class="opts">
+<button data-k="a">a) Review leader</button><button data-k="b">b) Scribe</button><button data-k="c">c) Moderator only</button><button data-k="d">d) Reviewer</button></div>
+<div class="expl"><b>a</b> — the review leader owns the review end-to-end.</div></div>
+
+<div class="q" data-a="b"><p class="qt">8. Who decides whether a review is performed at all, and its objectives?</p><div class="opts">
+<button data-k="a">a) Scribe</button><button data-k="b">b) Manager</button><button data-k="c">c) Author</button><button data-k="d">d) Reviewer</button></div>
+<div class="expl"><b>b</b> — the manager decides execution of reviews and their objectives.</div></div>
+
+<div class="q" data-a="a"><p class="qt">9. A review led by the author to explain the design to the team and gather comments is a:</p><div class="opts">
+<button data-k="a">a) Walkthrough</button><button data-k="b">b) Inspection</button><button data-k="c">c) Technical review</button><button data-k="d">d) Audit</button></div>
+<div class="expl"><b>a</b> — author-led, educational/consensus = walkthrough.</div></div>
+
+<div class="q" data-a="d"><p class="qt">10. The most formal review type, with rules, checklists, metrics, entry/exit criteria and a trained moderator who is not the author, is:</p><div class="opts">
+<button data-k="a">a) Informal review</button><button data-k="b">b) Walkthrough</button><button data-k="c">c) Technical review</button><button data-k="d">d) Inspection</button></div>
+<div class="expl"><b>d</b> — all formality markers = inspection.</div></div>
+
+<div class="q" data-a="d"><p class="qt">11. Pair reviewing a colleague's test cases at their desk, no documents, no formal roles — this is:</p><div class="opts">
+<button data-k="a">a) An inspection</button><button data-k="b">b) A technical review</button><button data-k="c">c) Static analysis</button><button data-k="d">d) An informal review</button></div>
+<div class="expl"><b>d</b> — no process/roles/documents = informal review.</div></div>
+
+<div class="q" data-a="b"><p class="qt">12. Which is a typical objective of a technical review?</p><div class="opts">
+<button data-k="a">a) Author education only</button><button data-k="b">b) Reaching consensus, detecting defects, and evaluating alternatives among technical peers</button><button data-k="c">c) Releasing the product</button><button data-k="d">d) Performance measurement</button></div>
+<div class="expl"><b>b</b> — technical review objectives: consensus, defects, decisions, alternatives.</div></div>
+
+<div class="q" data-a="c"><p class="qt">13. Which statement about reviews is TRUE?</p><div class="opts">
+<button data-k="a">a) Reviews always require a formal meeting</button><button data-k="b">b) Reviews only find defects in code</button><button data-k="c">c) Reviews can spread knowledge and improve consistency of work products</button><button data-k="d">d) Reviews replace dynamic testing</button></div>
+<div class="expl"><b>c</b> — reviews also educate and harmonise; they complement, never replace, dynamic testing.</div></div>
+
+<div class="q" data-a="d"><p class="qt">14. A review descends into personal blame and the author becomes defensive. Which success factor was violated?</p><div class="opts">
+<button data-k="a">a) Review rate limits</button><button data-k="b">b) Use of checklists</button><button data-k="c">c) Entry criteria</button><button data-k="d">d) A blame-free, defect-focused culture</button></div>
+<div class="expl"><b>d</b> — blame-free culture is a documented success factor.</div></div>
+
+<div class="q" data-a="b"><p class="qt">15. To keep reviews effective, work products should be reviewed:</p><div class="opts">
+<button data-k="a">a) In one long end-of-project session</button><button data-k="b">b) In small chunks respecting limited review rates (pages per hour)</button><button data-k="c">c) Only by managers</button><button data-k="d">d) Only after release</button></div>
+<div class="expl"><b>b</b> — capped review rates in small chunks keep reviewer effectiveness.</div></div>
+</div>
+</section>
+
+<div class="next"><a href="chapter-02.html">← Ch 2</a><span><a href="official-bank.html#ch3">Drill 20 official Ch 3 questions</a></span><a href="chapter-04.html">Next: Ch 4 (Friday) →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

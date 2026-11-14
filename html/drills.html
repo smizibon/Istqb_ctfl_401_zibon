@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K3 Drills — calculate, don't guess · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script>
+<style>
+/* ---------- K3 drills page styles ---------- */
+.drill{margin:10px 0}
+.drill-prompt{background:var(--accent-soft);border:1px solid var(--expl-border);border-radius:var(--r-md);padding:13px 16px;font-size:.95rem;margin:10px 0}
+.drill-prompt b{color:var(--accent)}
+.drill-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.drill-controls label{font-size:.85rem;font-weight:700;color:var(--ink-soft)}
+.drill-controls input{font:inherit;font-size:.95rem;padding:8px 11px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:var(--qbtn-bg);color:var(--ink);min-width:110px}
+.drill-controls input:focus{outline:2px solid var(--focus);border-color:var(--accent)}
+.dbtn{font:inherit;font-size:.85rem;font-weight:700;color:#fff;background:var(--pill-bg);border:none;border-radius:var(--r-sm);padding:8px 15px;cursor:pointer;transition:transform .12s}
+.dbtn:hover{transform:translateY(-1px)}
+.dbtn.alt{background:var(--qbtn-bg);color:var(--ink);border:1.5px solid var(--line)}
+.dbtn.alt:hover{border-color:var(--accent);color:var(--accent)}
+.dsession{font-size:.78rem;color:var(--ink-soft);font-weight:600;margin-left:auto;white-space:nowrap}
+.drill-sol{margin-top:12px}
+.drill-sol .steps{margin:6px 0;padding-left:22px}
+.drill-sol .steps li{margin:4px 0}
+.verdict{font-weight:800;border-radius:var(--r-sm);padding:8px 13px;margin:8px 0;font-size:.92rem}
+.verdict.ok{background:var(--und-soft);border:1.5px solid var(--ans-border);color:var(--ans-ink)}
+.verdict.no{background:var(--trap-soft);border:1.5px solid var(--no-rest-border);color:var(--no-rest-tag)}
+/* number line */
+.numline{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin:12px 0;font-size:.85rem}
+.numline .nl-cell{min-width:52px;text-align:center;padding:8px 6px;border:1.5px solid var(--line);border-radius:8px;background:var(--qbtn-bg);font-weight:700;color:var(--ink-soft)}
+.numline .nl-cell small{display:block;font-size:.66rem;font-weight:600;letter-spacing:.03em}
+.numline .nl-cell.on{background:var(--k3-bg);border-color:var(--k3-border);color:var(--k3-ink)}
+.numline .nl-dots{color:var(--ink-soft);padding:0 4px}
+.numline .nl-lab{flex-basis:100%;font-size:.74rem;color:var(--ink-soft);font-style:italic;margin-top:2px}
+/* decision table skeleton */
+.dt-mini{font-size:.8rem}
+.dt-mini th,.dt-mini td{padding:4px 7px;font-size:.78rem}
+.dt-mini td.dt-hl,.dt-mini th.dt-hl{background:var(--work-soft);color:var(--ink);font-weight:700}
+/* state machine */
+.sm-wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.sm-svg{flex:1 1 340px;max-width:460px}
+.sm-svg svg{width:100%;height:auto;display:block}
+.sm-side{flex:1 1 200px;min-width:210px}
+.sm-states circle.st-c{fill:rgba(148,163,199,.12);stroke:var(--accent-2);stroke-width:2.5}
+.sm-states text{fill:var(--ink);font:700 14px -apple-system,BlinkMacSystemFont,sans-serif}
+.sm-arrow{stroke:var(--ink-soft);stroke-width:2;fill:none;marker-end:url(#sm-arrowhead)}
+.sm-arrow-label{fill:var(--accent);font:800 11.5px -apple-system,BlinkMacSystemFont,sans-serif}
+#sm-dot{transition:transform .4s cubic-bezier(.3,.9,.4,1.1)}
+#sm-dot circle{fill:var(--k3-ink,#b91c1c);stroke:#fff;stroke-width:2.5}
+.sm-invalid{animation:sm-shake .45s ease}
+.sm-invalid circle.st-c{fill:var(--trap-soft);stroke:var(--trap)}
+@keyframes sm-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.sm-check{list-style:none;padding:0;margin:8px 0;font-size:.84rem}
+.sm-check li{padding:3px 0 3px 24px;position:relative;color:var(--ink-soft)}
+.sm-check li::before{content:"☐";position:absolute;left:2px;color:var(--ink-soft)}
+.sm-check li.done{color:var(--ink);font-weight:600}
+.sm-check li.done::before{content:"☑";color:var(--und)}
+.sm-status{font-size:.8rem;font-weight:700;margin:6px 0}
+.sm-status.complete{color:var(--und)}
+.sm-count{font-size:.78rem;color:var(--ink-soft);margin:4px 0}
+/* no-JS / print solved examples: hidden only when JS drives the widgets */
+body.drills-js .print-example{display:none}
+@media print{
+ .drill-controls,.dbtn,nav.crumbs,.menubar{display:none!important}
+ .print-example{display:block!important}
+ .drill-prompt{border:1px solid #999}
+ section{break-inside:avoid}
+ @page{margin:12mm}
+}
+</style></head><body data-page="drills" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → K3 Drills</nav>
+
+<header class="hero">
+<h1>K3 Drills — calculate, don't guess</h1>
+<div class="sub">Fresh numbers every round: hit "New numbers ▸", solve on paper, type your answer, press Check. Every wrong answer (and every right one) reveals the full worked recipe steps — the exact rules from the cheat sheet.<br>প্রতিবার নতুন সংখ্যা: "New numbers ▸" চাপো, কাগজে সমাধান করো, উত্তর লিখে Check দাও। ভুল হলেও (ঠিক হলেও) সম্পূর্ণ ধাপে-ধাপে সমাধান দেখাবে — cheat sheet-এর নিয়ম হুবহু।</div>
+<div class="meta"><span class="chip">Exam: Friday 13 Nov, evening</span><span class="chip">BVA · EP · coverage · decision tables · state machine</span><span class="chip">print = paper drill sheet</span><span class="chip hot">K3 = your margin</span></div>
+</header>
+
+<section id="w-bva" data-open>
+<h2>1 · BVA / EP generator</h2><p class="kbadge k3">K3</p>
+<p class="sec-sum">Random range, one random question: full 2-value BVA set, full 3-value BVA set, or minimum EP test count. <a href="math-walkthroughs.html#ep">how it's done ↗</a></p>
+<div class="drill" id="drill-bva"></div>
+<div class="print-example"><div class="box work"><span class="box-tag">✏️ Solved example (print)</span>
+<p><b>Field accepts 15–70.</b> List the complete 2-value BVA set.</p>
+<p><b>Rule:</b> 2-value (ISTQB default): {boundary, nearest neighbour}. Boundaries: 15 and 70.</p>
+<p>Boundary 15 → {15, 14} · boundary 70 → {70, 71}. Count one by one: 14, 15, 70, 71 → <b>4 tests</b>.</p>
+<div class="numline"><div class="nl-cell on">14<small>b−1</small></div><div class="nl-cell on">15<small>b</small></div><div class="nl-cell">16<small>b+1</small></div><div class="nl-dots">…</div><div class="nl-cell">69<small>b−1</small></div><div class="nl-cell on">70<small>b</small></div><div class="nl-cell on">71<small>b+1</small></div><div class="nl-lab">highlighted = the 2-value set {b, neighbour} at each boundary</div></div>
+<p class="axis">EP version of the same field: 1 valid partition [15–70] + 3 invalid (below, above, non-numeric), each invalid separate → 4 tests.</p></div></div>
+</section>
+
+<section id="w-cov">
+<h2>2 · Coverage meter drill</h2><p class="kbadge k3">K3</p>
+<p class="sec-sum">Random snippet + random test set → compute statement coverage % and branch coverage %. <a href="math-walkthroughs.html#coverage">how it's done ↗</a></p>
+<div class="drill" id="drill-cov"></div>
+<div class="print-example"><div class="box work"><span class="box-tag">✏️ Solved example (print)</span>
+<pre>1  read x
+2  if (x &gt; 10):        # decision D
+3      print("high")
+4  print("end")</pre>
+<p>Test 1: x = 15. Statements: 4 total (1, 2, 3, 4); x=15 executes 1, 2, 3, 4 → 4/4 = <b>100% statement</b>. Branches: D-T and D-F; only D-T taken → 1/2 = <b>50% branch</b>.</p>
+<p class="axis">Theorem: 100% branch ⇒ 100% statement — never the reverse. Add x = 5 (takes D-F) → 100% branch.</p></div></div>
+</section>
+
+<section id="w-dt">
+<h2>3 · Decision table count drill</h2><p class="kbadge k3">K3</p>
+<p class="sec-sum">Random conditions → how many full rules, and how many minimum tests after collapsing identical actions? <a href="math-walkthroughs.html#dt">how it's done ↗</a></p>
+<div class="drill" id="drill-dt"></div>
+<div class="print-example"><div class="box work"><span class="box-tag">✏️ Solved example (print)</span>
+<p>Conditions: Gold member (Y/N), Order &gt; €100 (Y/N) → full rules = 2 × 2 = <b>4</b>.</p>
+<p>Stated collapse: non-gold customers get no discount regardless of order size → the two Non-gold rules merge (Gold=F, Order=−) → minimum = <b>3 tests</b>.</p>
+<table class="dt-mini"><thead><tr><th></th><th>R1</th><th>R2</th><th class="dt-hl">R3</th><th class="dt-hl">R4</th></tr></thead><tbody>
+<tr><td>Gold member</td><td>Y</td><td>Y</td><td class="dt-hl">N</td><td class="dt-hl">N</td></tr>
+<tr><td>Order &gt; €100</td><td>Y</td><td>N</td><td class="dt-hl">Y</td><td class="dt-hl">N</td></tr>
+<tr><td>Action</td><td>20%</td><td>5%</td><td class="dt-hl">none</td><td class="dt-hl">none</td></tr>
+</tbody></table>
+<p class="axis">Full rules = product of condition values; collapse ONLY when actions are identical; minimum tests = collapsed rules.</p></div></div>
+</section>
+
+<section id="w-sm">
+<h2>4 · State-machine stepper — the music player</h2><p class="kbadge k3">K3</p>
+<p class="sec-sum">Fire events at the machine: valid transitions animate the dot; illegal (event, state) pairs shake red. Cover all 5 valid transitions for 0-switch completeness. <a href="math-walkthroughs.html#state">how it's done ↗</a></p>
+<div class="drill" id="drill-sm"></div>
+<div class="print-example"><div class="box work"><span class="box-tag">✏️ Solved example (print)</span>
+<p>Music player: states Idle, Playing, Paused; events Play / Pause / Stop.</p>
+<p><b>All 5 valid transitions</b> (0-switch = each exercised once → 5 tests): Play: Idle→Playing · Play: Paused→Playing · Pause: Playing→Paused · Stop: Playing→Idle · Stop: Paused→Idle.</p>
+<p><b>Invalid pairs</b> (also test cases — the system should reject them): Stop in Idle · Play in Playing · Pause in Idle · Pause in Paused (4 illegal pairs of 9).</p>
+<p class="axis">Count TRANSITIONS, not states; invalid (event, state) pairs are also test cases.</p></div></div>
+</section>
+
+<div class="next"><a href="chapter-04.html">← Ch 4 — the recipes</a><span></span><a href="final-day-cheatsheet.html#k3">Cheat-sheet recipe table →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script>
+<script src="assets/drills.js"></script></body></html>

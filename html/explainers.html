@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explainers — the WHY behind the definitions · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script>
+<style>
+/* Reuses the glossary card vocabulary (.gcards/.gcard/.gt/.gd/.gtrap) + explainer-layer blocks */
+.gcards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 4px}
+.gcard{border:1px solid var(--line);border-radius:var(--r-md);background:var(--kc-bg);padding:12px 15px;break-inside:avoid}
+.gt{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.gt b{font-size:.98rem}
+.gt .kbadge{font-size:.64rem;padding:1px 9px;margin:0;flex:0 0 auto}
+.gd{margin:6px 0 4px;font-size:.9rem}
+.gcard .bn{font-size:.86rem;border-top:1px dashed var(--line);margin-top:6px;padding-top:5px}
+.gtrap{font-size:.84rem;background:var(--trap-soft);border-left:4px solid var(--trap);border-radius:8px;padding:6px 10px;margin:8px 0 2px}
+.gl{margin:7px 0 0;font-size:.78rem}
+.gl a{font-weight:700;text-decoration:none}
+/* The FIXED FIVE explainer slots */
+.x-essence{font-size:.92rem;margin:6px 0 4px}
+.x-essence::before{content:"ESSENCE · ";font-size:.66rem;font-weight:700;letter-spacing:.06em;color:var(--accent)}
+.x-analogy{font-size:.9rem;margin:6px 0;background:var(--read-bg);border-radius:8px;padding:6px 10px}
+.x-why{font-size:.88rem;margin:6px 0}
+.x-why b{color:var(--accent)}
+.x-links{margin:7px 0 0;font-size:.78rem}
+.x-links a{font-weight:700;text-decoration:none}
+@media (max-width:640px){.gcards{grid-template-columns:1fr}}
+@media print{.gcards{grid-template-columns:1fr 1fr}}
+</style></head><body data-page="explainers" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Explainers</nav>
+
+<header class="hero">
+<h1>Explainers — the WHY behind the definitions</h1>
+<div class="sub">This is the middle layer: <b>glossary = what it says · chapter = the full lesson · this page = why it works that way + how the exam twists it.</b> Each card compresses one confusable pair into a one-line essence, an everyday analogy, the WHY, and the trap. Slot: <b>Thursday 19:30–21:00, after Mock 2</b>.
+<span class="bn">এটা মাঝের স্তর: <b>glossary = সংজ্ঞা · chapter = পূর্ণ পাঠ · এই পাতা = কেন এমন + পরীক্ষা কীভাবে ঘুরিয়ে জিজ্ঞেস করে।</b> প্রতিটি কার্ডে এক-লাইন essence, রোজকেহলার উপমা, WHY আর trap। Slot: <b>বৃহস্পতিবার 19:30–21:00, Mock 2-এর পরে</b>।</span></div>
+<div class="meta"><span class="chip">13 explainer cards — the WHY behind the definitions</span><span class="chip">EN essence + analogy · বাংলা analogy</span><span class="chip">⚠️ exam-twist hook on every card</span><span class="chip hot">Thursday 19:30–21:00, after Mock 2</span></div>
+</header>
+
+<section data-open>
+<h2>The confusable pairs — why each distinction exists</h2>
+<p class="sec-sum"><i>Read the essence, picture the analogy, then say the WHY out loud — if you can explain WHY, no twisted exam scenario can untwist it.</i></p>
+<div class="gcards">
+
+<div class="gcard" id="x-qa-vs-qc">
+<div class="gt"><b>QA vs QC</b><span class="kbadge">K2</span></div>
+<p class="x-essence">QA improves the <b>process</b> so defects are prevented; QC checks the <b>product</b> to detect the defects that still got through.</p>
+<p class="x-analogy"><b>Think of it like…</b> a restaurant kitchen: <b>QA</b> fixes the kitchen — training the cooks, tightening recipes — so no bad dish gets cooked in the first place; <b>QC</b> is the chef tasting the dish before it leaves the pass. And tasting can't un-burn the soup.</p>
+<p class="x-why"><b>Why it works this way:</b> you cannot inspect quality into a product after the fact — detection alone only finds what prevention failed to stop, so ISTQB pins prevention to the process (QA) and detection to the product (QC).</p>
+<div class="gtrap x-trap">⚠️ An option that says "testing ensures quality" is the classic trap — testing (QC) gives information about quality, it never guarantees it.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-qa-vs-qc">glossary · QA vs QC</a> · full lesson ↗ <a href="chapter-01.html">chapter-01.html</a></p>
+<div class="bn">রেস্তোরাঁর রান্নাঘর: <b>QA</b> রান্নাঘর ঠিক করে — cook-দের প্রশিক্ষণ, recipe নিয়ন্ত্রণ — যাতে খারাপ পদ প্রথমেই না বানে; <b>QC</b> হলো পরিবেশনের আগে chef-এর চেখে দেখা। আর চেখে দেখলে পোড়া স্যুপ আর আগের অবস্থায় ফেরে না।</div>
+</div>
+
+<div class="gcard" id="x-severity-vs-priority">
+<div class="gt"><b>Severity vs priority</b><span class="kbadge">K2</span></div>
+<p class="x-essence">Severity is the engineer's <b>measurement of damage</b>; priority is the manager's <b>decision about the fix queue</b>.</p>
+<p class="x-analogy"><b>Think of it like…</b> a hospital: severity is how badly the patient is injured, priority is who gets seen first. A <b>paper cut on the CEO</b> — low severity, high priority — jumps the queue while a grave-but-stable case waits.</p>
+<p class="x-why"><b>Why it works this way:</b> technical impact and business urgency are measured on different scales by different people, so ISTQB keeps them separate — the engineer cannot decide the business order, and the manager cannot rewrite the technical impact.</p>
+<div class="gtrap x-trap">⚠️ The exam's favourite twist: "homepage typo the night before launch" — answer low severity, HIGH priority, and never assume high severity ⇒ high priority.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-severity-vs-priority">glossary · severity vs priority</a> · full lesson ↗ <a href="chapter-05.html">chapter-05.html</a></p>
+<div class="bn">হাসপাতালের স্ট্যান্ডি: severity মানে রোগীর চোট কত গভীর (<b>engineer</b> মাপেন), priority মানে কাকে আগে দেখা হবে (<b>manager</b> ঠিক করেন) — CEO-র হাতে কাগজের কাটা অল্প severity, কিন্তু queue-তে একেবারে আগে।</div>
+</div>
+
+<div class="gcard" id="x-verification-vs-validation">
+<div class="gt"><b>Verification vs validation</b><span class="kbadge">K2</span></div>
+<p class="x-essence">Verification asks "did we build it <b>right</b> (per spec)?"; validation asks "did we build the <b>right thing</b> (per real needs)?"</p>
+<p class="x-analogy"><b>Think of it like…</b> a perfectly engineered <b>bridge to the wrong island</b>: verification checks the bridge — every weld matches the blueprint; validation checks the island — is this even where people need to go?</p>
+<p class="x-why"><b>Why it works this way:</b> a flawless build of a wrong specification is still a useless product, so ISTQB separates conformance-to-spec (verification, e.g. reviews) from fitness-for-purpose (validation, e.g. acceptance testing).</p>
+<div class="gtrap x-trap">⚠️ A scenario where the system meets every documented requirement but users can't use it = validation failure — don't pick "verification gap".</div>
+<p class="x-links">definition ↗ <a href="chapter-01.html#c1-confusion">chapter-01 confusion table</a> · full lesson ↗ <a href="chapter-01.html">chapter-01.html</a></p>
+<div class="bn">নিখুঁত <b>ব্রিজ, কিন্তু ভুল দ্বীপে</b>: verification দেখে ব্রিজটা blueprint-এর সঙ্গে মিলছে কি না; validation দেখে দ্বীপটাই বা আদৌ মানুষের দরকারের জায়গা কি না।</div>
+</div>
+
+<div class="gcard" id="x-confirmation-vs-regression">
+<div class="gt"><b>Confirmation vs regression testing</b><span class="kbadge">K2</span></div>
+<p class="x-essence">Confirmation re-runs the failed test to prove <b>that defect</b> is fixed; regression re-runs the broader suite to prove the <b>change broke nothing else</b>.</p>
+<p class="x-analogy"><b>Think of it like…</b> fixing a jammed door: <b>confirmation</b> testing checks the door is now locked properly; <b>regression</b> testing checks the fix didn't jam a window elsewhere in the house.</p>
+<p class="x-why"><b>Why it works this way:</b> fixes are new code, and new code can break old things — a defect fix is itself a change, so ISTQB demands both proofs: the original worry resolved AND the rest of the house untouched.</p>
+<div class="gtrap x-trap">⚠️ Exam scenario: "we only flipped a config flag — do we really need regression testing?" Answer: yes — a change is a change, and regression applies wherever testing applies.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-confirmation-vs-regression">glossary · confirmation vs regression</a> · full lesson ↗ <a href="chapter-02.html#c2-confreg">chapter-02.html#c2-confreg</a></p>
+<div class="bn">আটকে যাওয়া দরজা সারানোর পরে: <b>confirmation</b> testing দেখে দরজাটা এখন ঠিকঠাক লাগছে কি না; <b>regression</b> testing দেখে সেই সারানোর কাজ ঘরের অন্য কোনো জানালা আটকে দিয়েছে কি না।</div>
+</div>
+
+<div class="gcard" id="x-condition-vs-case">
+<div class="gt"><b>Test condition vs test case</b><span class="kbadge">K2</span></div>
+<p class="x-essence">A test condition is the <b>thing to test</b> ("the worry"); a test case is the <b>exact recipe</b> — inputs, preconditions, expected result — that proves or disproves it.</p>
+<p class="x-analogy"><b>Think of it like…</b> cooking: the <b>test condition</b> is the worry on a sticky note — "does the cake rise?" — while the <b>test case</b> is the precise recipe with exact measures and the photo of what the finished cake must look like.</p>
+<p class="x-why"><b>Why it works this way:</b> you can't design or measure coverage against a vague worry — ISTQB splits analysis ("what to test": conditions from the basis) from design ("how to test": cases with expected results) so both are traceable.</p>
+<div class="gtrap x-trap">⚠️ Exam scenario: a listed "test" with inputs but no expected result — it is not yet a test case; the prediction is the contract.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-test-condition">glossary · test condition</a> · <a href="glossary.html#g-test-case">test case</a> · full lesson ↗ <a href="chapter-01.html">chapter-01.html</a></p>
+<div class="bn">রান্নাঘর থেকে: <b>test condition</b> হলো sticky note-এ লেখা দুশ্চিন্তা — "cake ফুলবে তো?" — আর <b>test case</b> হলো নির্দিষ্ট recipe: exact মাপ, precondition, আর তৈরি cake-এর প্রত্যাশিত ছবি।</div>
+</div>
+
+<div class="gcard" id="x-entry-exit-criteria">
+<div class="gt"><b>Entry vs exit criteria</b><span class="kbadge">K2</span></div>
+<p class="x-essence">Entry criteria gate <b>when testing may begin</b>; exit criteria define <b>when testing may be declared complete</b> — both measurable, both agreed in the plan.</p>
+<p class="x-analogy"><b>Think of it like…</b> airport boarding: the <b>entry criterion</b> is the gate only opening when the plane is ready — boarding early means crowding a lounge that's still unset; the <b>exit criterion</b> is the doors closing only when the checklist is done, not when the crew "feels like it's fine".</p>
+<p class="x-why"><b>Why it works this way:</b> starting before the environment/build is ready burns days logging "defects" that are just unset setup, and finishing on a feeling ships risk — so ISTQB forces both gates to be objective and measurable.</p>
+<div class="gtrap x-trap">⚠️ Exam scenario: "the QA lead ends testing once the system feels stable" — wrong; a sign-off needs countable evidence (tests run %, coverage, open criticals).</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-entry-criteria">glossary · entry criteria</a> · <a href="glossary.html#g-exit-criteria">exit criteria</a> · full lesson ↗ <a href="chapter-05.html">chapter-05.html</a></p>
+<div class="bn">বিমানবন্দরের গেট: <b>entry criterion</b> মানে প্লেন প্রস্তুত হলেই গেট খোলে — আগেভাগে ঢুকলে অসাবধান পরিবেশে "defect" লিখে দিন নষ্ট; <b>exit criterion</b> মানে checklist শেষ হলে দরজা বন্ধ — ক্রু-র "মনে হয় ঠিক আছে" বলে নয়।</div>
+</div>
+
+<div class="gcard" id="x-error-defect-failure">
+<div class="gt"><b>Error → defect → failure — and its caveats</b><span class="kbadge">K2</span></div>
+<p class="x-essence">A human <b>error</b> plants a <b>defect</b> in the work product, which may — or may not — surface as an observed <b>failure</b> at runtime.</p>
+<p class="x-analogy"><b>Think of it like…</b> a water pipe with leaks both ways: an <b>error</b> is the plumber's bad joint (defect), but water may never flow through that stretch (defect never executed — no failure), while a burst can also come from outside the pipe entirely (environment). And if the measuring stick (<b>oracle</b>) is wrong, a perfect pipe still "fails" inspection.</p>
+<p class="x-why"><b>Why it works this way:</b> testing observes failures and works backwards to defects, so ISTQB warns the chain is leaky in both directions — defects can hide forever, failures can arrive without any defect, and a bad oracle fakes a failure in a perfect system.</p>
+<div class="gtrap x-trap">⚠️ "Environmental conditions cause errors" = wrong — they cause failures; the error is always a human action.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-defect">glossary · defect</a> · <a href="glossary.html#g-oracle">test oracle</a> · full lesson ↗ <a href="chapter-01.html">chapter-01.html</a></p>
+<div class="bn">দুই দিকেই ফুটো পাইপ: <b>error</b> মানে নল-মিস্ত্রির খারাপ জোড়া (<b>defect</b>), কিন্তু ওই অংশে জলই না চললে কিছু বোঝা যায় না (defect execute-ই হলো না), আবার পাইপের বাইরে থেকেও বিস্ফোরণ আসতে পারে (environment)। আর মাপার কাঠি (<b>oracle</b>) ভুল হলে নিখুঁত সিস্টেমও "failure" দেখায়।</div>
+</div>
+
+<div class="gcard" id="x-statement-branch">
+<div class="gt"><b>Statement vs branch coverage</b><span class="kbadge">K3</span></div>
+<p class="x-essence">Statement coverage walks every <b>line</b>; branch coverage additionally walks every <b>outcome of every decision</b> — all forks taken both ways.</p>
+<p class="x-analogy"><b>Think of it like…</b> a maze of forks: statement coverage just visits every corridor at least once; branch coverage forces you to walk <b>both directions of every fork</b>. But even walking every corridor, you can still <b>always turn left</b> — one single pass with x=15 never tests the right turn (the false branch).</p>
+<p class="x-why"><b>Why it works this way:</b> a decision is a fork, and walking BOTH forks of every fork necessarily covers every line — so 100% branch coverage implies 100% statement coverage, never the other way round: full statement coverage can leave entire false-branches unexecuted.</p>
+<div class="gtrap x-trap">⚠️ Give a one-condition snippet (if x>10…) and ask the coverage % of one test with x=15: statement = 100%, branch = 50%.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-statement-vs-branch-coverage">glossary · statement vs branch</a> · full lesson ↗ <a href="chapter-04.html">chapter-04.html</a> · cheat ↗ <a href="final-day-cheatsheet.html#k3">cheatsheet K3</a></p>
+<div class="bn">গলিপথের মোড়: statement coverage মানে প্রতিটা রাস্তায় অন্তত একবার হাঁটা; <b>branch</b> coverage মানে প্রতিটা মোড়ের <b>দুই দিকেই</b> হাঁটা। কিন্তু সব রাস্তায় হাঁটলেও তুমি হয়তো <b>সবসময় বাঁয়ে মোড়</b> নিচ্ছ (শুধু x=15) — ডান দিকটা (false branch) কখনোই পরীক্ষিত হলো না।</div>
+</div>
+
+<div class="gcard" id="x-0-switch">
+<div class="gt"><b>0-switch vs all-transitions vs N-switch coverage</b><span class="kbadge">K3</span></div>
+<p class="x-essence">0-switch proves each individual <b>transition</b> works; all-transitions is that full set; N-switch proves every <b>sequence of N+1 transitions</b> — chains, not just single hops.</p>
+<p class="x-analogy"><b>Think of it like…</b> a house of doorways: 0-switch checks every <b>single doorway</b> opens; 1-switch checks every <b>doorway-then-doorway sequence</b> — kitchen→lounge→cellar. Bugs rarely live in a door; they live in the <b>hand-off</b>: the state a door leaves you in silently breaks the next door.</p>
+<p class="x-why"><b>Why it works this way:</b> each transition can pass alone yet leave the system in a state the next transition doesn't expect, so ISTQB layers coverage by chain length — single hops (0-switch), all single hops (all-transitions), then longer chains (N-switch) to catch interaction defects between consecutive transitions.</p>
+<div class="gtrap x-trap">⚠️ When a scenario says "the bug only appears when two steps happen back-to-back", the answer is N-switch (1-switch) — not 0-switch.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-state-transition-testing">glossary</a> · full lesson ↗ <a href="chapter-04.html">chapter-04.html</a> · drill ↗ <a href="drills.html">state-machine drill · drills.html</a></p>
+<div class="bn">দরজার ঘর: <b>0-switch</b> দেখে প্রতিটা <b>দরজা আলাদাভাবে</b> খোলে কি না; <b>1-switch</b> দেখে <b>দরজার-পরে-দরজার sequence</b> — kitchen→lounge→cellar। বাগ সাধারণত দরজায় থাকে না, থাকে <b>হ্যান্ড-অফে</b> — একটা দরজা তোমাকে এমন state-এ ফেলে যাচ্ছে যেখানে পরের দরজা ভেঙে যায়।</div>
+</div>
+
+<div class="gcard" id="x-product-project-risk">
+<div class="gt"><b>Product vs project risk</b><span class="kbadge">K2</span></div>
+<p class="x-essence">Product risk = the <b>thing you built can hurt someone</b> (quality, harm to users); project risk = the <b>building of it can fall apart</b> (schedule, budget, staffing, politics).</p>
+<p class="x-analogy"><b>Think of it like…</b> a construction site: <b>product risk</b> is the finished bridge collapsing under a truck — the user suffers; <b>project risk</b> is the site running out of money, the crew quitting, the permit never arriving — the <b>schedule</b> suffers. The one-question test: <i>"if this happens, does the user bleed or does the plan bleed?"</i></p>
+<p class="x-why"><b>Why it works this way:</b> the two risks demand different mitigations — product risk is reduced by better test design (more rigor where harm lives), project risk by management action (buffers, stakeholders, planning) — so ISTQB keeps them on separate lists with separate owners.</p>
+<div class="gtrap x-trap">⚠️ "Delivering late" or "budget overrun" is project risk even though testing notices it first — don't classify anything a tester feels as product risk.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-risk">glossary · risk</a> · <a href="glossary.html#g-product-vs-project-risk">product vs project</a> · full lesson ↗ <a href="chapter-05.html">chapter-05.html</a></p>
+<div class="bn">নির্মাণস্থল: <b>product risk</b> মানে তৈরি হওয়া ব্রিজ ট্রাকের নিচে ভেঙে পড়ে — ক্ষতি সোখে <b>user</b>; <b>project risk</b> মানে টাকা ফুরিয়ে যাওয়া, কর্মীরা চলে যাওয়া — ক্ষতি সোখে <b>schedule</b>। এক-লাইনের প্রশ্ন: "এটা ঘটলে user কষ্ট পায়, নাকি schedule?"</div>
+</div>
+
+<div class="gcard" id="x-dt-collapse">
+<div class="gt"><b>Why decision-table collapsing is legitimate</b><span class="kbadge">K3</span></div>
+<p class="x-essence">When a condition has <b>no effect</b> on the outcome, you merge its rows — you're not skipping tests, you're merging <b>indistinguishable worlds</b>.</p>
+<p class="x-analogy"><b>Think of it like…</b> a living room where the light switch doesn't affect the TV: one test of the TV <b>proves it for both switch positions</b>, because switch-up-world and switch-down-world are identical as far as the TV is concerned. Two worlds that behave the same are really one world wearing two hats.</p>
+<p class="x-why"><b>Why it works this way:</b> a collapsed rule's merged cells are <b>don't-care</b> values, and a don't-care by definition cannot change the action — so one execution carries the proof of both original rules. The test count shrinks (N rules → fewer), but the <b>coverage of distinct behaviours</b> stays complete.</p>
+<div class="gtrap x-trap">⚠️ Collapsing only works on non-unique (don't-care) conditions — merging rows where every condition matters silently deletes genuinely different tests.</div>
+<p class="x-links">formula ↗ <a href="glossary.html#g-formula-dt-rules">glossary · DT rules formula</a> · walkthrough ↗ <a href="math-walkthroughs.html#dt">math-walkthroughs · DT</a></p>
+<div class="bn">লিভিং রুমে যদি light switch-এর TV-র ওপর <b>কোনো প্রভাব</b> না থাকে, তাহলে TV-র একটা test-ই <b>দুই অবস্থানের জন্যই</b> প্রমাণ — switch-up আর switch-down আসলে দুটি পৃথিবী নয়, <b>অভিন্ন পৃথিবী</b>। তুমি test skip করছ না, তুমি অভিন্ন পৃথিবীগুলো merge করছ।</div>
+</div>
+
+<div class="gcard" id="x-pyramid">
+<div class="gt"><b>Test pyramid — why fat bottom, thin top</b><span class="kbadge">K2</span></div>
+<p class="x-essence">Many cheap, fast <b>unit</b> tests at the bottom; a few slow, expensive <b>E2E</b> tests at the top — the shape is a cost-and-feedback argument, not fashion.</p>
+<p class="x-analogy"><b>Think of it like…</b> building a wall: a <b>unit test</b> checks one brick in a second; an <b>E2E test rebuilds the whole wall just to check one brick</b>. So you check bricks at the brick pile (cheap, everywhere) and save whole-wall inspections for the rare things only a wall can reveal — does the roof sit on it.</p>
+<p class="x-why"><b>Why it works this way:</b> the higher the level, the more of the system each test drags in — slower, flakier, and harder to localise when red — so the pyramid maximises feedback per minute: broad certainty cheaply below, a handful of end-to-end confidence checks above, integration in between.</p>
+<div class="gtrap x-trap">⚠️ The pyramid is a default, not a law — a UI-heavy legacy app with untestable units may justify an inverted shape; say "risk-based adaptation", never "E2E is bad".</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-test-pyramid">glossary · test pyramid</a> · full lesson ↗ <a href="chapter-05.html">chapter-05.html</a></p>
+<div class="bn">দেয়াল গাঁথা: <b>unit test</b> এক সেকেন্ডে একটা ইট পরীক্ষা করে; <b>E2E test</b> একটা ইট পরীক্ষা করতে <b>পুরো দেয়াল আবার তোলে</b>। তাই নিচে হাজারো সস্তা brick-check, ওপরে মাত্র কয়েকটা বিরল wall-check — টেস্ট pyramid-এর আকারটা খরচের হিসাব, ফ্যাশন নয়।</div>
+</div>
+
+<div class="gcard" id="x-walkthrough-review">
+<div class="gt"><b>Walkthrough vs technical review</b><span class="kbadge">K2</span></div>
+<p class="x-essence">A walkthrough is the <b>author's guided tour</b> — education, their document; a technical review is a <b>qualified panel's inspection</b> — findings and a verdict.</p>
+<p class="x-analogy"><b>Think of it like…</b> houses: a <b>walkthrough</b> is the owner walking guests through <b>their own house</b>, explaining each room — the goal is learning; a <b>technical review</b> is a licensed inspector team with a neutral guide checking against building codes — the goal is a verdict.</p>
+<p class="x-why"><b>Why it works this way:</b> different goals need different forms — the author leads, attendance is open, and there's no required verdict in a walkthrough (peer learning, defect gathering); a technical review needs qualified peers, defined roles including a neutral moderator, and documented findings against criteria, because its output feeds decisions.</p>
+<div class="gtrap x-trap">⚠️ "Author leads, no verdict" = walkthrough even if experts attend; "defined reviewer roles + documented findings" = technical review even if it feels friendly.</div>
+<p class="x-links">definition ↗ <a href="glossary.html#g-walkthrough">glossary · walkthrough</a> · <a href="glossary.html#g-technical-review">technical review</a> · full lesson ↗ <a href="chapter-03.html">chapter-03.html</a></p>
+<div class="bn">বাড়ি দেখানো: <b>walkthrough</b> মানে মালিক নিজের বাড়ির বারান্দায়-ঘরে অতিথিদের নিয়ে বেড়ানো — উদ্দেশ্য শেখা; <b>technical review</b> মানে স্বনামধন্য inspector দল <b>নিরপেক্ষ guide</b>-সহ building code মিলিয়ে পরীক্ষা করা — উদ্দেশ্য verdict, বেড়ানো নয়।</div>
+</div>
+
+</div>
+</section>
+
+<div class="next"><a href="glossary.html">← Glossary recall drill</a><span></span><a href="index.html">Chapters hub →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

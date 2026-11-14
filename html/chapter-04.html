@@ -1,0 +1,523 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 4 — Test Analysis &amp; Design (Test Techniques) · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script></head><body data-ch="ch4" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Chapter 4</nav>
+
+<header class="hero">
+<h1>Chapter 4 — Test Analysis and Design (Test Techniques)</h1>
+<div class="sub">The make-or-break chapter. EP · BVA · decision tables · state transitions · statement &amp; branch coverage — calculated by hand, not guessed.<br>সবচেয়ে নির্ণায়ক অধ্যায় — EP, BVA, decision table, state transition, statement ও branch coverage — সবই হাতে গুনে বের করতে হবে, অনুমানে নয়।</div>
+<div class="meta"><span class="chip">~10–11 exam questions</span><span class="chip">K2 + K3 (hand-calculation)</span><span class="chip">Study: FRIDAY 13 Nov morning — deliberately last, freshest for the exam</span><span class="chip hot">HARDEST = your margin</span></div>
+<div id="chapter-progress"></div>
+</header>
+
+<section>
+<h2>4.1 The test design process</h2><p class="kbadge">K2</p>
+<p class="plain"><b>In plain words:</b> turn "what to test" into concrete test cases through three ordered steps — analysis, design, implementation.</p>
+<p class="sec-sum">Test analysis → design → implementation chain, exact case/procedure/condition vocabulary, and risk-based prioritisation.</p>
+<p>A <b>test technique</b> is a procedure to derive and select test cases — it makes testing <b>reproducible, measurable, reviewable</b> rather than ad-hoc. Black-box = from the specification/usage; white-box = from internal structure; experience-based = from skill/intuition.</p>
+<div class="chain">
+<div class="c c-def"><b>Test analysis</b>identify <b>test conditions</b> from the test basis — <i>what</i> to test</div><div class="arr">→</div>
+<div class="c c-err"><b>Test design</b>conditions → concrete <b>test cases</b> (inputs, expected results, coverage items) — <i>how</i> to test</div><div class="arr">→</div>
+<div class="c c-fail"><b>Test implementation</b>procedures/suites, environments &amp; data, confirm testability</div>
+</div>
+<p>During execution, <b>actual results are compared with expected results</b>; completion criteria (often coverage) show when to stop.</p>
+<div class="box mem"><span class="box-tag">📖 Memorise — vocabulary, exactly</span>
+• <b>Test case</b> = set of <b>preconditions, inputs (incl. data), actions, expected results and postconditions</b>; concrete (exact values) or logical/abstract.<br>
+• <b>Test procedure</b> = ordered sequence of test cases (script).<br>
+• <b>Test condition</b> = the "thing to test" identified from the test basis.<br>
+• <b>Traceability</b>: conditions ↔ basis ↔ cases ↔ results → enables coverage measurement, change-impact analysis, auditing, reporting.</div>
+<div class="box und"><span class="box-tag">🧠 Understand — prioritisation (4.1.2)</span>
+Test cases are prioritised by <b>risk</b> (likelihood &amp; impact of failure), <b>coverage goals</b>, and <b>project constraints</b> (time, budget). Highest priority runs first; in regression only high-priority subsets may run.</div>
+<div class="bn">
+<p class="sec-sum"><i>test analysis → design → implementation শৃঙ্খল, case/procedure/condition-এর নির্দিষ্ট শব্দার্থ, আর risk-ভিত্তিক prioritisation।</i></p>
+<p><b>Test technique</b> হলো test case বের করে আনা ও বাছাই করার একটা পদ্ধতি — এটা testing-কে খেয়ালখুশির বদলে <b>পুনরাবৃত্তিযোগ্য, পরিমাপযোগ্য ও পর্যালোচনাযোগ্য</b> করে তোলে। Black-box মানে specification বা ব্যবহার থেকে; white-box মানে অভ্যন্তরীণ গঠন থেকে; experience-based মানে দক্ষতা ও অন্তর্দৃষ্টি থেকে।</p>
+<div class="chain">
+<div class="c c-def"><b>Test analysis</b>test basis থেকে <b>test condition</b> চিহ্নিত করা — <i>কী</i> টেস্ট করব</div><div class="arr">→</div>
+<div class="c c-err"><b>Test design</b>condition থেকে সুনির্দিষ্ট <b>test case</b> (ইনপুট, expected result, coverage item) — <i>কীভাবে</i> টেস্ট করব</div><div class="arr">→</div>
+<div class="c c-fail"><b>Test implementation</b>procedure/suite, পরিবেশ ও test data তৈরি, testability নিশ্চিত করা</div>
+</div>
+<p>Execution-এর সময় <b>actual result-এর সঙ্গে expected result মিলিয়ে দেখা হয়</b>; completion criteria (প্রায়ই coverage) বোঝায় কখন থামা যাবে।</p>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — শব্দার্থ, হুবহু</span>
+• <b>Test case</b> = <b>precondition, ইনপুট (test data সহ), action, expected result ও postcondition</b>-এর সেট; concrete (সুনির্দিষ্ট মান) বা logical/abstract হতে পারে।<br>
+• <b>Test procedure</b> = নির্দিষ্ট ক্রমে সাজানো test case-গুলোর সেট (স্ক্রিপ্ট)।<br>
+• <b>Test condition</b> = test basis থেকে চিহ্নিত "যেটা টেস্ট করতে হবে" সেই জিনিস।<br>
+• <b>Traceability</b>: condition ↔ basis ↔ case ↔ result → এর ফলে coverage মাপা, change-impact বিশ্লেষণ, audit ও রিপোর্টিং সবই সম্ভব হয়।</div>
+<div class="box und"><span class="box-tag">🧠 বুঝে নাও — prioritisation (4.1.2)</span>
+Test case-গুলোর অগ্রাধিকার ঠিক হয় <b>risk</b> (failure-এর সম্ভাবনা ও প্রভাব), <b>coverage লক্ষ্য</b>, আর <b>প্রকল্পের সীমাবদ্ধতার</b> (সময়, বাজেট) ভিত্তিতে। সবচেয়ে বেশি priority-রটা আগে চালানো হয়; regression-এ শুধু high-priority ভাগটুকুই চলতে পারে।</div>
+</div>
+</section>
+
+<section>
+<h2>4.2.1 Equivalence Partitioning (EP) — K3</h2><p class="kbadge k3">K3</p>
+<p class="plain"><b>In plain words:</b> group inputs the system treats the same way; test one value per group, invalids separately.</p>
+<p class="sec-sum">EP: count partitions, invalids get their own test — the minimum-test-count question lives here.</p>
+<h3 id="c4-ep-rule">The rule</h3>
+<p>Divide inputs (or outputs, or internal values) into <b>partitions</b> whose members are handled identically — then <b>one representative per partition</b> is enough. Exhaustive testing is impossible (principle 2); EP is the systematic escape.</p>
+<h3 id="c4-ep-traps">Traps</h3>
+<div class="box trap"><span class="box-tag">⚠️ Trap — invalid partitions</span>
+<b>Each invalid partition gets its OWN test case</b> (one invalid value per test) so the right error can be verified. Never bundle several invalid values into one test — <b>defect masking</b>: several invalid values in one test case can mask each other, as the first rejection hides the others' behaviour. Forgetting invalid partitions entirely is trap #1.</div>
+<h3 id="c4-ep-example">Worked example</h3>
+<div class="box work"><span class="box-tag">✏️ Worked example — hotel loyalty discount</span>
+Rule: <i>"Discount for guests aged 18–60; under-18 and over-60 get no discount but <b>different</b> messages."</i><br><br>
+Valid partitions: P1 = 18–60 (discount), P2 = under 18 (message A), P3 = over 60 (message B). Different behaviour → <b>two separate valid partitions</b>; if the spec treated them identically, they'd be one.<br>
+Invalid (age must be 0–120): P4 = below 0, P5 = above 120, P6 = non-numeric.<br>
+<b>Minimum 6 tests:</b> 25, 10, 70, −5, 200, "abc".</div>
+<div class="rule">Exam pattern: "how many test cases minimum?" → count partitions (invalids individually). "Which value tests an invalid partition?" → the one outside valid ranges.</div>
+<div class="bn">
+<p class="sec-sum"><i>EP: partition গুনো, invalid গুলো পায় নিজের আলাদা test — সর্বনিম্ন test সংখ্যার প্রশ্ন এখানেই আসে।</i></p>
+<p>ইনপুট (বা আউটপুট, বা অভ্যন্তরীণ মান) ভাগ করো এমন <b>partition</b>-এ (সমভাবা ভাগ), যেখানকার প্রতিটি সদস্যকে সিস্টেম একইভাবে সামলায় — তারপর <b>প্রতিটি partition থেকে একজন প্রতিনিধি</b> যথেষ্ট। সম্পূর্ণ নিরিক্ষণ অসম্ভব (principle 2); EP হলো সেখান থেকে বেরিয়ে আসার সুশৃঙ্খল পথ।</p>
+<div class="box trap"><span class="box-tag">⚠️ Trap — invalid partition</span>
+<b>প্রতিটি invalid partition পায় তার নিজের আলাদা test case</b> (এক test-এ একটির বেশি invalid মান নয়) — যাতে সঠিক error-টা যাচাই করা যায়। কখনোই একাধিক invalid মান এক test-এ জমা কোরো না — <b>defect masking</b>: এক test case-এ কয়েকটি invalid মান থাকলে প্রথম rejection-ই বাকিগুলোর আচরণ ঢেকে দেয়। Invalid partition একেবারে ভুলে যাওয়াই trap #1।</div>
+<div class="box work"><span class="box-tag">✏️ Worked example — হোটেল loyalty discount</span>
+নিয়ম: <i>"Discount for guests aged 18–60; under-18 and over-60 get no discount but <b>different</b> messages."</i><br><br>
+Valid partition: P1 = 18–60 (discount), P2 = 18-এর নিচে (message A), P3 = 60-এর উপরে (message B)। আচরণ আলাদা, তাই <b>দুটি পৃথক valid partition</b>; spec যদি দুটোকে একইভাবে দেখতো, তাহলে একটাই হতো।<br>
+Invalid (বয়স হতে হবে 0–120): P4 = 0-এর নিচে, P5 = 120-এর উপরে, P6 = সংখ্যা নয়।<br>
+<b>ন্যূনতম ৬টি test:</b> 25, 10, 70, −5, 200, "abc"।</div>
+<div class="rule">পরীক্ষার প্যাটার্ন: "how many test cases minimum?" → partition গুনো (invalid আলাদা করে)। "Which value tests an invalid partition?" → valid range-এর বাইরের মানটি।</div>
+</div>
+</section>
+
+<section>
+<h2>4.2.2 Boundary Value Analysis (BVA) — K3</h2><p class="kbadge k3">K3</p>
+<p class="plain"><b>In plain words:</b> bugs hide at the edges — test each boundary and the values just beside it.</p>
+<p class="sec-sum">BVA: test the boundary AND its neighbours — 2-value {b, neighbour}, 3-value {b−1, b, b+1}; the exam counts them.</p>
+<p>Defects cluster at partition <b>edges</b> (off-by-one errors). BVA tests values on and around the boundary — and it can apply to inputs <b>and outputs</b> (also data ranges, screen positions, array sizes).</p>
+<div class="quads">
+<div class="qd q1"><b>2-value method (ISTQB default)</b>for each boundary b: <b>{b, nearest neighbour}</b> (from the adjacent partition). Range 18–60 → <b>18, 17, 60, 61</b></div>
+<div class="qd q3"><b>3-value method</b>for each boundary b: <b>{b−1, b, b+1}</b>. Range 18–60 → <b>17, 18, 19 and 59, 60, 61</b></div>
+</div>
+<div class="axis">2-value = {b, neighbour} · 3-value = {b−1, b, b+1} — never mix conventions; "3-value" means each boundary contributes 3 tests.</div>
+<div class="diag">
+<svg viewBox="0 0 540 150" role="img" aria-label="BVA number line for the range 18 to 60, showing 2-value and 3-value test values">
+<defs><marker id="darrow-bva" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" style="fill:var(--ink-soft)"></path></marker></defs>
+<!-- axis: two segments (16..19 | 59..62) -->
+<line x1="45" y1="85" x2="255" y2="85" stroke="var(--ink-soft)" stroke-width="1.6" style="marker-end:url(#darrow-bva)"></line>
+<line x1="285" y1="85" x2="505" y2="85" stroke="var(--ink-soft)" stroke-width="1.6" style="marker-end:url(#darrow-bva)"></line>
+<line x1="258" y1="79" x2="262" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line>
+<line x1="266" y1="79" x2="270" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line>
+<text class="dsmall" x="510" y="90">age</text>
+<!-- ticks 16..19 -->
+<line x1="70" y1="79" x2="70" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="70" y="110" text-anchor="middle">16</text>
+<line x1="125" y1="79" x2="125" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="125" y="110" text-anchor="middle">17</text>
+<line x1="180" y1="79" x2="180" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="180" y="110" text-anchor="middle">18</text>
+<line x1="235" y1="79" x2="235" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="235" y="110" text-anchor="middle">19</text>
+<!-- ticks 59..62 -->
+<line x1="315" y1="79" x2="315" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="315" y="110" text-anchor="middle">59</text>
+<line x1="370" y1="79" x2="370" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="370" y="110" text-anchor="middle">60</text>
+<line x1="425" y1="79" x2="425" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="425" y="110" text-anchor="middle">61</text>
+<line x1="480" y1="79" x2="480" y2="91" stroke="var(--ink-soft)" stroke-width="1.4"></line><text class="dtxt" x="480" y="110" text-anchor="middle">62</text>
+<!-- 2-value row (solid dots, above axis): 17, 18, 60, 61 -->
+<text class="dsmall" x="45" y="40">2-value</text>
+<circle cx="125" cy="45" r="7" fill="var(--accent)"></circle>
+<circle cx="180" cy="45" r="7" fill="var(--accent)"></circle>
+<circle cx="370" cy="45" r="7" fill="var(--accent)"></circle>
+<circle cx="425" cy="45" r="7" fill="var(--accent)"></circle>
+<!-- 3-value row (hollow dots, below numbers): 17,18,19,59,60,61 -->
+<text class="dsmall" x="45" y="138">3-value</text>
+<circle cx="125" cy="130" r="7" fill="var(--kc-bg)" stroke="var(--accent)" stroke-width="2"></circle>
+<circle cx="180" cy="130" r="7" fill="var(--kc-bg)" stroke="var(--accent)" stroke-width="2"></circle>
+<circle cx="235" cy="130" r="7" fill="var(--kc-bg)" stroke="var(--accent)" stroke-width="2"></circle>
+<circle cx="315" cy="130" r="7" fill="var(--kc-bg)" stroke="var(--accent)" stroke-width="2"></circle>
+<circle cx="370" cy="130" r="7" fill="var(--kc-bg)" stroke="var(--accent)" stroke-width="2"></circle>
+<circle cx="425" cy="130" r="7" fill="var(--kc-bg)" stroke="var(--accent)" stroke-width="2"></circle>
+<text class="dtrap" x="510" y="24" text-anchor="end">neighbours are what make it BVA</text>
+</svg>
+</div>
+<div class="box work"><span class="box-tag">✏️ Worked example — BVA on 18–60</span>
+2-value: 17, 18, 60, 61 (4 tests). 3-value: 17, 18, 19, 59, 60, 61 (6 tests). The <b>neighbours</b> are what make it BVA — giving only 18 and 60 is the classic wrong answer.</div>
+<div class="bn">
+<p class="sec-sum"><i>BVA: boundary এবং তার neighbour — দুটোই টেস্ট করো — 2-value {b, neighbour}, 3-value {b−1, b, b+1}; পরীক্ষায় এগুলোই গোনানো হয়।</i></p>
+<p>Defect জমা হয় partition-এর <b>কিনারায়</b> (off-by-one error)। BVA boundary-র ওপরে-নামে ও চারপাশের মান টেস্ট করে — আর এটা ইনপুট ও <b>আউটপুট দুই জায়গাতেই</b> প্রযোজ্য হতে পারে (এছাড়া data range, স্ক্রিনের অবস্থান, array-র আকারেও)।</p>
+<div class="quads">
+<div class="qd q1"><b>2-value method (ISTQB-র ডিফল্ট)</b>প্রতিটি boundary b-এর জন্য: <b>{b, নিকটতম neighbour}</b> (পাশের partition থেকে)। Range 18–60 → <b>18, 17, 60, 61</b></div>
+<div class="qd q3"><b>3-value method</b>প্রতিটি boundary b-এর জন্য: <b>{b−1, b, b+1}</b>। Range 18–60 → <b>17, 18, 19 এবং 59, 60, 61</b></div>
+</div>
+<div class="axis">2-value = {b, neighbour} · 3-value = {b−1, b, b+1} — নিয়ম দুটো কখনো মেশাবে না; "3-value" মানে প্রতিটি boundary থেকে ৩টি test।</div>
+<div class="box work"><span class="box-tag">✏️ Worked example — 18–60 রেঞ্জে BVA</span>
+2-value: 17, 18, 60, 61 (৪টি test)। 3-value: 17, 18, 19, 59, 60, 61 (৬টি test)। <b>Neighbour</b>-গুলোই একে BVA করে তোলে — শুধু 18 আর 60 দিলে সেটাই ক্লাসিক ভুল উত্তর।</div>
+</div>
+</section>
+
+<section>
+<h2>4.2.3 Decision tables — K3</h2><p class="kbadge k3">K3</p>
+<p class="plain"><b>In plain words:</b> list every combination of conditions; each column (rule) needs at least one test.</p>
+<p class="sec-sum">Rules = product of condition values; each rule is a test — and collapsing identical-action rules cuts the exam's test count.</p>
+<p>For business rules combining <b>conditions</b>, list every combination and the resulting <b>action</b>. One column per combination = a <b>rule</b>; each rule = at least one test. Full rules = <b>product of condition values</b> (2 binary conditions → 4; 3 binary → 8; e.g. 2×2×3 = 12).</p>
+<div class="box work"><span class="box-tag">✏️ Worked example — gold / €100 discount</span>
+<i>"Gold AND order &gt; 100€ → 20%. Gold and ≤100€ → 5%. Non-gold and &gt;100€ → 10%. Non-gold and ≤100€ → none."</i>
+<table><thead><tr><th>Conditions \ Rules</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr></thead><tbody>
+<tr><td>Gold member</td><td>T</td><td>T</td><td>F</td><td>F</td></tr>
+<tr><td>Order &gt; 100€</td><td>T</td><td>F</td><td>T</td><td>F</td></tr>
+<tr><td><b>Action: discount</b></td><td>20%</td><td>5%</td><td>10%</td><td>none</td></tr>
+</tbody></table>
+→ 4 rules → <b>4 test cases minimum</b>.</div>
+<div class="box und"><span class="box-tag">🧠 Understand — collapsing tables</span>
+When a condition doesn't affect the action, merge rules with "don't care" (−): if gold members always got 20% regardless of amount, R1/R2 merge → Gold=T, Order=−, 20%. Collapsing <b>reduces test count</b> — the exam may ask how many tests after collapsing. But only collapse when the behaviour is <b>identical</b> — collapsing rules whose actions differ is a trap.</div>
+<div class="bn">
+<p class="sec-sum"><i>Rule = condition মানগুলোর গুণফল; প্রতিটি rule একটি test — আর একই action-এর rule মিশিয়ে (collapsing) পরীক্ষার test সংখ্যা কমে যায়।</i></p>
+<p>একাধিক <b>condition</b> মিলিয়ে বিজনেস রুলের জন্য প্রতিটি সমাবেশ আর তার ফলে কী <b>action</b> হবে তা সাজিয়ে লেখো। প্রতিটি সমাবেশ = এক কলাম = একটি <b>rule</b>; প্রতিটি rule = অন্তত একটি test। পূর্ণ টেবিলের rule সংখ্যা = <b>condition মানগুলোর গুণফল</b> (২টি binary condition → 4; ৩টি binary → 8; যেমন 2×2×3 = 12)।</p>
+<div class="box work"><span class="box-tag">✏️ Worked example — gold / €100 discount</span>
+<i>"Gold AND order &gt; 100€ → 20%. Gold and ≤100€ → 5%. Non-gold and &gt;100€ → 10%. Non-gold and ≤100€ → none."</i>
+<table><thead><tr><th>Conditions \ Rules</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr></thead><tbody>
+<tr><td>Gold member</td><td>T</td><td>T</td><td>F</td><td>F</td></tr>
+<tr><td>Order &gt; 100€</td><td>T</td><td>F</td><td>T</td><td>F</td></tr>
+<tr><td><b>Action: discount</b></td><td>20%</td><td>5%</td><td>10%</td><td>none</td></tr>
+</tbody></table>
+→ ৪টি rule → <b>ন্যূনতম ৪টি test case</b>।</div>
+<div class="box und"><span class="box-tag">🧠 বুঝে নাও — collapsed table</span>
+কোনো condition যদি action-এ কোনো প্রভাব না ফেলে, তাহলে "don't care" (−) চিহ্ন দিয়ে rule মিশিয়ে দাও: gold member যদি পরিমাণ যা-ই হোক সবসময় 20% পেতো, তাহলে R1/R2 মিশে যেত → Gold=T, Order=−, 20%। Collapsing-এ <b>test সংখ্যা কমে</b> — পরীক্ষায় জিজ্ঞেস করতে পারে collapse করার পরে কতটি test। কিন্তু আচরণ <b>হুবহু এক না হলে</b> কখনোই collapse কোরো না — action আলাদা হয়ে গেলে rule মেশানো নিজেই একটা trap।</div>
+</div>
+</section>
+
+<section>
+<h2>4.2.4 State transition testing — K3</h2><p class="kbadge k3">K3</p>
+<p class="plain"><b>In plain words:</b> draw circles (states) and arrows (transitions); count arrows for the exam, not circles.</p>
+<p class="sec-sum">Count TRANSITIONS, not states; test invalid (event, state) pairs too — 0-switch covers each single valid transition.</p>
+<p>Behaviour depends on <b>current state + event</b>. Vocabulary (memorise): <b>state</b> = the condition the system is in; <b>transition</b> = change of state caused by an <b>event</b>, possibly with an <b>action</b>; <b>action ≠ transition</b> (action = output performed; may occur without changing state).</p>
+<div class="box work"><span class="box-tag">✏️ Worked example — ATM PIN state machine</span>
+<div class="diag">
+<svg viewBox="0 0 580 250" role="img" aria-label="ATM state machine: Awaiting card, Awaiting PIN, Card retained; four valid transitions plus a self-loop">
+<defs><marker id="darrow-atm" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" style="fill:var(--ink-soft)"></path></marker></defs>
+<!-- 1. Awaiting card -> Awaiting PIN : card inserted -->
+<path class="dedge" d="M 130 78 C 190 40, 240 45, 272 78"></path>
+<text class="dsmall" x="200" y="38">card inserted</text>
+<!-- 2. Awaiting PIN self-loop : wrong PIN (<3) -->
+<path class="dedge" d="M 295 68 C 275 22, 365 22, 345 68"></path>
+<text class="dsmall" x="320" y="16" text-anchor="middle">wrong PIN (&lt;3)</text>
+<!-- 3. Awaiting PIN -> Card retained : 3rd wrong PIN -->
+<path class="dedge" d="M 378 115 L 452 115"></path>
+<text class="dsmall" x="415" y="102" text-anchor="middle">3rd wrong PIN</text>
+<!-- 4. Card retained -> Awaiting card : card removed -->
+<path class="dedge" d="M 495 160 C 400 215, 190 215, 118 160"></path>
+<text class="dsmall" x="300" y="222" text-anchor="middle">card removed</text>
+<!-- states -->
+<circle class="dbox" cx="95" cy="115" r="56"></circle><text class="dtxt" x="95" y="112" text-anchor="middle">Awaiting</text><text class="dtxt" x="95" y="128" text-anchor="middle">card</text>
+<circle class="dbox" cx="320" cy="115" r="56"></circle><text class="dtxt" x="320" y="112" text-anchor="middle">Awaiting</text><text class="dtxt" x="320" y="128" text-anchor="middle">PIN</text>
+<circle class="dbox" cx="510" cy="115" r="56"></circle><text class="dtxt" x="510" y="112" text-anchor="middle">Card</text><text class="dtxt" x="510" y="128" text-anchor="middle">retained</text>
+<!-- trap note -->
+<text class="dtrap" x="290" y="248" text-anchor="middle">invalid pairs are tests too — e.g. card removed while in Awaiting PIN</text>
+</svg>
+</div>
+<b>Valid transitions</b> (0-switch style): test each once — <b>4 tests</b>: card inserted; wrong PIN; 3rd wrong PIN; card removed.<br><br>
+<b>Invalid transitions</b> = (event, state) pairs <b>not</b> in the diagram (e.g., <i>card removed</i> while Awaiting PIN) — each is also a test: the system should reject it, ideally without changing state. Frequently forgotten by candidates.</div>
+<div class="rule">Count <b>TRANSITIONS, not states</b>. "Test all valid transitions" ≠ "test all states" — a state may have several in/out transitions.</div>
+<p><b>N-switch coverage</b> (concept only at FL): 0-switch covers every single valid transition; 1-switch covers every <b>pair</b> of consecutive transitions; higher N → more thorough, more tests.</p>
+<div class="bn">
+<p class="sec-sum"><i>গুনো TRANSITION, state নয়; invalid (event, state) জোড়াও টেস্ট করো — 0-switch প্রতিটি একক valid transition ঢেকে দেয়।</i></p>
+<p>আচরণ নির্ভর করে <b>বর্তমান state + event</b>-এর ওপর। শব্দার্থ (মুখস্থ): <b>state</b> = সিস্টেম যে অবস্থায় আছে; <b>transition</b> = কোনো <b>event</b>-এর কারণে state বদল — সঙ্গে <b>action</b> থাকতেও পারে, নাও পারে; <b>action ≠ transition</b> (action = সম্পাদিত আউটপুট; state না বদলেও ঘটতে পারে)।</p>
+<div class="box work"><span class="box-tag">✏️ Worked example — ATM PIN state machine</span>
+<div class="flow"><span class="st">Awaiting card</span><span class="ar">—card inserted→</span><span class="st">Awaiting PIN</span><span class="ar">—wrong PIN (&lt;3)→</span><span class="st">Awaiting PIN</span><span class="ar">—3rd wrong PIN→</span><span class="st">Card retained</span><span class="ar">—card removed→</span><span class="st">Awaiting card</span></div>
+<b>Valid transition</b> (0-switch ধাঁচে): প্রতিটি একবার টেস্ট — <b>৪টি test</b>: card inserted; wrong PIN; 3rd wrong PIN; card removed।<br><br>
+<b>Invalid transition</b> = ডায়াগ্রামে <b>নেই</b> এমন (event, state) জোড়া (যেমন Awaiting PIN অবস্থায় <i>card removed</i>) — প্রতিটিও একটি test: সিস্টেমকে সেটা reject করা উচিত, আদর্শভাবে state না বদলেই। পরীক্ষার্থীরা প্রায়ই এগুলো ভুলে যায়।</div>
+<div class="rule">গুনো <b>TRANSITION, state নয়</b>। "Test all valid transitions" ≠ "test all states" — একটি state-এ কয়েকটি ভেতরে/বাইরে transition থাকতে পারে।</div>
+<p><b>N-switch coverage</b> (FL স্তরে শুধু ধারণা): 0-switch প্রতিটি একক valid transition ঢেকে দেয়; 1-switch পরপর দুটি transition-এর প্রতিটি <b>জোড়া</b> ঢেকে দেয়; N বড় হলে → আরও পূর্ণাঙ্গ, আরও বেশি test।</p>
+</div>
+</section>
+
+<section>
+<h2>4.3 White-box: statement &amp; branch coverage — K3</h2><p class="kbadge k3">K3</p>
+<p class="plain"><b>In plain words:</b> measure which lines and which decision outcomes your tests actually execute.</p>
+<p class="sec-sum">Compute % executed statements vs decision outcomes; 100% branch always implies 100% statement — never the reverse.</p>
+<p>Based on the code's/design's <b>internal structure</b>.</p>
+<ul>
+<li><b>Statement coverage</b> = % of executable statements executed. 100% ⇒ every line runs at least once.</li>
+<li><b>Branch coverage</b> = % of <b>decision outcomes</b> exercised — each <code>if</code> has True and False exits; each <code>case</code> and <code>default</code> is a branch; loops: enter/skip. 100% ⇒ every outcome of every decision taken.</li>
+</ul>
+<div class="box mem"><span class="box-tag">📖 Memorise — the exam-critical theorem</span>
+<div class="pyramid">
+<div class="lvl l1">100% branch coverage</div>
+<div class="lvl l3">100% statement coverage</div>
+</div>
+<div class="axis">100% branch <b>⊃</b> 100% statement — always implies it. <b>Never the reverse</b>: a test set can run every statement while always taking the same branch outcome.</div>
+<div class="diag">
+<svg viewBox="0 0 480 230" role="img" aria-label="Containment diagram: 100 percent branch coverage encloses 100 percent statement coverage">
+<defs><marker id="darrow-cov" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" style="fill:var(--ink-soft)"></path></marker></defs>
+<!-- outer: branch -->
+<rect class="dbox" x="10" y="10" width="460" height="170" rx="10"></rect>
+<text class="dtxt" x="24" y="34">100% branch coverage</text>
+<!-- inner: statement -->
+<rect class="dsub" x="50" y="50" width="380" height="110" rx="8"></rect>
+<text class="dtxt" x="64" y="72">100% statement coverage</text>
+<!-- decision node + two outcome edges (if x > 10) -->
+<rect class="dbox" x="90" y="100" width="90" height="36" rx="8"></rect>
+<text class="dsmall" x="135" y="122" text-anchor="middle">if (x &gt; 10)</text>
+<path class="dedge" d="M 185 118 C 240 118, 260 95, 300 92"></path>
+<text class="dsmall" x="242" y="95">True: x=15</text>
+<path class="dedge" d="M 185 118 C 240 118, 260 140, 300 145"></path>
+<text class="dsmall" x="242" y="152">False: x=5</text>
+<text class="dsmall" x="430" y="72" text-anchor="end">runs all statements</text>
+<text class="dtrap" x="24" y="215">both outcomes taken ⊃ every line run — never the reverse</text>
+</svg>
+</div>
+</div>
+<div class="box work"><span class="box-tag">✏️ Worked example — the x&gt;0 snippet (answers most coverage questions)</span>
+<pre>1  if (x &gt; 0):          # decision D
+2      print("positive")
+3  print("done")</pre>
+Statements: 1, 2, 3 (three). Branches: D-T and D-F (two).<br>
+Test <b>x=5</b>: covers statements 1,2,3 → <b>100% statement, 50% branch</b> (D-F never taken).<br>
+Adding <b>x=−1</b> → <b>100% branch</b>.</div>
+<div class="rule">Coverage measure (exam style): "tests execute 8 of 10 statements" → 80% statement coverage. To raise branch coverage, add a test that exercises the <b>untaken decision outcome</b>.</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap — coverage proves nothing about correctness</span>
+White-box coverage <b>measures</b> structural test thoroughness but <b>cannot detect missing functionality</b> — code never written produces 0% extra statements to cover. Guaranteed trap: "100% branch coverage means the system meets all requirements" → <b>false</b>.</div>
+<div class="bn">
+<p class="sec-sum"><i>execute হওয়া statement বনাম decision outcome-এর % বের করো; 100% branch সবসময় 100% statement-এর অন্তর্ভুক্ত — কখনোই উল্টোটা নয়।</i></p>
+<p>ভিত্তি কোড বা design-এর <b>অভ্যন্তরীণ গঠন</b>।</p>
+<ul>
+<li><b>Statement coverage</b> = executable statement-এর কত % execute হলো। 100% ⇒ প্রতিটি লাইন অন্তত একবার চলল।</li>
+<li><b>Branch coverage</b> = কত % <b>decision outcome</b> অনুশীলিত হলো — প্রতিটি <code>if</code>-এর True ও False দুটি পথ; প্রতিটি <code>case</code> ও <code>default</code> একেকটি branch; loop: ঢোকা/বাদ দেওয়া। 100% ⇒ প্রতিটি decision-এর প্রতিটি outcome নেওয়া হলো।</li>
+</ul>
+<div class="box mem"><span class="box-tag">📖 মুখস্থ করো — পরীক্ষা-নির্ণায়ক উপপাদ্য</span>
+<div class="pyramid">
+<div class="lvl l1">100% branch coverage</div>
+<div class="lvl l3">100% statement coverage</div>
+</div>
+<div class="axis">100% branch <b>⊃</b> 100% statement — সবসময় এটাই অন্যটাকে বোঝায়। <b>কখনোই উল্টোটা নয়</b>: একটি test set প্রতিটি statement চালিয়েও সবসময় একই branch outcome নিতে পারে।</div></div>
+<div class="box work"><span class="box-tag">✏️ Worked example — x&gt;0 স্নিপেট (coverage প্রশ্নের বেশিরভাগ উত্তর এখানেই)</span>
+<pre>1  if (x &gt; 0):          # decision D
+2      print("positive")
+3  print("done")</pre>
+Statement: 1, 2, 3 (তিনটি)। Branch: D-T ও D-F (দুটি)।<br>
+Test <b>x=5</b>: statement 1,2,3 ঢেকে যায় → <b>100% statement, 50% branch</b> (D-F কখনো নেওয়া হয়নি)।<br>
+<b>x=−1</b> যোগ করলে → <b>100% branch</b>।</div>
+<div class="rule">Coverage মাপা (পরীক্ষার স্টাইল): "tests execute 8 of 10 statements" → 80% statement coverage। Branch coverage বাড়াতে হলে এমন test যোগ করো যেটা <b>এখনো নেওয়া হয়নি এমন decision outcome</b> অনুশীলন করে।</div>
+<div class="box trap"><span class="box-tag">⚠️ Trap — coverage সঠিকতার কোনো প্রমাণ দেয় না</span>
+White-box coverage structural সূক্ষ্মতা <b>মাপে</b>, কিন্তু <b>অনুপস্থিত functionality ধরতে পারে না</b> — যে কোড লেখাই হয়নি, সেখানে ঢাকার মতো নতুন কোনো statement নেই-ই। নিশ্চিত trap: "100% branch coverage means the system meets all requirements" → <b>মিথ্যা</b>।</div>
+</div>
+</section>
+
+<section>
+<h2>4.4 Experience-based techniques (K2)</h2><p class="kbadge">K2</p>
+<p class="plain"><b>In plain words:</b> use tester experience — anticipate likely defects, follow a checklist, or explore with charters.</p>
+<p class="sec-sum">Error guessing vs checklist vs exploratory (charter + session) — pick by tester experience, spec quality, and time.</p>
+<table class="good"><thead><tr><th>Technique</th><th>Essence</th><th>Best when</th></tr></thead><tbody>
+<tr><td>Error guessing</td><td>Anticipate likely defects from experience and target them (division by zero, empty lists, nulls, special characters, date boundaries) — a <b>defect-based</b> technique</td><td>Experienced tester, cheap to apply anywhere</td></tr>
+<tr><td>Checklist-based</td><td>Test against a <b>checklist</b> from experience/standards; items may become conditions; <b>checklist quality decides effectiveness</b>; items should evolve</td><td>Organisational memory, repeatable coverage</td></tr>
+<tr><td>Exploratory</td><td><b>Concurrent</b> learning, test design, execution; <b>charter-based</b> (goal) and <b>session-based</b> (timeboxed, with reports)</td><td>Poor specs, short time, agile, finding what scripted tests miss</td></tr>
+</tbody></table>
+<div class="box trap"><span class="box-tag">⚠️ Traps</span>
+"Exploratory = random/unstructured" → <b>false</b> (charters, sessions, discipline). Error guessing is <b>not</b> a checklist technique — no list, pure anticipation.</div>
+<div class="bn">
+<p class="sec-sum"><i>Error guessing বনাম checklist বনাম exploratory (charter + session) — বাছো tester-এর অভিজ্ঞতা, spec-এর মান আর সময় দেখে।</i></p>
+<table class="good"><thead><tr><th>Technique</th><th>মূল কথা</th><th>কখন সবচেয়ে ভালো</th></tr></thead><tbody>
+<tr><td>Error guessing</td><td>অভিজ্ঞতা থেকে সম্ভাব্য defect আঁচ করে সরাসরি সেগুলোকে লক্ষ্য করা (শূন্য দিয়ে ভাগ, খালি list, null, বিশেষ অক্ষর, তারিখের সীমানা) — একটি <b>defect-ভিত্তিক</b> technique</td><td>অভিজ্ঞ tester, যেকোনো জায়গায় সস্তায় প্রয়োগযোগ্য</td></tr>
+<tr><td>Checklist-based</td><td>অভিজ্ঞতা/মানদণ্ড থেকে তৈরি <b>checklist</b>-এর বিপরীতে টেস্ট; item গুলো condition হয়ে উঠতে পারে; <b>checklist-এর মানেই effectiveness নির্ধারিত হয়</b>; item আপডেট হতে থাকা উচিত</td><td>সংস্থার স্মৃতি, পুনরাবৃত্তিযোগ্য coverage</td></tr>
+<tr><td>Exploratory</td><td>শেখা, test design ও execution <b>একসাথে</b> চলে; <b>charter-ভিত্তিক</b> (লক্ষ্য) ও <b>session-ভিত্তিক</b> (নির্দিষ্ট সময়ে, রিপোর্টসহ)</td><td>দুর্বল spec, কম সময়, agile, আর scripted test যা ধরতে পারে না তা খুঁজে বের করা</td></tr>
+</tbody></table>
+<div class="box trap"><span class="box-tag">⚠️ Trap</span>
+"Exploratory = random/unstructured" → <b>মিথ্যা</b> (charter, session, শৃঙ্খলা আছে)। Error guessing checklist technique <b>নয়</b> — কোনো list নেই, শুধুই আন্দাজ।</div>
+</div>
+</section>
+
+<section>
+<h2>4.5 Collaboration-based approaches (K2 — new in v4.0)</h2><p class="kbadge">K2</p>
+<p class="plain"><b>In plain words:</b> derive tests from acceptance criteria; "Given/When/Then" in the question means BDD.</p>
+<p class="sec-sum">Acceptance-criteria testing, ATDD (test-first), BDD (Given/When/Then as living documentation) — spot the keyword, pick the label.</p>
+<ul>
+<li><b>Acceptance criteria-based testing (4.5.1):</b> derive tests from <b>user-story acceptance criteria</b> (the story's validation conditions); good criteria make stories testable — Given/When/Then style conditions help.</li>
+<li><b>ATDD:</b> tests derived from acceptance criteria <b>before coding</b> — the test-first loop with developers, testers, and business together.</li>
+<li><b>BDD:</b> collaboration where <b>examples with business value</b> are written in a <b>domain-specific, structured language (Given/When/Then — Gherkin)</b>, usable as <b>living documentation</b> and automation. Scenario says "Given/When/Then" → <b>BDD</b>.</li>
+</ul>
+<div class="box und"><span class="box-tag">🧠 Understand — choosing a technique</span>
+Black-box for functional coverage of requirements; add white-box to measure/raise structural coverage; add experience-based where time or specs are limited or risk intuition matters. In practice techniques are <b>combined</b>.</div>
+<div class="bn">
+<p class="sec-sum"><i>Acceptance criteria থেকে টেস্ট, ATDD (test-first), BDD (Given/When/Then যেন living documentation) — কীওয়ার্ড চিনলেই লেবেল বসে যায়।</i></p>
+<ul>
+<li><b>Acceptance criteria-based testing (4.5.1):</b> <b>user story-র acceptance criteria</b> থেকে test তৈরি (story পাস করার শর্তগুলো); ভালো criteria story-কে টেস্টযোগ্য করে তোলে — Given/When/Then ধাঁচের শর্ত সেটা সহজ করে।</li>
+<li><b>ATDD:</b> <b>কোডিংয়ের আগেই</b> acceptance criteria থেকে test লেখা — developer, tester ও business মিলেমিলে test-first লুপ।</li>
+<li><b>BDD:</b> এমন সহযোগিতা যেখানে <b>বিজনেস মূল্যসহ example</b> লেখা হয় <b>ডোমেইন-নির্দিষ্ট কাঠামোবদ্ধ ভাষায় (Given/When/Then — Gherkin)</b>, যা <b>living documentation</b> ও automation হিসেবে ব্যবহারযোগ্য। Scenario-তে "Given/When/Then" দেখলেই → <b>BDD</b>।</li>
+</ul>
+<div class="box und"><span class="box-tag">🧠 বুঝে নাও — technique বাছাই</span>
+Requirement-এর functional coverage-র জন্য black-box; structural coverage মাপতে/বাড়াতে white-box যোগ করো; সময় বা spec কম হলে বা risk-অনুমান জরুরি হলে experience-based যোগ করো। বাস্তবে technique-গুলো <b>মিলিয়ে</b> ব্যবহার হয়।</div>
+</div>
+</section>
+
+<section>
+<h2>Confusion table</h2>
+<p class="plain"><b>In plain words:</b> same-looking pairs, one-word differences — skim this the night before.</p>
+<p class="sec-sum">Seven lookalike pairs untangled plus the top six exam traps — skim this the night before the exam.</p>
+<table class="good"><tbody>
+<tr><td>Test condition / test case</td><td>What to test / concrete inputs + expected result</td></tr>
+<tr><td>2-value / 3-value BVA</td><td>{b, neighbour} / {b−1, b, b+1}</td></tr>
+<tr><td>Rule / decision table column</td><td>One full combination of conditions = one rule = ≥1 test</td></tr>
+<tr><td>Transition / action</td><td>Change of state / output performed (may occur without transition)</td></tr>
+<tr><td>Statement / branch coverage</td><td>Lines executed / decision outcomes exercised (branch ⊃ statement)</td></tr>
+<tr><td>Error guessing / checklist</td><td>Pure anticipation / itemised, reusable list</td></tr>
+<tr><td>ATDD / BDD</td><td>Test-first from acceptance criteria / Given-When-Then examples as living documentation</td></tr>
+</tbody></table>
+<div class="box trap"><span class="box-tag">⚠️ Top exam traps</span>
+1. EP: forgetting invalid partitions, or bundling invalids together.<br>
+2. BVA: giving only the boundary values (18, 60) without neighbours.<br>
+3. Decision tables: counting rules as tests before checking collapsible columns — or collapsing when behaviours differ.<br>
+4. State transition: counting <b>states</b> instead of <b>transitions</b>; ignoring invalid transitions.<br>
+5. Coverage: "100% statement ⇒ 100% branch" (wrong direction) and any "coverage proves correctness" option.<br>
+6. Exploratory testing described as unstructured/random.</div>
+<div class="bn">
+<p class="sec-sum"><i>সাতজোড়া lookalike জোড়া ছাড়ানো হলো, সঙ্গে পরীক্ষার শীর্ষ ছয় trap — পরীক্ষার আগের রাতে একবার চোখ বুলিয়ে নাও।</i></p>
+<table class="good"><tbody>
+<tr><td>Test condition / test case</td><td>কী টেস্ট করব / সুনির্দিষ্ট ইনপুট + expected result</td></tr>
+<tr><td>2-value / 3-value BVA</td><td>{b, neighbour} / {b−1, b, b+1}</td></tr>
+<tr><td>Rule / decision table column</td><td>condition-এর একটি পূর্ণ সমাবেশ = একটি rule = ≥1 test</td></tr>
+<tr><td>Transition / action</td><td>state বদল / সম্পাদিত আউটপুট (transition ছাড়াও ঘটতে পারে)</td></tr>
+<tr><td>Statement / branch coverage</td><td>চলা statement / নেওয়া decision outcome (branch ⊃ statement)</td></tr>
+<tr><td>Error guessing / checklist</td><td>শুধুই আন্দাজ / তালিকাভুক্ত, পুনর্ব্যবহারযোগ্য list</td></tr>
+<tr><td>ATDD / BDD</td><td>acceptance criteria থেকে test-first / Given-When-Then example যেন living documentation</td></tr>
+</tbody></table>
+<div class="box trap"><span class="box-tag">⚠️ পরীক্ষার শীর্ষ trap</span>
+1. EP: invalid partition ভুলে যাওয়া, বা invalid গুলো একসাথে জমা দেওয়া।<br>
+2. BVA: neighbour ছাড়া শুধু boundary মান (18, 60) দেওয়া।<br>
+3. Decision table: collapsible কলাম দেখে না পড়েই rule সংখ্যাকে test ধরে নেওয়া — বা আচরণ আলাদা হওয়া সত্ত্বেও collapse করা।<br>
+4. State transition: <b>transition-এর</b> বদলে <b>state</b> গোনা; invalid transition উপেক্ষা করা।<br>
+5. Coverage: "100% statement ⇒ 100% branch" (দিক ভুল) এবং যেকোনো "coverage proves correctness" অপশন।<br>
+6. Exploratory testing-কে unstructured/random বলে বর্ণনা করা।</div>
+</div>
+</section>
+
+<section id="recap">
+<h2>⏱ 60-second recap</h2>
+<div class="recap">
+<span class="rk">EP: each <i>invalid</i> partition gets its own test</span>
+<span class="rk">BVA 2-value <i>{b, nb}</i> · 3-value <i>{b−1, b, b+1}</i></span>
+<span class="rk">DT: rules = <i>product</i> of condition values</span>
+<span class="rk">DT: collapse <i>identical actions</i> only</span>
+<span class="rk">State: count <i>TRANSITIONS</i>; invalid (event, state) pairs are tests</span>
+<span class="rk">Branch <i>⊃</i> statement — never the reverse</span>
+<span class="rk">Error guessing = <i>experience</i> · checklist = <i>reusable list</i></span>
+<span class="rk">BDD = <i>Given / When / Then</i></span>
+</div>
+</section>
+
+<section>
+<h2>Knowledge check — say it, then reveal</h2>
+<p class="sec-sum">10 K3 drills — solve on PAPER first, then click to compare worked solutions.</p>
+<details class="kc"><summary>1. Field accepts 1–1000 items per order. List partitions and the 2-value BVA set.</summary><div class="a">Valid [1–1000]; invalid [≤0], [&gt;1000], non-numeric. 2-value BVA: 0, 1, 1000, 1001.</div></details>
+<details class="kc"><summary>2. "Student discount if age &lt; 26 AND enrolled full-time" — 4 rules, actions differ in every rule. Minimum tests? And after collapsing if non-students always pay full price regardless of enrolment?</summary><div class="a">4 rules → 4 tests; after collapsing (non-students → full price regardless of enrolment): 3 tests.</div></details>
+<details class="kc"><summary>3. From the ATM example: list every valid transition and two invalid transitions.</summary><div class="a">Valid: card inserted; wrong PIN (attempts&lt;3); 3rd wrong PIN; card removed. Invalid e.g.: card removed while Awaiting PIN; PIN entered while Awaiting card.</div></details>
+<details class="kc"><summary>4. Code: <code>if a: x(); if b: y();</code> — how many branches? Which single test reaches 100% statement coverage, and which coverage stays at 50%?</summary><div class="a">4 branches (two decisions × 2 outcomes). Test a=T, b=T → 100% statement; branch coverage stays 50%.</div></details>
+<details class="kc"><summary>5. A review finds no rule for orders of exactly 0 items. Which technique would have exposed this gap, and why can't white-box coverage do it?</summary><div class="a">Black-box (spec-driven) techniques expose missing rules; white-box coverage can't detect absent functionality — code never written gives nothing to cover.</div></details>
+<details class="kc"><summary>6. Write a Gherkin-style test from: "As a user, I want to reset my password so I regain access."</summary><div class="a">Given a registered email, When I request a password reset, Then I receive a reset link.</div></details>
+<details class="kc"><summary>7. Why does each invalid partition need its own test case?</summary><div class="a">So each invalid input's specific handling/error can be verified individually.</div></details>
+<details class="kc"><summary>8. Tests exercise 12 of 15 branch outcomes. Compute coverage and name the cheapest fix.</summary><div class="a">12/15 = 80%. Add a test exercising the 3 untaken decision outcomes.</div></details>
+<details class="kc"><summary>9. When would you choose exploratory over decision tables? Two situations.</summary><div class="a">Poor/absent specs; time-boxed exploration of a new build (also: after scripted tests to hunt the unexpected).</div></details>
+<details class="kc"><summary>10. Distinguish an action from a transition with a one-line example.</summary><div class="a">Transition: Paused→Playing on Play (state changes). Action: error beep on invalid PIN (no state change).</div></details>
+<div class="bn">
+<p class="sec-sum"><i>১০টি K3 drill — আগে কাগজে-কলমে সমাধান করো, তারপর ক্লিক করে মিলিয়ে নাও।</i></p>
+<p class="kc-bn"><b>প্রশ্ন ১.</b> একটি ফিল্ড প্রতি অর্ডারে 1–1000 item গ্রহণ করে। Partition আর 2-value BVA সেট লেখো। <b>উত্তর:</b> Valid [1–1000]; invalid [≤0], [&gt;1000], non-numeric। 2-value BVA: 0, 1, 1000, 1001।</p>
+<p class="kc-bn"><b>প্রশ্ন ২.</b> "Student discount if age &lt; 26 AND enrolled full-time" — ৪টি rule, প্রতিটিতে action আলাদা। ন্যূনতম কতটি test? আর non-student নাম-এনরোলমেন্ট যাই হোক সবসময় পূর্ণ দাম দিলে collapse-এর পরে কতটি? <b>উত্তর:</b> ৪ rule → ৪ test; collapse-এর পরে (non-student → এনরোলমেন্ট যা-ই হোক পূর্ণ দাম): ৩ test।</p>
+<p class="kc-bn"><b>প্রশ্ন ৩.</b> ATM উদাহরণ থেকে: প্রতিটি valid transition আর দুটি invalid transition লেখো। <b>উত্তর:</b> Valid: card inserted; wrong PIN (attempts&lt;3); 3rd wrong PIN; card removed। Invalid যেমন: Awaiting PIN অবস্থায় card removed; Awaiting card অবস্থায় PIN entered।</p>
+<p class="kc-bn"><b>প্রশ্ন ৪.</b> কোড: <code>if a: x(); if b: y();</code> — কতটি branch? কোন একক test-এ 100% statement coverage হয়, আর কোন coverage 50%-এ থেকে যায়? <b>উত্তর:</b> ৪টি branch (দুটি decision × ২টি outcome)। Test a=T, b=T → 100% statement; branch coverage 50%-এ থাকে।</p>
+<p class="kc-bn"><b>প্রশ্ন ৫.</b> একটি review-তে ঠিক 0 item-এর অর্ডারের কোনো rule নেই ধরা পড়লো। কোন technique এই ফাঁক ধরতো, আর white-box coverage কেন পারে না? <b>উত্তর:</b> Black-box (spec-ভিত্তিক) technique অনুপস্থিত rule ধরে; white-box coverage অনুপস্থিত functionality ধরতে পারে না — যে কোড লেখাই হয়নি, ঢাকার মতো কিছু নেই-ই।</p>
+<p class="kc-bn"><b>প্রশ্ন ৬.</b> "As a user, I want to reset my password so I regain access" — Gherkin-ধাঁচে একটি test লেখো। <b>উত্তর:</b> Given a registered email, When I request a password reset, Then I receive a reset link।</p>
+<p class="kc-bn"><b>প্রশ্ন ৭.</b> প্রতিটি invalid partition-এর নিজের আলাদা test case কেন দরকার? <b>উত্তর:</b> যাতে প্রতিটি invalid ইনপুটের নির্দিষ্ট সামলানো/error আলাদাভাবে যাচাই করা যায়।</p>
+<p class="kc-bn"><b>প্রশ্ন ৮.</b> Test-গুলো ১৫টির মধ্যে ১২টি branch outcome অনুশীলন করলো। Coverage বের করো আর সবচেয়ে সস্তা সমাধানের নাম দাও। <b>উত্তর:</b> 12/15 = 80%। এখনো নেওয়া হয়নি এমন ৩টি decision outcome অনুশীলন করা একটি test যোগ করো।</p>
+<p class="kc-bn"><b>প্রশ্ন ৯.</b> কখন decision table-এর বদলে exploratory বাছবে? দুটি পরিস্থিতি। <b>উত্তর:</b> দুর্বল/অনুপস্থিত spec; নতুন build-এর time-boxed অন্বেষণ (এছাড়া: scripted test-এর পরে অপ্রত্যাশিত খোঁজার জন্য)।</p>
+<p class="kc-bn"><b>প্রশ্ন ১০.</b> এক লাইনের উদাহরণ দিয়ে action আর transition-এর পার্থক্য বোঝাও। <b>উত্তর:</b> Transition: Play-তে Paused→Playing (state বদলায়)। Action: ভুল PIN-এ error beep (state বদলায় না)।</p>
+</div>
+</section>
+
+<section id="part-a">
+<h2>Part A — Technique tasks (K3). SOLVE ON PAPER FIRST, do not click yet</h2>
+<p class="sec-sum">12 K3 tasks — solve on PAPER first, then click to compare worked solutions. Do A1–A7 after §4.2 · A8–A12 after §4.3.</p>
+<details class="kc"><summary>A1. Field accepts quantities 1–100. List valid and invalid equivalence partitions and all values of the 2-value BVA set.</summary><div class="a">Valid: [1–100]. Invalid: [&lt;1], [&gt;100], non-numeric (if allowed by the field). 2-value BVA: <b>0, 1, 100, 101</b>.</div></details>
+<details class="kc"><summary>A2. Same field (1–100). Give the complete 3-value BVA set.</summary><div class="a">3-value BVA: <b>0, 1, 2 and 99, 100, 101</b> (six tests).</div></details>
+<details class="kc"><summary>A3. Loan applicants: "low" ≤ 20,000; "medium" &gt; 20,000 and ≤ 60,000; "high" &gt; 60,000; income must be a number 0–1,000,000. Minimum EP test cases?</summary><div class="a">Valid: low [0–20,000], medium (20,000–60,000], high (60,000–1,000,000] → 3. Invalid: ≤0, &gt;1,000,000, non-numeric → 3. <b>Minimum 6 tests.</b></div></details>
+<details class="kc"><summary>A4. "New customer AND electric → 15%. New, non-electric → 5%. Existing, electric → 10%. Existing, non-electric → 0%." Build the decision table. Rules / minimum tests?</summary><div class="a"><table><thead><tr><th></th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr></thead><tbody><tr><td>New customer</td><td>T</td><td>T</td><td>F</td><td>F</td></tr><tr><td>Electric</td><td>T</td><td>F</td><td>T</td><td>F</td></tr><tr><td>Discount</td><td>15%</td><td>5%</td><td>10%</td><td>0%</td></tr></tbody></table><b>4 rules → 4 minimum tests.</b></div></details>
+<details class="kc"><summary>A5. A4 extension: existing customers get 10% regardless of car type (new customers keep the two-way split). Which rules collapse, and the new minimum test count?</summary><div class="a">R3 and R4 collapse (existing customer, car type = don't-care, → 10%). New minimum: <b>3 tests</b>.</div></details>
+<details class="kc"><summary>A6. Music player: states Idle, Playing, Paused. Events: Play (from Idle or Paused → Playing), Pause (Playing → Paused), Stop (from Playing or Paused → Idle). List all valid transitions and count them.</summary><div class="a">Play: Idle→Playing; Play: Paused→Playing; Pause: Playing→Paused; Stop: Playing→Idle; Stop: Paused→Idle. <b>5 valid transitions.</b></div></details>
+<details class="kc"><summary>A7. For the player in A6: list three invalid transitions.</summary><div class="a">Examples: Stop in Idle; Play in Playing; Pause in Idle or Paused (any three event/state pairs not in the diagram).</div></details>
+<p class="kbadge">§4.3 needed from here</p>
+<details class="kc"><summary>A8. Code: read x; if x &gt; 10: print("high"); print("end"). Test 1 uses x = 15. Statement and branch coverage for Test 1 alone? Which single second test achieves 100% branch?</summary><div class="a">Statements: read, if-check, print("high"), print("end") — Test 1 (x=15) executes all four → <b>100% statement</b>. Branches: x&gt;10 T and F — only T taken → <b>50% branch</b>. Add <b>x = 5</b> → 100% branch.</div></details>
+<details class="kc"><summary>A9. Component has 40 executable statements and 12 two-way decisions. Tests execute 36 statements and 20 of 24 branch outcomes. Compute both coverage percentages.</summary><div class="a">Statement: 36/40 = <b>90%</b>. Branch: 20/24 = <b>83.3%</b>.</div></details>
+<details class="kc"><summary>A10. Order form: three independent boolean conditions (premium Y/N, rush Y/N, gift wrap Y/N). How many rules in the full table? If only the four premium=Y rules are tested, what fraction is covered?</summary><div class="a">2×2×2 = <b>8 rules</b>; 4 of 8 covered = <b>50%</b>.</div></details>
+<details class="kc"><summary>A11. Temperature monitor alerts above 40°C (valid range −50 to +50). Write the EP partitions and the 3-value BVA tests for the 40 boundary.</summary><div class="a">The alert behaviour splits the valid range into two valid partitions: [−50…40] no alert, (40…50] alert. Invalid: &lt;−50, &gt;50, non-numeric. 3-value BVA at 40: <b>39, 40, 41</b> — with "above 40" read literally, 39 and 40 produce no alert, 41 triggers it. (Exam habit: re-read the comparison word — "above" vs "at or above" changes which side belongs to which behaviour.)</div></details>
+<details class="kc"><summary>A12. For A6's state diagram: what coverage is achieved by (Idle→Playing via Play), (Playing→Paused via Pause), (Paused→Idle via Stop) — 0-switch or more? Which valid transitions remain uncovered?</summary><div class="a">Three single transitions = partial <b>0-switch</b> coverage (each covered transition individually). Uncovered valid transitions: Play: Paused→Playing and Stop: Playing→Idle.</div></details>
+</section>
+
+<section id="part-b">
+<h2>Part B — Concept questions (target 10/12)</h2>
+<p class="sec-sum">12 multiple-choice concept questions — interactive quiz, target 10/12.</p>
+<div class="quiz" data-target="10">
+<div class="q" data-a="d"><p class="qt">1. Which activity identifies test conditions from the test basis?</p><div class="opts">
+<button data-k="a">a) Test design</button><button data-k="b">b) Test implementation</button><button data-k="c">c) Test execution</button><button data-k="d">d) Test analysis</button></div>
+<div class="expl"><b>d</b> — analysis → conditions; design → cases.</div></div>
+
+<div class="q" data-a="b"><p class="qt">2. Prioritising test cases for execution is primarily driven by:</p><div class="opts">
+<button data-k="a">a) Alphabetical order of test case IDs</button><button data-k="b">b) Risk, coverage goals and project constraints</button><button data-k="c">c) The author's preference</button><button data-k="d">d) Number of steps in each case</button></div>
+<div class="expl"><b>b</b> — risk, coverage, constraints (LO 4.1.2).</div></div>
+
+<div class="q" data-a="c"><p class="qt">3. Traceability from test cases to requirements does NOT support:</p><div class="opts">
+<button data-k="a">a) Coverage evaluation</button><button data-k="b">b) Change impact analysis</button><button data-k="c">c) Automatic test execution</button><button data-k="d">d) Auditability</button></div>
+<div class="expl"><b>c</b> — traceability informs; it executes nothing.</div></div>
+
+<div class="q" data-a="a"><p class="qt">4. EP and BVA differ because BVA:</p><div class="opts">
+<button data-k="a">a) Targets values at and around partition edges</button><button data-k="b">b) Tests classes of equivalent inputs</button><button data-k="c">c) Requires code knowledge</button><button data-k="d">d) Only tests invalid inputs</button></div>
+<div class="expl"><b>a</b> — BVA attacks the edges where off-by-one defects cluster.</div></div>
+
+<div class="q" data-a="d"><p class="qt">5. "Each invalid partition is covered by a separate test case" — why?</p><div class="opts">
+<button data-k="a">a) To save time</button><button data-k="b">b) Because ISTQB requires exactly one assertion</button><button data-k="c">c) Invalid inputs cannot be combined</button><button data-k="d">d) So each invalid input's specific handling/error can be verified</button></div>
+<div class="expl"><b>d</b> — each invalid input must reveal its own correct rejection behaviour.</div></div>
+
+<div class="q" data-a="b"><p class="qt">6. In state transition testing, an action differs from a transition because an action:</p><div class="opts">
+<button data-k="a">a) Changes the state</button><button data-k="b">b) Is a behaviour/output performed, which may occur without changing state</button><button data-k="c">c) Is always invalid</button><button data-k="d">d) Belongs only to 1-switch coverage</button></div>
+<div class="expl"><b>b</b> — action = output/behaviour; transition = state change.</div></div>
+
+<div class="q" data-a="c"><p class="qt">7. Which statement is TRUE?</p><div class="opts">
+<button data-k="a">a) 100% statement coverage implies 100% branch coverage</button><button data-k="b">b) The two are unrelated</button><button data-k="c">c) 100% branch coverage implies 100% statement coverage</button><button data-k="d">d) Both imply absence of defects</button></div>
+<div class="expl"><b>c</b> — branch ⊃ statement. Every branch outcome taken means every statement ran.</div></div>
+
+<div class="q" data-a="b"><p class="qt">8. White-box coverage cannot detect:</p><div class="opts">
+<button data-k="a">a) An unused branch</button><button data-k="b">b) Missing functionality (code never written)</button><button data-k="c">c) An unexecuted statement</button><button data-k="d">d) An untested decision outcome</button></div>
+<div class="expl"><b>b</b> — you can't cover code that doesn't exist; the classic white-box limitation.</div></div>
+
+<div class="q" data-a="a"><p class="qt">9. A tester with 10 years on payment systems tests unusual card numbers first. This is:</p><div class="opts">
+<button data-k="a">a) Error guessing</button><button data-k="b">b) Checklist-based testing</button><button data-k="c">c) BVA</button><button data-k="d">d) State transition testing</button></div>
+<div class="expl"><b>a</b> — experience-driven anticipation = error guessing.</div></div>
+
+<div class="q" data-a="b"><p class="qt">10. Testing against a list of known risk items derived from past projects is:</p><div class="opts">
+<button data-k="a">a) Error guessing</button><button data-k="b">b) Checklist-based testing</button><button data-k="c">c) EP</button><button data-k="d">d) Inspection</button></div>
+<div class="expl"><b>b</b> — a reusable list = checklist-based testing.</div></div>
+
+<div class="q" data-a="a"><p class="qt">11. Exploratory testing in timeboxed sessions guided by charters is called:</p><div class="opts">
+<button data-k="a">a) Session-based exploratory testing</button><button data-k="b">b) Ad-hoc testing</button><button data-k="c">c) Checklist testing</button><button data-k="d">d) Regression testing</button></div>
+<div class="expl"><b>a</b> — charters + timeboxed sessions = session-based exploratory testing.</div></div>
+
+<div class="q" data-a="d"><p class="qt">12. Business analysts, developers and testers jointly specify examples in Given/When/Then format used as living documentation and automation. This is:</p><div class="opts">
+<button data-k="a">a) ATDD</button><button data-k="b">b) EP</button><button data-k="c">c) Inspection-based testing</button><button data-k="d">d) BDD</button></div>
+<div class="expl"><b>d</b> — Given/When/Then examples as living documentation = BDD. (ATDD is the broader test-first approach from acceptance criteria.)</div></div>
+</div>
+</section>
+
+<section id="part-c">
+<h2>Part C — K3 as the exam asks it (MCQ)</h2><p class="kbadge k3">K3</p>
+<p class="sec-sum">Six exam-style K3 derivations — count or pick the value on paper, then click.</p>
+<div class="quiz" data-target="4">
+<div class="q" data-a="c"><p class="qt">C1. A field accepts 1–100. Using the 2-value BVA method, what is the minimum number of BVA test cases for this single range?</p><div class="opts">
+<button data-k="a">a) 2 — the boundary values 1 and 100</button><button data-k="b">b) 6 — three values per boundary</button><button data-k="c">c) 4 — each boundary plus its neighbour</button><button data-k="d">d) 8 — both 2-value and 3-value sets combined</button></div>
+<div class="expl"><b>c</b> — 2-value BVA: {1, 0} and {100, 101} → 4 tests. 2 = boundaries only (no neighbours); 6 = 3-value confusion; 8 = double-count.</div></div>
+
+<div class="q" data-a="a"><p class="qt">C2. For the same range 1–100, which is the complete 3-value BVA set?</p><div class="opts">
+<button data-k="a">a) {0, 1, 2, 99, 100, 101}</button><button data-k="b">b) {0, 1, 100, 101}</button><button data-k="c">c) {1, 100}</button><button data-k="d">d) {1, 2, 99, 100}</button></div>
+<div class="expl"><b>a</b> — each boundary b contributes {b−1, b, b+1}: {0,1,2} and {99,100,101}. b) is the 2-value set; c) boundaries only; d) missing the outer neighbours.</div></div>
+
+<div class="q" data-a="d"><p class="qt">C3. A numeric field 0–120 drives three behaviours (0–12, 13–64, 65–120); non-numeric input is also possible. Minimum EP test cases, invalids counted individually?</p><div class="opts">
+<button data-k="a">a) 3 — one per valid partition</button><button data-k="b">b) 4 — valids plus one combined invalid test</button><button data-k="c">c) 5</button><button data-k="d">d) 6</button></div>
+<div class="expl"><b>d</b> — 3 valid partitions + 3 invalid (&lt;0, &gt;120, non-numeric), each invalid separately → 6. Bundling invalids (b) risks defect masking.</div></div>
+
+<div class="q" data-a="b"><p class="qt">C4. Code: <code>if order &gt; 100: freeShipping()</code>. So far only order=150 has been tested. Which additional test raises branch coverage?</p><div class="opts">
+<button data-k="a">a) order = 200</button><button data-k="b">b) order = 80</button><button data-k="c">c) order = 300</button><button data-k="d">d) Re-run order = 150 with a different customer</button></div>
+<div class="expl"><b>b</b> — only the False outcome of the decision is untaken; 80 (≤ 100) exercises it. a/c re-take True; d) repeats the same outcome.</div></div>
+
+<div class="q" data-a="a"><p class="qt">C5. A form has two independent fields: field X with 3 partitions, field Y with 2 partitions. Fields are tested independently (no combination table required). Minimum EP test cases?</p><div class="opts">
+<button data-k="a">a) 5</button><button data-k="b">b) 6</button><button data-k="c">c) 3</button><button data-k="d">d) 2</button></div>
+<div class="expl"><b>a</b> — number of EP test cases = SUM of partitions across fields when tested independently: 3 + 2 = 5. The product (3 × 2 = 6) applies only if a full combination table is required.</div></div>
+
+<div class="q" data-a="c"><p class="qt">C6. A loan system rates income as "low" (≤ 20,000), "medium" (&gt; 20,000 and ≤ 60,000) or "high" (&gt; 60,000). Using output-based EP, how many tests cover every equivalence class of output?</p><div class="opts">
+<button data-k="a">a) 2</button><button data-k="b">b) 3, plus one test for each invalid input partition</button><button data-k="c">c) 3 — one representative income per output class</button><button data-k="d">d) 9 — every valid value in every class</button></div>
+<div class="expl"><b>c</b> — equivalence classes of OUTPUTS: one representative input per class (e.g., 10k, 40k, 70k) → 3 tests. b) confuses output classes with input invalid partitions; d) is exhaustive testing.</div></div>
+</div>
+</section>
+
+<div class="next"><a href="chapter-03.html">← Ch 3</a><span>· <a href="drills.html">K3 Drills ▸ practice with fresh numbers</a></span><a href="official-bank.html#ch4-k3">Next: Official bank → Ch 4 K3 questions →</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>

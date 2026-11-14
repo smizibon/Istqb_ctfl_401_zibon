@@ -1,0 +1,716 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glossary — Recall Drill · CTFL Prep</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('ctflg-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));</script>
+<style>
+.gfilter{position:sticky;top:70px;z-index:40;display:flex;gap:10px;align-items:center;background:var(--menubar-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin-bottom:18px}
+.gfilter input{flex:1;font:inherit;font-size:.92rem;color:var(--ink);background:var(--read-bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 13px}
+.gfilter input:focus{outline:none;border-color:var(--accent)}
+#fbtn,#rbtn,#mbtn{flex:0 0 auto;font:inherit;font-size:.8rem;font-weight:700;color:var(--ink);background:var(--read-bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 13px;cursor:pointer}
+#fbtn:hover,#rbtn:hover,#mbtn:hover{border-color:var(--accent)}
+#fbtn.on,#rbtn.on,#mbtn.on{background:var(--pill-bg);border-color:var(--pill-bg);color:#fff}
+#gcount{flex:0 0 auto;font-size:.8rem;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+#gprog{font-size:.78rem;font-weight:700;color:var(--ink-soft);margin:-8px 2px 14px}
+/* Recall mode: cover the answer until the card is clicked */
+main.recall .gcard{cursor:pointer}
+main.recall .gcard:not(.revealed) .gd,main.recall .gcard:not(.revealed) .gtrap,main.recall .gcard:not(.revealed) .bn,main.recall .gcard:not(.revealed) .gl{filter:blur(4px);user-select:none}
+main:not(.recall) .srow{display:none}
+/* Self-marking state at a glance */
+.gcard.mark-known{border-left:4px solid var(--und)}
+.gcard.mark-missed{border-left:4px solid var(--trap)}
+.srow{margin-top:6px}
+.schip{font:inherit;font-size:.72rem;font-weight:700;color:var(--ink);background:var(--read-bg);border:1.5px solid var(--line);border-radius:8px;padding:3px 9px;cursor:pointer;margin:0 5px 0 0}
+.schip:hover{border-color:var(--accent)}
+.schip.sel-ok{background:var(--und-soft);border-color:var(--und);color:var(--und)}
+.schip.sel-no{background:var(--trap-soft);border-color:var(--trap);color:var(--trap)}
+.gcards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 4px}
+.gcard{border:1px solid var(--line);border-radius:var(--r-md);background:var(--kc-bg);padding:12px 15px;break-inside:avoid}
+.gt{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.gt b{font-size:.98rem}
+.gt .kbadge{font-size:.64rem;padding:1px 9px;margin:0;flex:0 0 auto}
+.gd{margin:6px 0 4px;font-size:.9rem}
+.gcard .bn{font-size:.86rem;border-top:1px dashed var(--line);margin-top:6px;padding-top:5px}
+.gtrap{font-size:.84rem;background:var(--trap-soft);border-left:4px solid var(--trap);border-radius:8px;padding:6px 10px;margin:8px 0 2px}
+.gl{margin:7px 0 0;font-size:.78rem}
+.gl a{font-weight:700;text-decoration:none}
+@media (max-width:640px){.gcards{grid-template-columns:1fr}.gfilter{top:62px}}
+@media print{.gfilter,#gprog,.srow{display:none}.gcards{grid-template-columns:1fr 1fr}
+main.recall .gcard .gd,main.recall .gcard .gtrap,main.recall .gcard .bn{filter:none;user-select:auto}}
+</style></head><body data-page="glossary" data-provenance="original"><main>
+<nav class="crumbs"><a href="index.html">⌂ Study hub</a> → Glossary recall drill</nav>
+
+<header class="hero">
+<h1>Glossary — 10-minute flash sweep</h1>
+<div class="sub">This is a RECALL DRILL, not a reading destination: cover the definition with your hand, recall it out loud, then check. Every definition is copied verbatim from the chapter memorise boxes — one source of truth. Feeds the <b>Friday 15:15–15:45 flash sweep</b> before the 16:00 stop. <b>Recall mode:</b> mark ✗ Missed on Wed/Thu; Friday 15:15, hit "✗ Missed only" for a closed-book run of just your weak cards.
+<span class="bn">এটা পড়ার পাতা নয়, RECALL DRILL — সংজ্ঞা ঢেকে দাও, মুখে বলো, তারপর মিলাও। প্রতিটি সংজ্ঞা chapter-এর memorise box থেকে হুবহু তোলা। শুক্রবার 15:15–15:45 flash sweep-এর জন্য। বুধ/বৃহস্পতিবার ✗ Missed চিহ্নিত করো; শুক্রবার 15:15-এ "✗ Missed only" চেপে শুধু দুর্বল কার্ডগুলো closed-book ঝালাও।</span></div>
+<div class="meta"><span class="chip">72 exam-critical terms + 7 formulas</span><span class="chip">EN definition + বাংলা line</span><span class="chip">⚠️ traps only where the site documents one</span><span class="chip hot">Feeds Fri 15:15 flash sweep</span></div>
+</header>
+
+<div class="gfilter" id="gfilter">
+<input type="text" id="gq" placeholder="Filter terms… (e.g. coverage, regression, BVA, risk)" aria-label="Filter glossary terms">
+<button type="button" id="fbtn" aria-pressed="false" title="Show only the 7 exam formulas">ƒ Formulas only</button>
+<button type="button" id="rbtn" aria-pressed="false" title="Hide definitions — click a card to reveal, then self-mark">◉ Recall mode</button>
+<button type="button" id="mbtn" aria-pressed="false" title="Show only cards you marked ✗ Missed">✗ Missed only (<span id="mcount">0</span>)</button>
+<span id="gcount"></span>
+</div>
+<div id="gprog"></div>
+
+<section data-open>
+<h2>Chapter 1 — Fundamentals (13 terms)</h2>
+<p class="sec-sum"><i>The vocabulary everything else is built on: the quality chain, QA/QC, the principles, and the basis/condition/case family.</i></p>
+<div class="gcards">
+
+<div class="gcard" id="g-software-testing">
+<div class="gt"><b>Software testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"the process of <b>evaluating a work product</b> to determine whether it <b>satisfies requirements</b>" and to detect differences between given and expected results.</p>
+<div class="bn">Software testing মানে একটি <b>work product মূল্যায়ন</b> করা, যাতে বোঝা যায় এটি <b>requirements পূরণ করে কি না</b> — execution ছাড়াও planning, analysis, design, implementation, reporting সবই এর অংশ।</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-testing-vs-debugging">
+<div class="gt"><b>Testing vs debugging</b><span class="kbadge">K2</span></div>
+<p class="gd">"Testing <b>detects failures</b> caused by defects. Debugging <b>finds, analyses, and removes their causes</b>."</p>
+<div class="bn">Testing <b>failure শনাক্ত করে</b>; debugging <b>কারণ খুঁজে, analysis করে, দূর করে</b>। Debugging একটি development activity।</div>
+<div class="gtrap">⚠️ An option describing "finding and removing causes" is <b>debugging</b>, not testing.</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-error">
+<div class="gt"><b>Error (mistake)</b><span class="kbadge">K2</span></div>
+<p class="gd">"a <b>human action</b> that produces a defect."</p>
+<div class="bn">Error মানে <b>মানুষের কাজ (human action)</b> যা defect তৈরি করে — developer spec ভুল পড়ে ভুল formula টাইপ করল।</div>
+<div class="gtrap">⚠️ An error is always a <b>human action</b> — "environmental conditions" as an error cause = wrong; as a <b>failure</b> cause = correct.</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-defect">
+<div class="gt"><b>Defect (bug/fault)</b><span class="kbadge">K2</span></div>
+<p class="gd">"a <b>flaw in a work product</b>, can cause failure."</p>
+<div class="bn">Defect মানে work product-এর ভেতরে <b>একটি ত্রুটি</b>, যা failure ঘটাতে পারে — code-এ ভুল interest formula আছে।</div>
+<div class="gtrap">⚠️ A defect does <b>not always</b> cause a failure — the wrong code may never be executed, or the inputs may never trigger it.</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-failure">
+<div class="gt"><b>Failure</b><span class="kbadge">K2</span></div>
+<p class="gd">"actual behaviour <b>deviates from expected</b>, observed at runtime."</p>
+<div class="bn">Failure মানে প্রকৃত আচরণ <b>প্রত্যাশিত আচরণ থেকে সরে যায়</b>, runtime-এ দেখা যায় — ATM ভুল balance দেখাল।</div>
+<div class="gtrap">⚠️ Not every failure comes from a code defect — environmental conditions (radiation, hardware faults, wrong setup/configuration) can cause failures.</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-oracle">
+<div class="gt"><b>Test oracle</b><span class="kbadge">K2</span></div>
+<p class="gd">"if the <b>expected result was wrong</b> (bad oracle), a 'failure' may be observed even when the system behaves as designed."</p>
+<div class="bn">Oracle মানে expected result-এর উৎস — <b>ভুল oracle</b> (ভুল প্রত্যাশিত ফলাফল) থাকলে সিস্টে ঠিক থাকলেও "failure" দেখা দেয়।</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-qa-vs-qc">
+<div class="gt"><b>QA vs QC</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>quality assurance (QA)</b>, process-oriented" — preventing defects through reviews and early test design; "<b>quality control (QC)</b>, product-oriented" — detecting and evaluating defects.</p>
+<div class="bn"><b>QA</b> process-মুখী প্রতিরোধ ("আমরা সঠিক কাজগুলো সঠিকভাবে করছি?"); <b>QC</b> product-মুখী শনাক্তকরণ ("এই build ভালো?")।</div>
+<div class="gtrap">⚠️ Testing alone does <b>not</b> ensure quality — testing gives <i>information</i> about quality.</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-defect-clustering">
+<div class="gt"><b>Defect clustering</b><span class="kbadge">K2</span></div>
+<p class="gd">"Few modules hold most defects" — 80% of bugs in 3 of 40 modules → focus effort there.</p>
+<div class="bn">অল্প কিছু module-এই বেশিরভাগ defect থাকে — শক্তি সেখানেই কেন্দ্রীভূত করো।</div>
+<div class="gtrap">⚠️ "Most bugs in a few modules" = <b>defect clustering</b>, NOT pesticide paradox.</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.3 →</a></p>
+</div>
+
+<div class="gcard" id="g-pesticide-paradox">
+<div class="gt"><b>Pesticide paradox</b><span class="kbadge">K2</span></div>
+<p class="gd">"Same tests stop finding new defects → <b>update/improve the tests</b>."</p>
+<div class="bn">একই test নতুন defect খুঁজে পাওয়া বন্ধ করে দেয় → <b>test update/improve করো</b>।</div>
+<div class="gtrap">⚠️ The remedy is <b>new/modified tests</b>, never "run them more often".</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.3 →</a></p>
+</div>
+
+<div class="gcard" id="g-testing-shows-presence">
+<div class="gt"><b>Testing shows presence of defects</b><span class="kbadge">K2</span></div>
+<p class="gd">"Testing can show the <b>presence</b> of defects, never their absence."</p>
+<div class="bn">Testing defect-এর <b>উপস্থিতি</b> দেখাতে পারে, <b>অনুপস্থিতি কখনোই নয়</b> — সব test pass মানে bug-free নয়।</div>
+<div class="gtrap">⚠️ "All tests passed, so the software is defect-free" → violates principle 1.</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.3 →</a></p>
+</div>
+
+<div class="gcard" id="g-test-basis">
+<div class="gt"><b>Test basis</b><span class="kbadge">K2</span></div>
+<p class="gd">"the body of information a test is based on (requirements, user stories, design)."</p>
+<div class="bn">Test basis মানে <b>যে তথ্যভাণ্ডারের উপর ভিত্তি করে test করা হয়</b> (requirements, user story, design)।</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-test-condition">
+<div class="gt"><b>Test condition</b><span class="kbadge">K2</span></div>
+<p class="gd">"an <b>item/event to be tested</b>" ("interest calculation on overdue accounts").</p>
+<div class="bn">Test condition মানে <b>যে item/event test করা হবে</b> — test analysis-এর কাজ condition চিহ্নিত করা (কী test করব)।</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-test-case">
+<div class="gt"><b>Test case</b><span class="kbadge">K2</span></div>
+<p class="gd">"input + execution preconditions + <b>expected result</b>" — the expected result is what makes it a <i>case</i>, not just a trial run.</p>
+<div class="bn">Test case মানে input + precondition + <b>expected result</b> — expected result-ই একে প্রকৃত case বানায়; এটি test design-এর কাজ (কীভাবে test করব)।</div>
+<p class="gl"><a href="chapter-01.html">Ch 1 §1.4 →</a></p>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>Chapter 2 — Testing in the SDLC (12 terms)</h2>
+<p class="sec-sum"><i>Shift-left, the 4 levels × 4 types, confirmation vs regression, smoke, and the maintenance triggers.</i></p>
+<div class="gcards">
+
+<div class="gcard" id="g-shift-left">
+<div class="gt"><b>Shift-left</b><span class="kbadge">K2</span></div>
+<p class="gd">"(a) testing <b>work products earlier</b> (reviews, static analysis, early test design) and (b) <b>testers involved from the start</b> in requirements/user stories."</p>
+<div class="bn">Shift-left-এর <b>দুই অর্ধেক</b>: (a) work product <b>আগেভাগে test</b>, (b) শুরু থেকেই <b>tester-দের যুক্ত করা</b> — দুটো মিলেই সঠিক অর্থ।</div>
+<div class="gtrap">⚠️ Shift-left described only as "starting test <b>execution</b> earlier" is <b>incomplete</b>.</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-retrospective">
+<div class="gt"><b>Retrospective</b><span class="kbadge">K2</span></div>
+<p class="gd">"the team reflects: what went well, what to improve — including <b>test process improvement</b>."</p>
+<div class="bn">Iteration/release-এর পরে দলের প্রতিফলন-মিটিং — কী ভালো হলো, কী উন্নত করা যায়; exam scenario: "team meets after sprint to improve testing" → retrospective।</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-component-testing">
+<div class="gt"><b>Component (unit) testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"Single components in isolation" — developers; "mock objects/stubs to isolate."</p>
+<div class="bn">একটি component আলাদা করে টেস্ট — developers করেন, আলাদা করতে mock object/stub ব্যবহার হয়।</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-component-integration-testing">
+<div class="gt"><b>Component integration testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Interactions &amp; interfaces between components</b>" — developers primarily.</p>
+<div class="bn">component-গুলোর মধ্যে <b>interaction ও interface</b> পরীক্ষা — মূলত developers করেন।</div>
+<div class="gtrap">⚠️ "Verifying interaction between modules" = component <i>integration</i> testing.</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-system-testing">
+<div class="gt"><b>System testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Whole system's behaviour &amp; capabilities</b>, end-to-end" — <b>independent test team</b>.</p>
+<div class="bn"><b>পুরো সিস্টেমের আচরণ ও সামর্থ্য</b>, end-to-end — <b>independent test team</b> চালায়; functional + non-functional দুটোই।</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-acceptance-testing">
+<div class="gt"><b>Acceptance testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Validation</b> — meets user needs/business goals?; often the <b>entry criterion for release</b>."</p>
+<div class="bn"><b>Validation</b> — user/business-এর চাহিদা মেটায় কি না; প্রায়ই <b>release-এর entry criterion</b>; users/customers, ops, support চালান।</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-alpha-beta-testing">
+<div class="gt"><b>Alpha vs beta testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>alpha (developer's site), beta (user's site)</b>."</p>
+<div class="bn"><b>Alpha = developer-এর site-এ, beta = user-দের site-এ</b> — দুটো acceptance testing-এর রূপ।</div>
+<div class="gtrap">⚠️ Beta testing placed "at the developer's site" → swapped with <b>alpha</b>.</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-functional-vs-non-functional">
+<div class="gt"><b>Functional vs non-functional testing</b><span class="kbadge">K2</span></div>
+<p class="gd">Functional: "<i>What</i> the system does — functions it performs." Non-functional: "<i>How well</i> it behaves — quality characteristics."</p>
+<div class="bn">Functional মানে সিস্টেম <b>কী করে</b>; non-functional মানে <b>কতটা ভালোভাবে করে</b> (performance, usability, security, reliability)।</div>
+<div class="gtrap">⚠️ "Non-functional testing happens only at system level" → false; <b>all types at all levels</b>.</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-black-box-vs-white-box">
+<div class="gt"><b>Black-box vs white-box testing</b><span class="kbadge">K2</span></div>
+<p class="gd">Black-box: "Behaviour <b>from outside</b>, based on specifications — no knowledge of internals." White-box: "Internal <b>structure</b> of the system/code drives the tests."</p>
+<div class="bn">Black-box মানে spec থেকে বাইরে থেকে আচরণ দেখা; white-box মানে ভেতরের <b>গঠন</b> থেকে test তৈরি।</div>
+<div class="gtrap">⚠️ The real distinction is <b>spec-based vs structure-based derivation</b> — not "who runs it".</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-confirmation-vs-regression">
+<div class="gt"><b>Confirmation vs regression testing</b><span class="kbadge">K2</span></div>
+<p class="gd">Confirmation (re-testing): "Verify a <b>specific defect</b> is really fixed." Regression: "Verify a <b>change</b> broke nothing else."</p>
+<div class="bn">Confirmation মানে <b>নির্দিষ্ট defect সত্যিই ঠিক হয়েছে কি না</b>; regression মানে <b>change অন্য কিছু ভেঙেছে কি না</b> — দুটো একসাথে থাকে।</div>
+<div class="gtrap">⚠️ Regression runs after <b>any</b> change (fixes, new features, environment/config changes), at <b>all levels, all SDLCs</b> — not only after defect fixes.</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-smoke-test-suite">
+<div class="gt"><b>Smoke test suite</b><span class="kbadge">K2</span></div>
+<p class="gd">"does the build work at all?" — the most important functions, run on every new build.</p>
+<div class="bn">Smoke suite জিজ্ঞেস করে "<b>build-টা আদৌ চলে কি না</b>" — সবচেয়ে গুরুত্বপূর্ণ function গুলো, প্রতিটি নতুন build-এ।</div>
+<div class="gtrap">⚠️ A smoke suite does <b>not replace</b> regression testing; it just gates further work on a build.</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-maintenance-triggers">
+<div class="gt"><b>Maintenance triggers</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Modification</b> — planned enhancements, corrective fixes, emergency hotfixes. <b>Migration</b> — moving to another platform/OS/DB/server. <b>Retirement</b> — shutting down."</p>
+<div class="bn">৩টি ট্রিগার: <b>modification</b> (enhancement/fix/hotfix), <b>migration</b> (নতুন platform/DB), <b>retirement</b> (বন্ধ করা) — scope ঠিক হয় <b>impact analysis</b> দিয়ে।</div>
+<div class="gtrap">⚠️ A migration scenario needs data <b>conversion</b> testing too — not just regression testing.</div>
+<p class="gl"><a href="chapter-02.html">Ch 2 §2.3 →</a></p>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>Chapter 3 — Static Testing (8 terms)</h2>
+<p class="sec-sum"><i>Static testing vs static analysis, the review formality ladder, and the six roles.</i></p>
+<div class="gcards">
+
+<div class="gcard" id="g-static-testing">
+<div class="gt"><b>Static testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"examines work products <b>without executing the code</b> — manually (<b>reviews</b>) or automatically (<b>static analysis</b>)."</p>
+<div class="bn">Static testing মানে work product পরীক্ষা করা <b>কোড execute না করে</b> — হাতে (review) বা স্বয়ংক্রিয়ভাবে (static analysis)।</div>
+<div class="gtrap">⚠️ Static testing finds the <b>defect in the document/code itself</b>; dynamic testing observes <b>failures</b> from which defects are inferred.</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-reviews-vs-static-analysis">
+<div class="gt"><b>Reviews vs static analysis</b><span class="kbadge">K2</span></div>
+<p class="gd">Reviews: "<b>Human</b> examination of documents/code." Static analysis: "<b>Tool-based</b> analysis of code (and models)."</p>
+<div class="bn">Review করে <b>মানুষ</b>; static analysis করে <b>tool</b> — দুটোই execution ছাড়া চলে।</div>
+<div class="gtrap">⚠️ A compiler <b>is</b> a static analysis tool — it analyses code without executing it.</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-informal-review">
+<div class="gt"><b>Informal review</b><span class="kbadge">K2</span></div>
+<p class="gd">"No process, no roles, no documents; <b>pair review / pair programming</b>, desk-check; cheap, immediate feedback."</p>
+<div class="bn">কোনো process নেই, role নেই, document নেই — pair review, desk-check; মূল লক্ষ্য সস্তা ও দ্রুত defect ধরা।</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-walkthrough">
+<div class="gt"><b>Walkthrough</b><span class="kbadge">K2</span></div>
+<p class="gd">"Led by the <b>author</b>; goal often <b>education / consensus-building</b>, gathering comments, explaining/evaluating."</p>
+<div class="bn">Walkthrough পরিচালনা করেন <b>author</b> নিজে; লক্ষ্য প্রায়ই <b>শেখানো / ঐকমত্য তৈরি</b> ও মন্তব্য সংগ্রহ।</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-technical-review">
+<div class="gt"><b>Technical review</b><span class="kbadge">K2</span></div>
+<p class="gd">"Trained moderator (not the author), technical/qualified reviewers; <b>peer review</b> among technical peers."</p>
+<div class="bn">প্রশিক্ষিত moderator (author নন) ও যোগ্য reviewer-দের <b>peer review</b>; লক্ষ্য: ঐকমত্য, defect ধরা, সিদ্ধান্ত, বিকল্প তৈরি।</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-inspection">
+<div class="gt"><b>Inspection</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Most formal</b>: rules/checklists, defined roles, detailed entry/exit criteria, <b>metrics</b> gathered, formal follow-up; led by a <b>trained moderator (not the author)</b>."</p>
+<div class="bn"><b>সবচেয়ে formal</b> review: নিয়ম/checklist, নির্দিষ্ট role, entry/exit criteria, metrics, formal follow-up — পরিচালনা করেন প্রশিক্ষিত moderator (author নন)।</div>
+<div class="gtrap">⚠️ "Rule-based, checklist, metrics, trained moderator" = <b>inspection</b>; "author presents to the team" = <b>walkthrough</b>.</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-review-roles">
+<div class="gt"><b>The six review roles</b><span class="kbadge">K1</span></div>
+<p class="gd">Author (fixes defects after) · Facilitator (ensures effective running) · Reviewer (examines the product) · Scribe (collects defects/comments) · Review leader (overall responsibility) · Manager (decides <b>whether</b> a review happens).</p>
+<div class="bn">ছয়টি role: author (পরে ঠিক করেন) · facilitator (মিটিং কার্যকর রাখেন) · reviewer (পরীক্ষা করেন) · scribe (issue লিখে রাখেন) · review leader (সামগ্রিক দায়িত্ব) · manager (review হবে কি না ঠিক করেন)।</div>
+<div class="gtrap">⚠️ "Who records the issues raised?" → <b>scribe</b>; "who ensures an effective meeting?" → <b>facilitator</b>; "who decides on executing the review?" → <b>manager</b>.</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-facilitator-vs-review-leader-vs-manager">
+<div class="gt"><b>Facilitator / review leader / manager</b><span class="kbadge">K1</span></div>
+<p class="gd">"Runs the meeting / owns the review's success / decides the review happens."</p>
+<div class="bn">Facilitator = মিটিং চালান; review leader = review-এর <b>সাফল্যের মালিক</b>; manager = review <b>হবে কি না</b> সেটা ঠিক করেন।</div>
+<p class="gl"><a href="chapter-03.html">Ch 3 §3.2 →</a></p>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>Chapter 4 — Test Techniques (15 terms + 6 formulas)</h2>
+<p class="sec-sum"><i>The K3 recipe vocabulary: EP, BVA, decision tables, state transitions, statement/branch coverage — plus experience-based and collaboration-based labels. K3 technique cards link to the cheat sheet's K3 box.</i></p>
+<div class="gcards">
+
+<div class="gcard" id="g-test-procedure">
+<div class="gt"><b>Test procedure (test script)</b><span class="kbadge">K2</span></div>
+<p class="gd">"ordered sequence of test cases (script)" — the step-by-step instructions for executing test cases, in order.</p>
+<div class="bn">Test procedure মানে <b>নির্দিষ্ট ক্রমে সাজানো test case-গুলোর সেট</b> (script) — test implementation-এর কাজ এটি তৈরি করা।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-traceability">
+<div class="gt"><b>Traceability</b><span class="kbadge">K2</span></div>
+<p class="gd">"conditions ↔ basis ↔ cases ↔ results → enables coverage measurement, change-impact analysis, auditing, reporting."</p>
+<div class="bn">Traceability মানে test basis ↔ condition ↔ case ↔ result-এর <b>সংযোগ</b> — এতে coverage মাপা, impact analysis, audit ও reporting সম্ভব।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-equivalence-partitioning">
+<div class="gt"><b>Equivalence partitioning (EP)</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"Divide inputs (or outputs, or internal values) into <b>partitions</b> whose members are handled identically — then <b>one representative per partition</b> is enough."</p>
+<div class="bn">ইনপুট ভাগ করো এমন <b>partition</b>-এ, যেখানকার প্রতিটি সদস্যকে সিস্টেম একইভাবে সামলায় — তারপর <b>প্রতিটি partition থেকে একজন প্রতিনিধি</b> যথেষ্ট।</div>
+<div class="gtrap">⚠️ Each <b>invalid partition gets its OWN test case</b> — forgetting invalid partitions entirely is trap #1. K3 recipe: <a href="final-day-cheatsheet.html#k3">cheat sheet · THE K3 BOX</a></div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-defect-masking">
+<div class="gt"><b>Defect masking</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"several invalid values in one test case can mask each other, as the first rejection hides the others' behaviour."</p>
+<div class="bn">এক test case-এ কয়েকটি invalid মান থাকলে <b>প্রথম rejection-ই বাকিগুলোর আচরণ ঢেকে দেয়</b> — তাই এক test-এ একটির বেশি invalid মান নয়।</div>
+<div class="gtrap">⚠️ Never bundle several invalid values into one test.</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-boundary-value-analysis">
+<div class="gt"><b>Boundary value analysis (BVA)</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"Defects cluster at partition <b>edges</b> (off-by-one errors). BVA tests values on and around the boundary — and it can apply to inputs <b>and outputs</b>."</p>
+<div class="bn">Defect জমা হয় partition-এর <b>কিনারায়</b> — BVA boundary-র ওপরে-নিচে ও চারপাশের মান test করে; ইনপুট ও আউটপুট দুই জায়গাতেই প্রযোজ্য।</div>
+<div class="gtrap">⚠️ <b>2-value</b> (ISTQB default) = {b, nearest neighbour} → 18–60 gives 18, 17, 60, 61 · <b>3-value</b> = {b−1, b, b+1} → 17, 18, 19, 59, 60, 61. Giving only 18 and 60 is the classic wrong answer. K3 recipe: <a href="final-day-cheatsheet.html#k3">cheat sheet · THE K3 BOX</a></div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-decision-table">
+<div class="gt"><b>Decision table</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"One column per combination = a <b>rule</b>; each rule = at least one test. Full rules = <b>product of condition values</b> (2 binary conditions → 4; e.g. 2×2×3 = 12)."</p>
+<div class="bn">প্রতিটি condition-সমাবেশ = এক কলাম = একটি <b>rule</b>; প্রতিটি rule = অন্তত একটি test; পূর্ণ টেবিলের rule = <b>condition মানগুলোর গুণফল</b>।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.3 →</a> · <a href="final-day-cheatsheet.html#k3">cheat sheet · THE K3 BOX</a></p>
+</div>
+
+<div class="gcard" id="g-decision-table-collapse">
+<div class="gt"><b>Collapsing a decision table</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"When a condition doesn't affect the action, merge rules with 'don't care' (−)" — collapsing <b>reduces test count</b>.</p>
+<div class="bn">কোনো condition-এর action-এ প্রভাব না থাকলে "don't care" (−) দিয়ে rule <b>মিশিয়ে দাও</b> — collapsing-এ test সংখ্যা কমে।</div>
+<div class="gtrap">⚠️ Only collapse when the behaviour is <b>identical</b> — collapsing rules whose actions differ is a trap.</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.3 →</a></p>
+</div>
+
+<div class="gcard" id="g-state-transition-testing">
+<div class="gt"><b>State transition testing</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"Behaviour depends on <b>current state + event</b>." 0-switch coverage "covers every single valid transition."</p>
+<div class="bn">আচরণ নির্ভর করে <b>বর্তমান state + event</b>-এর ওপর; 0-switch প্রতিটি একক valid transition ঢেকে দেয়।</div>
+<div class="gtrap">⚠️ Count <b>TRANSITIONS, not states</b> — "test all valid transitions" ≠ "test all states". K3 recipe: <a href="final-day-cheatsheet.html#k3">cheat sheet · THE K3 BOX</a></div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-transition-vs-action">
+<div class="gt"><b>Transition vs action</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"<b>transition</b> = change of state caused by an <b>event</b>, possibly with an <b>action</b>; <b>action ≠ transition</b> (action = output performed; may occur without changing state)."</p>
+<div class="bn">Transition মানে event-এর কারণে <b>state বদল</b>; action মানে <b>সম্পাদিত আউটপুট</b> — action state না বদলেও ঘটতে পারে (ভুল PIN-এ error beep)।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-invalid-transition">
+<div class="gt"><b>Invalid transitions</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"(event, state) pairs <b>not</b> in the diagram — each is also a test: the system should reject it, ideally without changing state."</p>
+<div class="bn">ডায়াগ্রামে <b>নেই</b> এমন (event, state) জোড়া — প্রতিটিও একটি test; সিস্টেমকে সেটা reject করা উচিত। পরীক্ষার্থীরা প্রায়ই ভুলে যায়।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-statement-vs-branch-coverage">
+<div class="gt"><b>Statement vs branch coverage</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"<b>Statement coverage</b> = % of executable statements executed. <b>Branch coverage</b> = % of <b>decision outcomes</b> exercised."</p>
+<div class="bn">Statement coverage = executable statement-এর কত % execute হলো; branch coverage = কত % <b>decision outcome</b> নেওয়া হলো — প্রতিটি if-এর True ও False দুটি পথ।</div>
+<div class="gtrap">⚠️ 100% branch <b>⊃</b> 100% statement — always implies it, <b>never the reverse</b>. And coverage <b>cannot detect missing functionality</b>: "100% branch coverage means the system meets all requirements" → false. K3 recipe: <a href="final-day-cheatsheet.html#k3">cheat sheet · THE K3 BOX</a></div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.3 →</a></p>
+</div>
+
+<div class="gcard" id="g-error-guessing">
+<div class="gt"><b>Error guessing</b><span class="kbadge">K2</span></div>
+<p class="gd">"Anticipate likely defects from experience and target them (division by zero, empty lists, nulls, special characters, date boundaries) — a <b>defect-based</b> technique."</p>
+<div class="bn">অভিজ্ঞতা থেকে সম্ভাব্য defect আঁচ করে সরাসরি সেগুলোকে লক্ষ্য করা — একটি <b>defect-ভিত্তিক</b> technique।</div>
+<div class="gtrap">⚠️ Error guessing is <b>not</b> a checklist technique — no list, pure anticipation.</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-checklist-based-testing">
+<div class="gt"><b>Checklist-based testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"Test against a <b>checklist</b> from experience/standards; items may become conditions; <b>checklist quality decides effectiveness</b>."</p>
+<div class="bn">অভিজ্ঞতা/মানদণ্ড থেকে তৈরি <b>checklist</b>-এর বিপরীতে test — <b>checklist-এর মানেই effectiveness নির্ধারিত হয়</b>; item আপডেট হতে থাকা উচিত।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-exploratory-testing">
+<div class="gt"><b>Exploratory testing</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Concurrent</b> learning, test design, execution; <b>charter-based</b> (goal) and <b>session-based</b> (timeboxed, with reports)."</p>
+<div class="bn">শেখা, test design ও execution <b>একসাথে</b> চলে; <b>charter-ভিত্তিক</b> (লক্ষ্য) ও <b>session-ভিত্তিক</b> (নির্দিষ্ট সময়ে, রিপোর্টসহ)।</div>
+<div class="gtrap">⚠️ "Exploratory = random/unstructured" → <b>false</b> (charters, sessions, discipline).</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.4 →</a></p>
+</div>
+
+<div class="gcard" id="g-atdd-vs-bdd">
+<div class="gt"><b>ATDD vs BDD</b><span class="kbadge">K2</span></div>
+<p class="gd">ATDD: "tests derived from acceptance criteria <b>before coding</b>." BDD: "<b>examples with business value</b> are written in a <b>domain-specific, structured language (Given/When/Then — Gherkin)</b>, usable as <b>living documentation</b>."</p>
+<div class="bn">ATDD মানে <b>কোডিংয়ের আগেই</b> acceptance criteria থেকে test; BDD-তে business-মূল্যসহ example লেখা হয় <b>Given/When/Then (Gherkin)</b>-এ — living documentation হিসেবে।</div>
+<div class="gtrap">⚠️ Scenario says "Given/When/Then" → <b>BDD</b>.</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.5 →</a></p>
+</div>
+
+<div class="gcard" id="g-formula-ep-count">
+<div class="gt"><b>ƒ EP — minimum test count</b><span class="kbadge k3">K3</span></div>
+<p class="gd"><b>min tests = (# valid partitions) + (# invalid partitions)</b> — one test per valid partition, and <b>each invalid partition gets its own separate test</b> (bundling invalids = defect masking). Valid 1–100 → 1 valid + invalids 0, 101, "abc" → <b>4 tests</b>.</p>
+<div class="bn">প্রতিটি valid partition-এ একটি test, আর <b>প্রতিটি invalid partition-এ আলাদা test</b> — একসাথে করলে defect masking হয়।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2 →</a> · <a href="final-day-cheatsheet.html#k3">recipe ↗</a></p>
+</div>
+
+<div class="gcard" id="g-formula-bva-2v">
+<div class="gt"><b>ƒ BVA 2-value — tests per boundary</b><span class="kbadge k3">K3</span></div>
+<p class="gd"><b>tests = 2 × (# boundaries)</b> — test <b>b and its nearest neighbour</b>. Range 18–60: 2 boundaries → <b>18, 17, 60, 61 → 4 tests</b>.</p>
+<div class="bn">প্রতিটি boundary-তে <b>দুটি value</b> — b এবং তার পাশের neighbour। 18–60 মানে 18, 17, 60, 61।</div>
+<div class="gtrap">⚠️ Giving only 18, 60 without neighbours is <b>not</b> BVA.</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2 →</a> · <a href="final-day-cheatsheet.html#k3">recipe ↗</a></p>
+</div>
+
+<div class="gcard" id="g-formula-bva-3v">
+<div class="gt"><b>ƒ BVA 3-value — tests per boundary</b><span class="kbadge k3">K3</span></div>
+<p class="gd"><b>tests = 3 × (# boundaries)</b> — test <b>b−1, b, b+1</b>. Range 18–60: <b>17, 18, 19, 59, 60, 61 → 6 tests</b>.</p>
+<div class="bn">প্রতিটি boundary-তে <b>তিনটি value</b> — b−1, b, b+1। 18–60 মানে 17, 18, 19 এবং 59, 60, 61।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2 →</a> · <a href="final-day-cheatsheet.html#k3">recipe ↗</a></p>
+</div>
+
+<div class="gcard" id="g-formula-dt-rules">
+<div class="gt"><b>ƒ Decision table — full rule count</b><span class="kbadge k3">K3</span></div>
+<p class="gd"><b>full rules = product of each condition's values</b> (2 binary conditions → 4; 3 binary → 8; 2×2×3 → 12). <b>Minimum tests = collapsed rules</b> — collapse ONLY when actions are identical.</p>
+<div class="bn">Full rule সংখ্যা = প্রতিটি condition-এর value সংখ্যার <b>গুণফল</b>; শুধু identical action হলে collapse — min test = collapsed rule সংখ্যা।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2 →</a> · <a href="final-day-cheatsheet.html#k3">recipe ↗</a></p>
+</div>
+
+<div class="gcard" id="g-formula-st-coverage">
+<div class="gt"><b>ƒ State transition — test count</b><span class="kbadge k3">K3</span></div>
+<p class="gd"><b>count transitions, not states</b>; 0-switch coverage = <b>every valid transition exercised once</b>; each invalid (event, state) pair adds 1 more test → <b>total = valid transitions + invalid pairs</b>.</p>
+<div class="bn">Test গণনা হয় <b>transition দিয়ে, state দিয়ে নয়</b>; প্রতিটি invalid (event, state) pair-ও একটি test।</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.2 →</a> · <a href="final-day-cheatsheet.html#k3">recipe ↗</a></p>
+</div>
+
+<div class="gcard" id="g-formula-coverage-pct">
+<div class="gt"><b>ƒ Statement &amp; branch coverage %</b><span class="kbadge k3">K3</span></div>
+<p class="gd"><b>statement % = executed statements ÷ total statements × 100</b>; <b>branch % = outcomes exercised ÷ total outcomes × 100</b> (each two-way decision has 2 outcomes: e.g. 12 decisions → 24). Example: 36/40 statements = 90%; 20/24 outcomes = 83.3%.</p>
+<div class="bn">Statement % = চালানো statement ÷ মোট statement × 100; branch % = চালানো decision outcome ÷ মোট outcome × 100 (দুই-মুখী decision-এ ২টি outcome)।</div>
+<div class="gtrap">⚠️ 100% branch ⇒ 100% statement — <b>never the reverse</b>.</div>
+<p class="gl"><a href="chapter-04.html">Ch 4 §4.3 →</a> · <a href="final-day-cheatsheet.html#k3">recipe ↗</a></p>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>Chapter 5 — Test Management (12 terms + 1 formula)</h2>
+<p class="sec-sum"><i>Entry/exit criteria, estimation, pyramid &amp; quadrants, risk, severity/priority, and the defect lifecycle.</i></p>
+<div class="gcards">
+
+<div class="gcard" id="g-entry-criteria">
+<div class="gt"><b>Entry criteria</b><span class="kbadge">K2</span></div>
+<p class="gd">"what must hold to <i>begin</i> execution (environment ready, test data available, testable build)."</p>
+<div class="bn">Execution <b>শুরু</b> করতে হলে যা পূরণ থাকতে হবে — environment প্রস্তুত, test data available, testable build; খুব আগে শুরু করলে false failure-এ শ্রম নষ্ট।</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-exit-criteria">
+<div class="gt"><b>Exit criteria</b><span class="kbadge">K2</span></div>
+<p class="gd">"what must hold to <i>declare testing complete</i> (planned tests executed, coverage achieved, defects below threshold, no critical opens)."</p>
+<div class="bn"><b>Testing সম্পূর্ণ</b> ঘোষণা করতে হলে যা পূরণ থাকতে হবে; Agile-এর আত্মীয়: <b>Definition of Done</b>।</div>
+<div class="gtrap">⚠️ Criteria must be <b>measurable</b> — "the system feels stable" is the exam's favourite anti-pattern.</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-metrics-vs-expert-estimation">
+<div class="gt"><b>Metrics-based vs expert-based estimation</b><span class="kbadge">K2</span></div>
+<p class="gd">"Metrics-based = estimate from <b>measures of past projects</b>… Expert-based = estimate from <b>experience of experts</b> (planning poker, wideband Delphi)."</p>
+<div class="bn"><b>Metrics-based</b> = অতীত প্রকল্পের measure থেকে ("historical data"); <b>expert-based</b> = expert-দের অভিজ্ঞতা থেকে (planning poker, wideband Delphi)।</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-test-pyramid">
+<div class="gt"><b>Test pyramid</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>MANY</b> · small automated component (unit) tests — fast, cheap" at the base; "FEW · large end-to-end / system tests — slow, costly" at the top.</p>
+<div class="bn">ভিত্তিতে <b>অনেক</b> ছোট automated component test (দ্রুত, সস্তা), উপরে <b>অল্প</b> end-to-end test (ধীর, ব্যয়বহুল) — টেস্টের অধিকাংশ থাকা উচিত base-এ।</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-test-quadrants">
+<div class="gt"><b>Test quadrants</b><span class="kbadge">K2</span></div>
+<p class="gd">"Q1 · technology-facing, supports the team · Q2 · business-facing, supports the team · Q3 · business-facing, critiques the product · Q4 · technology-facing, critiques the product."</p>
+<div class="bn">Q1 tech/supports (component, integration) · Q2 business/supports (functional, BDD) · Q3 business/critiques (acceptance, exploratory, UAT) · Q4 tech/critiques (performance, security)।</div>
+<div class="gtrap">⚠️ Performance testing is <b>Q4, technology-facing</b> — examiners love parking it in a business-facing quadrant.</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-risk">
+<div class="gt"><b>Risk</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Risk = likelihood × impact.</b>"</p>
+<div class="bn"><b>Risk = likelihood × impact</b> — risk assessment = চিহ্নিত করা + analysis করা + mitigation ঠিক করা; testing নিজেই একটি mitigation।</div>
+<div class="gtrap">⚠️ Rank by multiplication, never eyeball — A = 2×5 = 10, B = 4×3 = 12, so B is the higher risk.</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-product-vs-project-risk">
+<div class="gt"><b>Product vs project risk</b><span class="kbadge">K2</span></div>
+<p class="gd">"Product risk — the <b>work product</b> may fail its users… Project risk — threats to <b>the project itself</b>: staffing, skills, conflicts, supplier trouble, bad estimates."</p>
+<div class="bn"><b>Product risk</b> = work product ব্যবহারকারীদের কাছে ব্যর্থ হতে পারে (data leak); <b>project risk</b> = প্রকল্পের নিজের ওপর হুমকি (vendor দেউলিয়া, release দেরি)।</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-residual-risk">
+<div class="gt"><b>Residual risk</b><span class="kbadge">K2</span></div>
+<p class="gd">"the risk that remains afterwards is <b>residual risk</b>, which must be communicated to stakeholders."</p>
+<div class="bn">Risk-based testing-এর পরেও <b>যে risk থেকে যায়</b> সেটাই residual risk — stakeholder-দের কাছে জানাতেই হবে।</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-severity-vs-priority">
+<div class="gt"><b>Severity vs priority</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Severity = technical impact</b> ('crashes when saving'). <b>Priority = business urgency</b> ('must fix before Friday's demo')."</p>
+<div class="bn"><b>Severity = technical impact</b>; <b>priority = ব্যবসায়িক তাড়া</b> — দুটো আলাদা দিকে যেতে পারে: launch-এর আগের রাতে homepage typo = কম severity, বেশি priority।</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.5 →</a></p>
+</div>
+
+<div class="gcard" id="g-defect-lifecycle">
+<div class="gt"><b>Defect lifecycle</b><span class="kbadge">K2</span></div>
+<p class="gd">"New → Assigned → Fixed → Confirmation test → passes → Closed"; "fails → Reopened ↺ back to Assigned." Side states: "Rejected · Duplicate · Deferred."</p>
+<div class="bn">New → Assigned → Fixed → <b>confirmation test</b> → pass করলে Closed, fail করলে Reopened; পাশের state: Rejected, Duplicate, Deferred।</div>
+<div class="gtrap">⚠️ "Fixed" is <b>not</b> the end: the confirmation test <b>precedes</b> closing.</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.5 →</a></p>
+</div>
+
+<div class="gcard" id="g-defect-report">
+<div class="gt"><b>Defect report</b><span class="kbadge k3">K3</span></div>
+<p class="gd">"Steps to reproduce — ordered, precise · Expected vs actual result (both!) · Environment / build under test · Severity" — plus unique ID, title, date &amp; reporter, evidence, references.</p>
+<div class="bn">ভালো report-এ থাকে: reproduce করা যায় এমন steps, expected <b>এবং</b> actual, build ID, severity — দোষারোপ নয়।</div>
+<div class="gtrap">⚠️ Penalise: blame ("Sam's fault"), vagueness ("crashes sometimes"), several defects bundled in one report, missing expected result.</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.5 →</a></p>
+</div>
+
+<div class="gcard" id="g-monitoring-vs-control">
+<div class="gt"><b>Monitoring vs control</b><span class="kbadge">K2</span></div>
+<p class="gd">"<b>Monitoring</b> = gather data, compare progress vs plan. <b>Control</b> = act on it — re-prioritise, adjust schedule, add automation. (Observe → correct.)"</p>
+<div class="bn">Monitoring = data জোগাড় করে plan-এর সঙ্গে তুলনা; control = সেই তথ্যের ভিত্তিতে <b>ব্যবস্থা নেওয়া</b> (দেখা → সংশোধন)।</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.3 →</a></p>
+</div>
+
+<div class="gcard" id="g-formula-risk">
+<div class="gt"><b>ƒ Risk level</b><span class="kbadge">K2</span></div>
+<p class="gd"><b>risk = likelihood of the event × impact of the event</b> — rank items by the product to decide test priority: highest risk gets tested first and most intensely. Example: A = 2×5 = 10; B = 4×3 = 12 → test B first.</p>
+<div class="bn">Risk = event-এর <b>likelihood × impact</b>; গুণফল অনুযায়ী rank করে সবচেয়ে বড় risk আগে ও বেশি intense ভাবে test করা হয়।</div>
+<div class="gtrap">⚠️ Severity = <b>technical impact</b>; priority = <b>business urgency</b> — they can diverge (homepage typo: low severity, high priority).</div>
+<p class="gl"><a href="chapter-05.html">Ch 5 §5.2 →</a></p>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>Chapter 6 — Test Tools (5 terms)</h2>
+<p class="sec-sum"><i>The six categories with the classic classification traps, the risk list, and the pilot-project rule.</i></p>
+<div class="gcards">
+
+<div class="gcard" id="g-tool-categories">
+<div class="gt"><b>The six tool categories</b><span class="kbadge">K2</span></div>
+<p class="gd">"Test management · Static analysis · Test design / implementation · Test execution &amp; automation · Non-functional testing · Support tools."</p>
+<div class="bn">ছয়টি category: test management · static analysis · test design/implementation · test execution &amp; automation · non-functional testing · support — exam বর্ণনা দেয়, তুমি নাম বলবে।</div>
+<p class="gl"><a href="chapter-06.html">Ch 6 §6.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-support-tools">
+<div class="gt"><b>Support tools</b><span class="kbadge">K2</span></div>
+<p class="gd">"keep test work efficient &amp; manageable" — CI/CD, build tools, <b>version control</b>, incident management, spreadsheets.</p>
+<div class="bn">Support tool মানে test-এর কাজ <b>দক্ষ ও নিয়ন্ত্রণযোগ্য</b> রাখে — CI/CD, build tool, version control, incident management, spreadsheet।</div>
+<div class="gtrap">⚠️ Version control is a <b>support</b>/configuration-management tool — not test management.</div>
+<p class="gl"><a href="chapter-06.html">Ch 6 §6.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-non-functional-tools">
+<div class="gt"><b>Non-functional testing tools</b><span class="kbadge">K2</span></div>
+<p class="gd">"measure quality characteristics" — performance/load tools, security scanners.</p>
+<div class="bn">Non-functional tool মানে <b>quality characteristic মাপে</b> — performance/load tool, security scanner।</div>
+<div class="gtrap">⚠️ Performance tools are <b>non-functional</b> tools — not "test execution" tools.</div>
+<p class="gl"><a href="chapter-06.html">Ch 6 §6.1 →</a></p>
+</div>
+
+<div class="gcard" id="g-tool-risks">
+<div class="gt"><b>Tool benefits &amp; risks</b><span class="kbadge">K2</span></div>
+<p class="gd">Benefits come from <b>automating repetitive work</b>. Risks: "Unrealistic expectations · Underestimated time, cost, effort of introduction and ongoing maintenance · Over-reliance · Vendor dependency."</p>
+<div class="bn">Benefit আসে <b>পুনরাবৃত্ত কাজ automate</b> করা থেকে; risk: অবাস্তব প্রত্যাশা, introduction ও maintenance-এর খরচ কম ভাবা, অতিরিক্ত নির্ভরতা, vendor dependency।</div>
+<div class="gtrap">⚠️ A tool <b>helps but never guarantees</b> — it cannot replace tester skill/judgement.</div>
+<p class="gl"><a href="chapter-06.html">Ch 6 §6.2 →</a></p>
+</div>
+
+<div class="gcard" id="g-pilot-project">
+<div class="gt"><b>Pilot project</b><span class="kbadge">K2</span></div>
+<p class="gd">"run the tool on <b>one small, contained project</b>: does it fit our context and needs? What does it really cost?"</p>
+<div class="bn">পুরো rollout-এর আগে tool-টা <b>একটা ছোট, সীমাবদ্ধ project</b>-এ চালিয়ে দেখা — context-এ মেলে কি না, আসল খরচ কত।</div>
+<p class="gl"><a href="chapter-06.html">Ch 6 §6.2 →</a></p>
+</div>
+
+</div>
+</section>
+
+<script>
+(function(){
+var q=document.getElementById('gq'),fb=document.getElementById('fbtn'),
+rb=document.getElementById('rbtn'),mb=document.getElementById('mbtn'),
+mcount=document.getElementById('mcount'),prog=document.getElementById('gprog'),
+mainEl=document.querySelector('main'),
+cards=[].slice.call(document.querySelectorAll('.gcard')),
+fonly=false,recall=false,missedOnly=false;
+/* Recall mode / self-marking store — distinct from ctflg-progress-v1: {cardId: 1=known, 2=missed} */
+var SRSKEY='ctflg-glossary-srs-v1',marks={};
+try{var saved=JSON.parse(localStorage.getItem(SRSKEY));if(saved&&typeof saved==='object')marks=saved;}catch(e){}
+function saveMarks(){try{localStorage.setItem(SRSKEY,JSON.stringify(marks));}catch(e){}}
+function makeChipRow(){
+var d=document.createElement('div');d.className='srow';
+var ok=document.createElement('button');ok.type='button';ok.className='schip ok';ok.textContent='✓ Knew it';
+var no=document.createElement('button');no.type='button';no.className='schip no';no.textContent='✗ Missed';
+d.appendChild(ok);d.appendChild(no);return d;}
+function syncCard(c){
+c.classList.toggle('mark-known',marks[c.id]===1);
+c.classList.toggle('mark-missed',marks[c.id]===2);
+var row=c.querySelector('.srow');if(!row)return;
+row.querySelector('.ok').classList.toggle('sel-ok',marks[c.id]===1);
+row.querySelector('.no').classList.toggle('sel-no',marks[c.id]===2);}
+function refreshMarks(){
+var k=0,m=0;
+cards.forEach(function(c){if(marks[c.id]===1)k++;else if(marks[c.id]===2)m++;});
+if(mcount)mcount.textContent=m;
+if(prog)prog.textContent='known '+k+'/'+cards.length+' · missed '+m+' · unseen '+(cards.length-k-m);}
+function run(){
+var v=q.value.trim().toLowerCase(),n=0;
+cards.forEach(function(c){
+var isF=c.id.indexOf('g-formula-')===0;
+var hit=(!fonly||isF)&&(!missedOnly||marks[c.id]===2)&&(!v||c.textContent.toLowerCase().indexOf(v)>-1);
+c.style.display=hit?'':'none';if(hit)n++;});
+document.querySelectorAll('main section').forEach(function(s){
+var cs=s.querySelectorAll('.gcard'),vis=0;
+cs.forEach(function(c){if(c.style.display!=='none')vis++;});
+s.style.display=(cs.length&&!vis)?'none':'';});
+document.getElementById('gcount').textContent=n+' / '+cards.length+' terms'+((missedOnly&&n===0)?' — nothing marked missed yet: use ◉ Recall mode first': '');}
+fb.addEventListener('click',function(){fonly=!fonly;fb.classList.toggle('on',fonly);fb.setAttribute('aria-pressed',fonly);run();});
+rb.addEventListener('click',function(){recall=!recall;rb.classList.toggle('on',recall);rb.setAttribute('aria-pressed',recall);mainEl.classList.toggle('recall',recall);});
+mb.addEventListener('click',function(){missedOnly=!missedOnly;mb.classList.toggle('on',missedOnly);mb.setAttribute('aria-pressed',missedOnly);run();});
+q.addEventListener('input',run);
+mainEl.addEventListener('click',function(e){
+var t=e.target;
+var chip=t.closest?t.closest('.schip'):null;
+if(chip){
+var card=chip.closest('.gcard');
+marks[card.id]=chip.classList.contains('ok')?1:2;
+saveMarks();syncCard(card);refreshMarks();
+if(missedOnly)run();
+return;}
+if(!recall)return;
+var card=t.closest?t.closest('.gcard'):null;
+if(!card||card.style.display==='none')return;
+// on an unrevealed card, a click on the (blurred) chapter link reveals the card instead of navigating
+if(t.closest&&t.closest('.gl')&&e.preventDefault&&!card.classList.contains('revealed'))e.preventDefault();
+if(card.classList.contains('revealed'))return;
+card.classList.add('revealed');
+var row=makeChipRow();card.appendChild(row);syncCard(card);});
+cards.forEach(syncCard);refreshMarks();run();
+})();
+</script>
+
+<div class="next"><a href="index.html">← Study hub</a><span></span><a href="final-day-cheatsheet.html">Final-day cheat sheet → STOP at 16:00</a></div>
+</main><script src="assets/menu.js"></script><script src="assets/i18n.js"></script>
+<script src="assets/quiz.js"></script><script src="assets/layout.js"></script><script src="assets/progress.js"></script><script src="assets/bangla.js"></script></body></html>
