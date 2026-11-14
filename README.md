@@ -1,6 +1,6 @@
 # CTFL-Guide
-
-An **unofficial, community-built study guide** for the ISTQB Certified Tester Foundation Level (CTFL) v4.0 exam. Fully offline, zero-install, bilingual (English / বাংলা), and free to share under open licenses.
+Give a Star if you want to send love to a brother . 
+An **unofficial, community-built study guide** for the ISTQB Certified Tester Foundation Level (CTFL) v4.0.1 exam. Fully offline, zero-install, bilingual (English / বাংলা), and free to share under open licenses.
 
 > Not affiliated with, endorsed by, or connected to ISTQB or any exam board. See [Disclaimer](#disclaimer--trademarks).
 ## Authors message 
